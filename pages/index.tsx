@@ -1,9 +1,10 @@
-import type { NextPage } from 'next'
+import type { ReactElement } from 'react'
 import Head from 'next/head'
+import Layout from '@components/Layout'
 
-const Home: NextPage = () => {
+const Home = () => {
   return (
-    <div>
+    <>
       <Head>
         <title>Gabrielle</title>
         <meta
@@ -12,8 +13,13 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-    </div>
+      <section></section>
+    </>
   )
+}
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>
 }
 
 export default Home

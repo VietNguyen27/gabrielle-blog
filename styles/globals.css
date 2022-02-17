@@ -1,3 +1,115 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../public/fonts/Quicksand-Light.ttf');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../public/fonts/Quicksand-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../public/fonts/Quicksand-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../public/fonts/Quicksand-SemiBold.ttf');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../public/fonts/Quicksand-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --primary-color: #111314;
+  --primary-hover-color: #353637;
+  --secondary-color: #ff7a52;
+  --secondary-hover-color: #feb098;
+  --tertiary-color: #0063ff;
+  --tertiary-hover-color: #0256db;
+  --border-color: #f0f2f5;
+  --border-hover-color: #353637;
+  --background-color: #ffffff;
+  --background-darker-color: #f0f2f5;
+  --text-color: #5b6066;
+  --heading-color: #2b3138;
+  --divider-color: #ced0d4;
+
+  --lh-tight: 1.25;
+  --lh-base: 1.4;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 1.875rem;
+  --fs-4xl: 2.25rem;
+  --fs-5xl: 3rem;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --ff-quicksand: 'Quicksand', sans-serif;
+
+  --z-negative: -1;
+  --z-elevate: 1;
+  --z-sticky: 100;
+  --z-drawer: 200;
+  --z-dropdown: 400;
+  --z-modal: 500;
+  --z-popover: 500;
+
+  --header-height: 100px;
+  --header-sticky-height: 70px;
+  --footer-height: 250px;
+  --content-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--ff-quicksand);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+}
+
+main {
+  min-height: var(--content-height);
+}
