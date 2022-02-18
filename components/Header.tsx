@@ -30,7 +30,7 @@ const Header = () => {
           'z-50 flex items-center bg-background',
           isSticky
             ? 'fixed bottom-[calc(100%+1px)] left-0 right-0  min-h-header-sticky animate-slide-down py-4 shadow-md'
-            : 'relative min-h-header py-8'
+            : 'py-7.5 relative min-h-header'
         )}
         ref={ref}
       >

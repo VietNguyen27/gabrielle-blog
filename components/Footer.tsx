@@ -38,12 +38,12 @@ const footerLinks = [
 
 const footerBottomLinks = [
   {
-    href: '/privacy-policy',
+    href: '/privacy',
     title: 'Privacy Policy',
   },
   {
-    href: '/cookie-policy',
-    title: 'Cookie Policy',
+    href: '/terms',
+    title: 'Terms Of Use',
   },
   {
     href: '/contact',
