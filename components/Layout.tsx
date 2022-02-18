@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import Navbar from './Navbar'
+import Header from './Header'
 import Footer from './Footer'
 
 type TLayoutProps = {
@@ -9,7 +9,7 @@ type TLayoutProps = {
 const Layout = ({ children }: TLayoutProps) => {
   return (
     <>
-      <Navbar />
+      <Header />
       <main>{children}</main>
       <Footer />
     </>

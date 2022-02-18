@@ -1,10 +1,9 @@
 import React from 'react'
 import Anchor from './Anchor'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
-import logo from '../public/logo.png'
 import Button, { EButtonAs, EButtonSizes, EButtonVariants } from './Button'
-import Link from 'next/link'
+import Container from './Container'
+import Logo from './Logo'
 
 const footerLinks = [
   {
@@ -57,7 +56,7 @@ const Footer = () => {
 
   return (
     <footer className="min-h-footer overflow-hidden bg-background-darker">
-      <div className="container mx-auto px-4">
+      <Container>
         <div className="flex flex-col items-center justify-center py-6 text-center lg:flex-row lg:py-10">
           <h2 className="mr-0 mb-2 text-4xl font-bold lg:mb-0 lg:mr-6">
             Join a network of curious minds.
@@ -71,14 +70,10 @@ const Footer = () => {
             Let's begin
           </Button>
         </div>
-      </div>
-      <div className="container mx-auto px-4">
+      </Container>
+      <Container>
         <div className="flex flex-col items-start border-t border-divider pt-4 pb-2 md:flex-row md:items-center lg:pt-8 lg:pb-4">
-          <Link href="/">
-            <a className="cursor-pointer">
-              <Image alt="Gabrielle logo" src={logo} width={120} height={20} />
-            </a>
-          </Link>
+          <Logo />
           <div className="ml-0 mt-2 flex flex-wrap items-center gap-y-1 md:ml-12 md:mt-0">
             {footerLinks.map(({ href, title }, index) => (
               <Anchor
@@ -114,7 +109,7 @@ const Footer = () => {
             &copy; Gabrielle {new Date().getFullYear()}
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }

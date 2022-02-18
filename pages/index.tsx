@@ -1,7 +1,8 @@
 import type { ReactElement } from 'react'
 import Head from 'next/head'
 import Layout from '@components/Layout'
-import Post from '@components/Post'
+import { Post, PostLarge } from '@components/Post'
+import Container from '@components/Container'
 import HeroImg from '../public/hero.png'
 
 import BlogImg1 from '../public/dummy-blog-1.png'
@@ -51,8 +52,8 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="mb-6 border-t border-b border-divider">
-        <div className="container mx-auto px-4">
-          <div className="relative">
+        <Container>
+          <div className="relative flex min-h-[50vh] items-center">
             <div className="w-full py-14 sm:w-2/3 lg:w-1/2">
               <h1 className="mb-2 text-5xl leading-tight">
                 Welcome to Gabrielle, a good place to write, read, and connect
@@ -76,16 +77,29 @@ const Home = () => {
               className="absolute top-1/2 right-0 -z-10 hidden h-full w-1/2 min-w-[450px] -translate-y-1/2 object-contain sm:block"
             />
           </div>
-        </div>
+        </Container>
       </section>
-      <section className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-14 pb-20 sm:grid-cols-2 lg:grid-cols-3">
-          {[...Array(9).keys()].map((_, index) => {
-            const post = dummyPosts[index % 2]
+      <section>
+        <Container>
+          <div className="flex items-center justify-between"></div>
+          <div className="mt-4 mb-14">
+            <PostLarge {...dummyPosts[0]} />
+          </div>
+          <div className="mb-14 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2">
+            {[...Array(2).keys()].map((_, index) => {
+              const post = dummyPosts[index % 2]
 
-            return <Post key={index} {...post} />
-          })}
-        </div>
+              return <Post key={index} {...post} />
+            })}
+          </div>
+          <div className="grid grid-cols-1 gap-x-8 gap-y-14 pb-20 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(9).keys()].map((_, index) => {
+              const post = dummyPosts[(index + 3) % 2]
+
+              return <Post key={index} {...post} />
+            })}
+          </div>
+        </Container>
       </section>
     </>
   )
