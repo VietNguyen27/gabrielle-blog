@@ -49,12 +49,12 @@ type TBaseProps = {
 
 type TEButtonAsButton = TBaseProps &
   Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof TBaseProps> & {
-    EButtonAs?: EButtonAs.BUTTON
+    buttonAs?: EButtonAs.BUTTON
   }
 
 type TEButtonAsLink = TBaseProps &
   Omit<LinkProps, keyof TBaseProps> & {
-    EButtonAs: EButtonAs.LINK
+    buttonAs: EButtonAs.LINK
   }
 
 type TButtonProps = TEButtonAsButton | TEButtonAsLink
@@ -82,7 +82,7 @@ const Button = ({
     rounded
   )
 
-  if (rest.EButtonAs === EButtonAs.LINK) {
+  if (rest.buttonAs === EButtonAs.LINK) {
     return (
       <Link {...rest}>
         <a className={allClassNames}>

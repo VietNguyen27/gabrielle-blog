@@ -14,15 +14,15 @@ module.exports = {
       },
     },
     fontSize: {
-      xs: '0.75rem',
-      sm: '0.875rem',
-      base: '1rem',
-      lg: '1.125rem',
-      xl: '1.25rem',
-      '2xl': '1.5rem',
-      '3xl': '1.875rem',
-      '4xl': '2.25rem',
-      '5xl': '3rem',
+      xs: 'var(--fs-xs)',
+      sm: 'var(--fs-sm)',
+      base: 'var(--fs-base)',
+      lg: 'var(--fs-lg)',
+      xl: 'var(--fs-xl)',
+      '2xl': 'var(--fs-2xl)',
+      '3xl': 'var(--fs-3xl)',
+      '4xl': 'var(--fs-4xl)',
+      '5xl': 'var(--fs-5xl)',
     },
     fontWeight: {
       light: 300,
@@ -60,6 +60,11 @@ module.exports = {
         'header-sticky': 'var(--header-sticky-height)',
         footer: 'var(--footer-height)',
       },
+      minHeight: {
+        header: 'var(--header-height)',
+        'header-sticky': 'var(--header-sticky-height)',
+        footer: 'var(--footer-height)',
+      },
       animation: {
         'slide-up': 'slide-up 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards',
         'slide-down': 'slide-down 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards',
@@ -84,5 +89,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
 }

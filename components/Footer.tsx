@@ -56,14 +56,14 @@ const Footer = () => {
   const { pathname } = useRouter()
 
   return (
-    <footer className="h-footer overflow-hidden bg-background-darker">
+    <footer className="min-h-footer overflow-hidden bg-background-darker">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center py-10">
-          <h2 className="mr-6 text-4xl font-bold">
+        <div className="flex flex-col items-center justify-center py-6 text-center lg:flex-row lg:py-10">
+          <h2 className="mr-0 mb-2 text-4xl font-bold lg:mb-0 lg:mr-6">
             Join a network of curious minds.
           </h2>
           <Button
-            EButtonAs={EButtonAs.LINK}
+            buttonAs={EButtonAs.LINK}
             href="/register"
             variant={EButtonVariants.TERTIARY}
             size={EButtonSizes.LARGE}
@@ -73,13 +73,13 @@ const Footer = () => {
         </div>
       </div>
       <div className="container mx-auto px-4">
-        <div className="flex items-center border-t border-divider pt-8 pb-4">
+        <div className="flex flex-col items-start border-t border-divider pt-4 pb-2 md:flex-row md:items-center lg:pt-8 lg:pb-4">
           <Link href="/">
             <a className="cursor-pointer">
               <Image alt="Gabrielle logo" src={logo} width={120} height={20} />
             </a>
           </Link>
-          <div className="ml-12 flex items-center">
+          <div className="ml-0 mt-2 flex flex-wrap items-center gap-y-1 md:ml-12 md:mt-0">
             {footerLinks.map(({ href, title }, index) => (
               <Anchor
                 key={index}
@@ -92,7 +92,7 @@ const Footer = () => {
             ))}
           </div>
         </div>
-        <div className="flex items-center justify-between gap-4 py-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2 py-2.5">
           <div className="flex items-center">
             {footerBottomLinks.map(({ href, title }, index) => (
               <Anchor

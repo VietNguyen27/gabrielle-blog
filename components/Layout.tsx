@@ -10,7 +10,7 @@ const Layout = ({ children }: TLayoutProps) => {
   return (
     <>
       <Navbar />
-      <main className="container m-auto">{children}</main>
+      <main>{children}</main>
       <Footer />
     </>
   )
