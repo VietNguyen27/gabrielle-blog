@@ -23,7 +23,7 @@ const Anchor = ({
   ...rest
 }: TAnchorProps) => {
   const defaultClassName =
-    'relative font-semibold after:absolute after:left-0 after:-bottom-0.5  after:border-b after:border-text after:transition-all after:duration-300 hover:after:w-full'
+    'relative font-semibold after:absolute after:left-0 after:-bottom-0.5  after:border-b after:border-gray-700 after:transition-all after:duration-300 hover:after:w-full'
   const allClassNames = clsx(
     defaultClassName,
     className,

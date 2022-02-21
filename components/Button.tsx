@@ -14,9 +14,9 @@ export enum EButtonAs {
 }
 
 export enum EButtonVariants {
-  PRIMARY = 'bg-primary-900 text-background border-none hover:bg-primary-500',
-  SECONDARY = 'bg-transparent text-heading border-border-500 hover:border-border-900',
-  TERTIARY = 'bg-tertiary-900 text-background border-none hover:bg-tertiary-500',
+  PRIMARY = 'bg-primary-900 text-white border-none hover:bg-primary-500',
+  SECONDARY = 'bg-transparent text-gray-800 border-gray-200 hover:border-gray-800',
+  TERTIARY = 'bg-tertiary-900 text-white border-none hover:bg-tertiary-500',
 }
 
 export enum EButtonSizes {

@@ -23,7 +23,7 @@ const Terms = () => {
           <div className="px-8 py-10">
             <Title className="text-center">Terms and Conditions of Use</Title>
             <div className="mt-6 text-lg">
-              <Heading level={3}>Terms</Heading>
+              <Heading level={2}>Terms</Heading>
               <Paragraph>
                 Incidunt, velit fugit esse ex natus ipsa, dolorum accusantium
                 placeat tempore eos eaque. Odit at consequatur, alias nisi illo
@@ -38,7 +38,7 @@ const Terms = () => {
                 cumque saepe. Amet, quis? Dolorem adipisci dicta dolore quo unde
                 vero!
               </Paragraph>
-              <Heading level={3}>Use Lincense</Heading>
+              <Heading level={2}>Use Lincense</Heading>
               <List>
                 <ListItem>
                   Dolor sit amet consectetur adipisicing elit. Dignissimos,
@@ -75,7 +75,7 @@ const Terms = () => {
                   aliquid.
                 </ListItem>
               </List>
-              <Heading level={3}>Disclaimer</Heading>
+              <Heading level={2}>Disclaimer</Heading>
               <Paragraph>
                 Consequatur aspernatur exercitationem consectetur hic, rem
                 inventore? Minima ullam dolorum impedit aut hic enim, vitae
@@ -93,7 +93,7 @@ const Terms = () => {
                 doloremque incidunt, ipsam magnam omnis, inventore facilis
                 beatae harum explicabo, minus doloribus! Aut, quae?
               </Paragraph>
-              <Heading level={3}>Limitations</Heading>
+              <Heading level={2}>Limitations</Heading>
               <Paragraph>
                 Ipsum dolor sit amet consectetur adipisicing elit. Pariatur quae
                 provident totam, voluptatibus laborum officia! Modi
@@ -112,7 +112,7 @@ const Terms = () => {
                 Totam recusandae ipsa veniam, doloribus nemo similique repellat
                 sit animi.
               </Paragraph>
-              <Heading level={3}>Revisions and Errata</Heading>
+              <Heading level={2}>Revisions and Errata</Heading>
               <Paragraph>
                 Cum provident odit hic, accusamus obcaecati ipsum facilis beatae
                 eveniet possimus rem iure sed ullam pariatur, ea natus qui
@@ -128,7 +128,7 @@ const Terms = () => {
                 harum, eaque accusamus omnis repellat alias quia eius cumque
                 iure expedita iste.
               </Paragraph>
-              <Heading level={3}>Links</Heading>
+              <Heading level={2}>Links</Heading>
               <Paragraph>
                 Commodi temporibus expedita error, soluta laboriosam quia
                 dignissimos pariatur, doloremque eius, voluptatem minima quasi
@@ -140,7 +140,7 @@ const Terms = () => {
                 Inventore quisquam molestiae, dolore distinctio labore
                 asperiores sint libero eveniet magni beatae.
               </Paragraph>
-              <Heading level={3}>Copyright / Takedown</Heading>
+              <Heading level={2}>Copyright / Takedown</Heading>
               <Paragraph>
                 Tenetur molestias eum pariatur enim, rem aliquid vel quo
                 repudiandae, consequuntur laborum, a quos cupiditate facilis
@@ -164,7 +164,7 @@ const Terms = () => {
                 porro eius, inventore illo? Quis doloremque vitae rem nesciunt
                 corporis commodi et!
               </Paragraph>
-              <Heading level={3}>Site terms of use modifications</Heading>
+              <Heading level={2}>Site terms of use modifications</Heading>
               <Paragraph>
                 Sit amet consectetur adipisicing elit. Numquam ipsa
                 reprehenderit aperiam nemo laboriosam, doloribus maiores, veniam
@@ -177,7 +177,7 @@ const Terms = () => {
                 hic deleniti dolor iusto numquam nemo veniam quasi, ut velit
                 ipsam.
               </Paragraph>
-              <Heading level={3}>
+              <Heading level={2}>
                 Gabrielle Community trademarks and logos policy
               </Heading>
               <Paragraph>
@@ -192,7 +192,7 @@ const Terms = () => {
                 itaque aspernatur laborum fugit, obcaecati tempora corporis
                 officia. Cumque, accusamus?
               </Paragraph>
-              <Heading level={3}>Reserved names</Heading>
+              <Heading level={2}>Reserved names</Heading>
               <Paragraph>
                 Dolor sit amet consectetur adipisicing elit. Atque dolorum non
                 ea, culpa veritatis error sunt inventore iste eius facere.
@@ -213,7 +213,7 @@ const Terms = () => {
                 dolor id voluptatem, sapiente consectetur debitis voluptatum ut
                 unde nostrum ex eos. Voluptatem, qui in!
               </Paragraph>
-              <Heading level={3}>Content policy</Heading>
+              <Heading level={2}>Content policy</Heading>
               <Paragraph>
                 Consectetur adipisicing elit. Adipisci maiores voluptate,
                 aliquid nesciunt laudantium voluptatem labore blanditiis
@@ -248,7 +248,7 @@ const Terms = () => {
                 veritatis repudiandae fuga quod enim perferendis possimus rerum
                 illum, repellendus unde natus ex explicabo impedit vel!
               </Paragraph>
-              <Heading level={3}>Governing law</Heading>
+              <Heading level={2}>Governing law</Heading>
               <Paragraph>
                 Adipisicing elit. Reiciendis odit quae cumque autem enim qui
                 tempore voluptas neque excepturi iste labore optio, a

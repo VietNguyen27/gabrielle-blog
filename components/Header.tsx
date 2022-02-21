@@ -27,7 +27,7 @@ const Header = () => {
     <>
       <header
         className={clsx(
-          'z-50 flex items-center bg-background',
+          'z-50 flex items-center bg-white',
           isSticky
             ? 'fixed bottom-[calc(100%+1px)] left-0 right-0  min-h-header-sticky animate-slide-down py-4 shadow-md'
             : 'py-7.5 relative min-h-header'

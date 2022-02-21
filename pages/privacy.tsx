@@ -49,7 +49,7 @@ const Privacy = () => {
                 eos, fuga perspiciatis quia dignissimos aut ipsam aspernatur
                 rerum fugiat sint libero laudantium optio.
               </Paragraph>
-              <Heading level={3}>
+              <Heading level={2}>
                 What personal information do we collect?
               </Heading>
               <Paragraph>
@@ -87,7 +87,7 @@ const Privacy = () => {
                   elit. Provident cupiditate sed ex architecto optio doloribus.
                 </ListItem>
               </List>
-              <Heading level={3}>
+              <Heading level={2}>
                 How do we use your personal information
               </Heading>
               <Paragraph>
@@ -128,7 +128,7 @@ const Privacy = () => {
                   voluptatum? Blanditiis?
                 </ListItem>
               </List>
-              <Heading level={3}>
+              <Heading level={2}>
                 What personal information do we disclose?
               </Heading>
               <Paragraph>
@@ -172,7 +172,7 @@ const Privacy = () => {
                 minus accusamus quaerat, consectetur non voluptatum modi odit,
                 delectus, est velit ea impedit inventore.
               </Paragraph>
-              <Heading level={3}>Transfer of data</Heading>
+              <Heading level={2}>Transfer of data</Heading>
               <Paragraph>
                 Dolor, sit amet consectetur adipisicing elit. Sint eius saepe
                 nisi, commodi ipsam sed vitae odit maiores facilis quo quasi qui
@@ -204,7 +204,7 @@ const Privacy = () => {
                 Debitis delectus aspernatur excepturi unde quos ipsa nulla ea
                 repudiandae itaque et!
               </Paragraph>
-              <Heading level={3}>Your rights</Heading>
+              <Heading level={2}>Your rights</Heading>
               <Paragraph>
                 Nostrum perferendis itaque sit laudantium dolorem eius nobis
                 aliquid cupiditate recusandae, quasi, soluta maxime eligendi
@@ -265,7 +265,7 @@ const Privacy = () => {
                 consectetur eius delectus eaque quos pariatur veritatis sit!
                 Laborum, sapiente!
               </Paragraph>
-              <Heading level={3}>Persons under the age of 18</Heading>
+              <Heading level={2}>Persons under the age of 18</Heading>
               <Paragraph>
                 Tenetur molestias eum pariatur enim, rem aliquid vel quo
                 repudiandae, consequuntur laborum, a quos cupiditate facilis
@@ -274,7 +274,7 @@ const Privacy = () => {
                 labore amet sed quas placeat quaerat molestias rem? Praesentium
                 eligendi impedit, hic culpa totam sapiente. Aliquid, deserunt!
               </Paragraph>
-              <Heading level={3}>Cookies and similar technologies</Heading>
+              <Heading level={2}>Cookies and similar technologies</Heading>
               <Paragraph>
                 Ipsum quaerat ad, voluptatum eos harum sunt impedit maxime
                 repellendus eius accusamus quasi voluptatem atque. Quos iure eos
@@ -305,7 +305,7 @@ const Privacy = () => {
                 error, quo id vel odio distinctio explicabo laboriosam
                 voluptate.
               </Paragraph>
-              <Heading level={3}>Protection of personal information</Heading>
+              <Heading level={2}>Protection of personal information</Heading>
               <Paragraph>
                 Architecto ducimus dicta suscipit aliquid rem distinctio unde
                 nobis reiciendis, eius error magni quisquam quia iste dolor
@@ -327,7 +327,7 @@ const Privacy = () => {
                 nisi et ducimus expedita sunt commodi placeat assumenda mollitia
                 quaerat?
               </Paragraph>
-              <Heading level={3}>
+              <Heading level={2}>
                 Integrity and retention of personal information
               </Heading>
               <Paragraph>
@@ -340,7 +340,7 @@ const Privacy = () => {
                 expedita doloremque amet architecto magnam alias nemo nostrum
                 quae, explicabo deleniti atque! Iste incidunt adipisci aliquam?
               </Paragraph>
-              <Heading level={3}>Access to personal information</Heading>
+              <Heading level={2}>Access to personal information</Heading>
               <Paragraph>
                 Consectetur adipisicing elit. Ad sequi repellendus possimus.
                 Vitae, iusto! Dolorem obcaecati molestias libero et corporis,
@@ -359,7 +359,7 @@ const Privacy = () => {
                 similique molestias totam odio. Amet cum cumque quis labore illo
                 perspiciatis, atque nesciunt quae voluptates magni?
               </Paragraph>
-              <Heading level={3}>Privacy policy updates</Heading>
+              <Heading level={2}>Privacy policy updates</Heading>
               <Paragraph>
                 Adipisicing elit. Ab minus accusamus quibusdam non nemo ut
                 doloremque eum quod voluptates dolorem distinctio praesentium
