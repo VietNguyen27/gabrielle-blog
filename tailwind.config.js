@@ -4,6 +4,14 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    screens: {
+      xs: '536px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
     container: {
       screens: {
         sm: '600px',
@@ -34,26 +42,23 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          500: 'var(--primary-hover-color)',
-          900: 'var(--primary-color)',
+          500: 'var(--primary-500)',
+          900: 'var(--primary-900)',
         },
         secondary: {
-          500: 'var(--secondary-hover-color)',
-          900: 'var(--secondary-color)',
+          500: 'var(--secondary-500)',
+          900: 'var(--secondary-900)',
         },
         tertiary: {
-          500: 'var(--tertiary-hover-color)',
-          900: 'var(--tertiary-color)',
+          500: 'var(--tertiary-500)',
+          900: 'var(--tertiary-900)',
         },
-        border: {
-          500: 'var(--border-color)',
-          900: 'var(--border-hover-color)',
+        gray: {
+          100: 'var(--gray-100)',
+          200: 'var(--gray-200)',
+          700: 'var(--gray-700)',
+          800: 'var(--gray-800)',
         },
-        background: 'var(--background-color)',
-        'background-darker': 'var(--background-darker-color)',
-        text: 'var(--text-color)',
-        heading: 'var(--heading-color)',
-        divider: 'var(--divider-color)',
       },
       height: {
         header: 'var(--header-height)',

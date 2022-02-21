@@ -4,6 +4,7 @@
     "paths": {
       "@components/*": ["components/*"],
       "@constants/*": ["constants/*"],
+      "@data/*": ["data/*"],
       "@pages/*": ["pages/*"],
       "@styles/*": ["styles/*"]
     },
@@ -24,6 +25,6 @@
     "downlevelIteration": true,
     "noImplicitAny": false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "data/footer.ts"],
   "exclude": ["node_modules"]
 }
