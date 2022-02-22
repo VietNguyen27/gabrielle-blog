@@ -12,7 +12,7 @@ export const navLinks = [
     label: 'Write',
   },
   {
-    slug: '/sign-in',
+    slug: '/login',
     label: 'Sign In',
   },
 ]
