@@ -60,10 +60,14 @@ module.exports = {
           800: 'var(--gray-800)',
         },
       },
+      width: {
+        checkbox: 'var(--checkbox-size)',
+      },
       height: {
         header: 'var(--header-height)',
         'header-sticky': 'var(--header-sticky-height)',
         footer: 'var(--footer-height)',
+        checkbox: 'var(--checkbox-size)',
       },
       minHeight: {
         header: 'var(--header-height)',

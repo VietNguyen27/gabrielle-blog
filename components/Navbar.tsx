@@ -19,7 +19,12 @@ const variants = {
   },
   closed: {
     opacity: 0,
-    transition: { staggerChildren: 0.05, staggerDirection: 1 },
+    display: 'none',
+    transition: {
+      staggerChildren: 0.05,
+      staggerDirection: 1,
+      when: 'afterChildren',
+    },
   },
 }
 
