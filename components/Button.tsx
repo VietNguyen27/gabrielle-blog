@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useRef } from 'react'
 import Link, { LinkProps } from 'next/link'
 import clsx from 'clsx'
 
@@ -14,9 +14,9 @@ export enum EButtonAs {
 }
 
 export enum EButtonVariants {
-  PRIMARY = 'bg-primary-900 text-white border-none hover:bg-primary-500',
-  SECONDARY = 'bg-transparent text-gray-800 border-gray-200 hover:border-gray-800',
-  TERTIARY = 'bg-tertiary-900 text-white border-none hover:bg-tertiary-500',
+  PRIMARY = 'bg-primary-900 text-white border-none hover:bg-primary-500 disabled:hover:bg-primary-900',
+  SECONDARY = 'bg-transparent text-gray-800 border-gray-200 hover:border-gray-800 disabled:hover:bg-transparent',
+  TERTIARY = 'bg-tertiary-900 text-white border-none hover:bg-tertiary-500 disabled:hover:bg-tertiary-900',
 }
 
 export enum EButtonSizes {
@@ -28,6 +28,7 @@ export enum EButtonSizes {
 }
 
 export enum EButtonRounded {
+  NONE = '',
   EXTRA_SMALL = 'rounded',
   SMALL = 'rounded-lg',
   MEDIUM = 'rounded-xl',
@@ -45,6 +46,7 @@ type TBaseProps = {
   className?: string
   prefix?: ReactNode
   suffix?: ReactNode
+  onPressEnter?: () => void
 }
 
 type TEButtonAsButton = TBaseProps &
@@ -69,10 +71,12 @@ const Button = ({
   className,
   prefix,
   suffix,
+  onPressEnter,
   ...rest
 }: TButtonProps) => {
+  const ref = useRef<any>(null)
   const defaultClassName =
-    'inline-flex justify-center items-center border outline-none font-semibold transition-all active:scale-95'
+    'relative inline-flex justify-center items-center gap-1 border outline-none font-semibold transition-all disabled:text-gray-500'
   const allClassNames = clsx(
     defaultClassName,
     className,
@@ -81,6 +85,33 @@ const Button = ({
     size,
     rounded
   )
+
+  useEffect(() => {
+    const isInViewport = (element) => {
+      const rect = element.getBoundingClientRect()
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <=
+          (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <=
+          (window.innerWidth || document.documentElement.clientWidth)
+      )
+    }
+
+    const handleEnter = (event) => {
+      if (event.keyCode === 13 && typeof onPressEnter === 'function') {
+        if (ref.current && isInViewport(ref.current)) {
+          onPressEnter()
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleEnter)
+    return () => {
+      window.removeEventListener('keydown', handleEnter)
+    }
+  }, [])
 
   if (rest.buttonAs === EButtonAs.LINK) {
     return (
@@ -94,8 +125,23 @@ const Button = ({
     )
   }
 
+  if (typeof onPressEnter === 'function') {
+    return (
+      <div className="relative" ref={ref}>
+        <button type={type} className={allClassNames} {...rest}>
+          {prefix && prefix}
+          {children}
+          {suffix && suffix}
+        </button>
+        <span className="absolute top-1/2 left-full -translate-y-1/2 whitespace-nowrap pl-3 text-sm text-gray-800">
+          press <strong>Enter ↵</strong>
+        </span>
+      </div>
+    )
+  }
+
   return (
-    <button type={type} className={allClassNames} {...rest}>
+    <button type={type} className={allClassNames} ref={ref} {...rest}>
       {prefix && prefix}
       {children}
       {suffix && suffix}

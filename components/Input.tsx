@@ -4,6 +4,11 @@ import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline'
 
 const MAX_LENGTH_INPUT = 64
 
+export enum EInputVariants {
+  PRIMARY = 'primary',
+  SECONDARY = 'secondary',
+}
+
 export enum EInputTypes {
   EMAIL = 'email',
   TEXT = 'text',
@@ -27,10 +32,12 @@ export enum EInputRounded {
 }
 
 type TInputProps = {
+  variant?: EInputVariants
   type?: EInputTypes
   size?: EInputSizes
   rounded?: EInputRounded
-  placeholder: string
+  label?: string
+  placeholder?: string
   className?: string
   maxLength?: number
   readOnly?: boolean
@@ -41,9 +48,11 @@ type TInputProps = {
 const Input = forwardRef<HTMLInputElement, TInputProps>(
   (
     {
+      variant = EInputVariants.PRIMARY,
       type = EInputTypes.TEXT,
       size = EInputSizes.MEDIUM,
       rounded = EInputRounded.SMALL,
+      label,
       placeholder,
       className,
       maxLength = MAX_LENGTH_INPUT,
@@ -57,9 +66,6 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
     const [isFocus, setIsFocus] = useState<boolean>(false)
     const inputContainerRef = useRef(null)
     const isInputPassword = type === EInputTypes.PASSWORD
-    const defaultClassName =
-      'flex items-stretch border border-gray-200 focus-within:border-gray-700'
-    const allClassNames = clsx(defaultClassName, rounded, className)
     const iconClassNames = 'w-5 h-5'
 
     const onBlur = (e) => {
@@ -70,28 +76,79 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
       }
     }
 
+    if (variant === EInputVariants.PRIMARY) {
+      const defaultClassName =
+        'flex items-stretch border border-gray-200 focus-within:border-gray-700'
+      const allClassNames = clsx(defaultClassName, rounded, className)
+
+      return (
+        <div className={allClassNames}>
+          <div
+            className={clsx('relative w-full', size)}
+            ref={inputContainerRef}
+          >
+            <label
+              className={clsx(
+                'pointer-events-none absolute transition-all',
+                isFocus
+                  ? '-mx-0.5 bg-white px-1 text-xs text-gray-800'
+                  : 'text-gray-400'
+              )}
+              style={
+                isFocus
+                  ? {
+                      transform: `translateY(-${
+                        (inputContainerRef.current as any).offsetHeight / 2 - 2
+                      }px)`,
+                    }
+                  : {}
+              }
+            >
+              {label}
+            </label>
+            <input
+              {...(isInputPassword && showPassword
+                ? { type: EInputTypes.TEXT }
+                : { type: EInputTypes.PASSWORD })}
+              {...(!isInputPassword && { type: type })}
+              className="w-full border-none bg-transparent outline-none"
+              maxLength={maxLength}
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
+              ref={ref}
+              onFocus={() => setIsFocus(true)}
+              onBlur={onBlur}
+              {...rest}
+            />
+          </div>
+          {type === EInputTypes.PASSWORD && (
+            <button
+              type="button"
+              className="mr-2.5 outline-none"
+              onClick={() => setShowPassword((prevState) => !prevState)}
+              tabIndex={-1}
+            >
+              {showPassword ? (
+                <EyeIcon className={iconClassNames} />
+              ) : (
+                <EyeOffIcon className={iconClassNames} />
+              )}
+            </button>
+          )}
+        </div>
+      )
+    }
+
+    const defaultClassName =
+      'flex items-end py-1 border-b-2 border-gray-200 transition-all focus-within:border-gray-700'
+    const allClassNames = clsx(defaultClassName, className)
+
     return (
       <div className={allClassNames}>
-        <div className={clsx('relative w-full', size)} ref={inputContainerRef}>
-          <label
-            className={clsx(
-              'pointer-events-none absolute transition-all',
-              isFocus
-                ? '-mx-0.5 bg-white px-1 text-xs text-gray-800'
-                : 'text-gray-400'
-            )}
-            style={
-              isFocus
-                ? {
-                    transform: `translateY(-${
-                      (inputContainerRef.current as any).offsetHeight / 2 - 2
-                    }px)`,
-                  }
-                : {}
-            }
-          >
-            {placeholder}
-          </label>
+        <label className="block w-full">
+          <span className="text-base font-semibold">{label}</span>
           <input
             {...(isInputPassword && showPassword
               ? { type: EInputTypes.TEXT }
@@ -103,17 +160,18 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck="false"
+            placeholder={placeholder}
             ref={ref}
-            onFocus={() => setIsFocus(true)}
             onBlur={onBlur}
             {...rest}
           />
-        </div>
+        </label>
         {type === EInputTypes.PASSWORD && (
           <button
             type="button"
-            className="mr-2.5 outline-none"
+            className="mr-2.5 pl-2.5 outline-none"
             onClick={() => setShowPassword((prevState) => !prevState)}
+            tabIndex={-1}
           >
             {showPassword ? (
               <EyeIcon className={iconClassNames} />

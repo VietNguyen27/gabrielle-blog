@@ -25,10 +25,10 @@ const Login = () => {
             Sign in to get the most out of Gabrielle.
           </p>
           <form className="flex flex-col items-stretch gap-4 pb-4">
-            <Input placeholder="Email" className="mb-2" />
+            <Input label="Email" className="mb-2" />
             <Input
               type={EInputTypes.PASSWORD}
-              placeholder="Password"
+              label="Password"
               className="mb-2"
             />
             <div className="flex justify-between">
@@ -42,8 +42,8 @@ const Login = () => {
             </Button>
           </form>
           <p>
-            Don’t have an account?{' '}
-            <Link href="/#">
+            Don't have an account?{' '}
+            <Link href="/register">
               <a className="text-tertiary-900">Sign up</a>
             </Link>
           </p>
