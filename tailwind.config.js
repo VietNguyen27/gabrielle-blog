@@ -77,6 +77,7 @@ module.exports = {
       animation: {
         'slide-up': 'slide-up 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards',
         'slide-down': 'slide-down 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        flash: '0.25s ease 0s 2 normal none running flash',
       },
       keyframes: {
         'slide-up': {
@@ -93,6 +94,11 @@ module.exports = {
           },
           '100%': {
             transform: 'translateY(100%)',
+          },
+        },
+        flash: {
+          '50%': {
+            opacity: 0.3,
           },
         },
       },
