@@ -6,20 +6,10 @@ const userSchema = new Schema(
     email: {
       type: String,
       unique: true,
-      required: true,
     },
-    password: {
-      type: String,
-      required: true,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    position: {
-      type: String,
-      required: true,
-    },
+    password: String,
+    username: String,
+    position: String,
     image: String,
     bio: String,
     backdrop: String,
