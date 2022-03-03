@@ -22,6 +22,7 @@ const feedbackSchema = new Schema(
 )
 
 feedbackSchema.plugin(timeZone, { paths: ['createdAt', 'updatedAt'] })
+feedbackSchema.index({ createdAt: -1 })
 
 const FeedbackModel =
   mongoose.models.Feedback || mongoose.model('Feedback', feedbackSchema)

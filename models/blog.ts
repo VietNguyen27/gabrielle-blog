@@ -56,6 +56,7 @@ const blogSchema = new Schema(
 )
 
 blogSchema.plugin(timeZone, { paths: ['createdAt', 'updatedAt'] })
+blogSchema.index({ createdAt: -1, user: -1 })
 
 const BlogModel = mongoose.models.Blog || mongoose.model('Blog', blogSchema)
 

@@ -27,6 +27,7 @@ const notificationSchema = new Schema(
 )
 
 notificationSchema.plugin(timeZone, { paths: ['createdAt', 'updatedAt'] })
+notificationSchema.index({ createdAt: -1, receiver: -1 })
 
 const NotificationModel =
   mongoose.models.Notification ||
