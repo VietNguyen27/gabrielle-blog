@@ -62,6 +62,7 @@ const userSchema = new Schema(
 )
 
 userSchema.plugin(timeZone, { paths: ['createdAt', 'updatedAt'] })
+userSchema.index({ email: 1, username: 1 })
 
 const UserModel = mongoose.models.User || mongoose.model('User', userSchema)
 

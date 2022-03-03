@@ -35,6 +35,7 @@ const commentSchema = new Schema(
 )
 
 commentSchema.plugin(timeZone, { paths: ['createdAt', 'updatedAt'] })
+commentSchema.index({ createdAt: -1, blog: -1 })
 
 const CommentModel =
   mongoose.models.Comment || mongoose.model('Comment', commentSchema)
