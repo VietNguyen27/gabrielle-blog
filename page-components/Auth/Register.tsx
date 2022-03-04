@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Logo } from '@components/Logo'
 import { Button, EButtonRounded, EButtonSizes } from '@components/Button'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -8,6 +8,10 @@ import StepOne from './StepOne'
 import StepTwo from './StepTwo'
 import StepThree from './StepThree'
 import StepFour from './StepFour'
+import { Form } from '@components/Form'
+import { fetcher } from 'lib/fetcher'
+import { useCurrentUser } from '@lib/user'
+import { useRouter } from 'next/router'
 
 const registrationSteps = [StepOne, StepTwo, StepThree, StepFour]
 const SCROLL_UP = 'up'
@@ -16,9 +20,12 @@ const SCROLL_DOWN = 'down'
 const Register = () => {
   const [started, setStarted] = useState<boolean>(false)
   const [currentStep, setCurrentStep] = useState<number>(-1)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const prevStep = usePrevious(currentStep)
   const mainRef = useRef<any>(null)
   const scrollDirection = useRef<string>(SCROLL_DOWN)
+  const { mutate } = useCurrentUser()
+  const route = useRouter()
 
   useEffect(() => {
     let hold = false
@@ -86,6 +93,33 @@ const Register = () => {
     }
   }, [started, scrollDirection])
 
+  const onSubmit = useCallback(
+    async (data) => {
+      const { email, password, position, interests, username } = data
+
+      try {
+        setIsLoading(true)
+        const response = await fetcher('/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            password,
+            position,
+            interests,
+            username,
+          }),
+        })
+        mutate({ user: response.user }, false)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [mutate, route]
+  )
+
   const startRegistration = () => {
     setStarted(true)
     setCurrentStep(0)
@@ -104,7 +138,7 @@ const Register = () => {
         transition={{ duration: 0.6 }}
         ref={mainRef}
       >
-        <form onSubmit={(e) => e.preventDefault()}>
+        <Form onSubmit={onSubmit}>
           <AnimatePresence>
             {!started && (
               <motion.div
@@ -150,7 +184,7 @@ const Register = () => {
               />
             )
           })}
-        </form>
+        </Form>
       </motion.main>
       {started && (
         <div className="fixed bottom-8 right-8 flex items-stretch">

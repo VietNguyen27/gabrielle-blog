@@ -1,6 +1,7 @@
 import { EInputTypes, EInputVariants, Input } from '@components/Input'
 import { TitleQuestion } from '@components/Title'
 import React from 'react'
+import { useFormContext } from 'react-hook-form'
 import StepWrapper from './StepWrapper'
 
 type TStepProps = {
@@ -10,6 +11,8 @@ type TStepProps = {
 }
 
 const StepOne = (props: TStepProps) => {
+  const { register } = useFormContext()
+
   return (
     <StepWrapper {...props}>
       <TitleQuestion
@@ -26,6 +29,7 @@ const StepOne = (props: TStepProps) => {
         label="Email:"
         placeholder="name@example.com"
         className="mb-3 text-xl"
+        {...register('email')}
       />
       <Input
         variant={EInputVariants.SECONDARY}
@@ -33,6 +37,7 @@ const StepOne = (props: TStepProps) => {
         label="Password:"
         placeholder="Must be between 8-24 characters"
         className="mb-3 text-xl"
+        {...register('password')}
       />
       <Input
         variant={EInputVariants.SECONDARY}
@@ -40,6 +45,7 @@ const StepOne = (props: TStepProps) => {
         label="Password confirmation:"
         placeholder="Numbers are also allowed"
         className="mb-3 text-xl"
+        {...register('passwordConfirmation')}
       />
     </StepWrapper>
   )

@@ -87,7 +87,11 @@ const Choice = ({
 
     const handleKeyPress = (event) => {
       if (event.keyCode === keyValues?.keyCode) {
-        if (ref.current && ref.current.type === EChoiceTypes.CUSTOMIZE) {
+        if (
+          ref.current &&
+          ref.current.type === EChoiceTypes.CUSTOMIZE &&
+          isInViewport(ref.current.parentNode)
+        ) {
           setIsCustomize((prevState) => !prevState)
           return
         }
