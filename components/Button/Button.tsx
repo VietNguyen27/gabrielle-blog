@@ -11,6 +11,7 @@ export enum EButtonTypes {
 export enum EButtonAs {
   BUTTON = 'button',
   LINK = 'a',
+  LABEL = 'label',
 }
 
 export enum EButtonVariants {
@@ -59,7 +60,12 @@ type TEButtonAsLink = TBaseProps &
     buttonAs: EButtonAs.LINK
   }
 
-type TButtonProps = TEButtonAsButton | TEButtonAsLink
+type TEButtonAsLabel = TBaseProps &
+  Omit<React.LabelHTMLAttributes<HTMLLabelElement>, keyof TBaseProps> & {
+    buttonAs: EButtonAs.LABEL
+  }
+
+type TButtonProps = TEButtonAsButton | TEButtonAsLink | TEButtonAsLabel
 
 const Button = ({
   children,
@@ -125,10 +131,24 @@ const Button = ({
     )
   }
 
+  if (rest.buttonAs === EButtonAs.LABEL) {
+    const { buttonAs, ...otherAttr } = rest
+
+    return (
+      <label role="button" className={allClassNames} {...otherAttr}>
+        {prefix && prefix}
+        {children}
+        {suffix && suffix}
+      </label>
+    )
+  }
+
   if (typeof onPressEnter === 'function') {
+    const { buttonAs, ...otherAttr } = rest
+
     return (
       <div className="relative" ref={ref}>
-        <button type={type} className={allClassNames} {...rest}>
+        <button type={type} className={allClassNames} {...otherAttr}>
           {prefix && prefix}
           {children}
           {suffix && suffix}
