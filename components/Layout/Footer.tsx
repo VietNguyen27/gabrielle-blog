@@ -1,7 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import Image from 'next/image'
 import Container from './Container'
 import {
   Button,
@@ -74,10 +73,10 @@ const Footer = () => {
         <div className="border-divider flex items-end justify-between border-t pt-4 pb-2 md:flex-row md:items-center lg:pt-8 lg:pb-4">
           <Logo />
           <div className="flex items-center gap-4">
-            {socials.map(({ slug, img }, index) => (
+            {socials.map(({ slug, img: Image }, index) => (
               <Link href={slug} key={index}>
                 <a>
-                  <Image src={img} />
+                  <Image />
                 </a>
               </Link>
             ))}

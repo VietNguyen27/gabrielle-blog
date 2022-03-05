@@ -17,7 +17,7 @@ const Contributors = () => {
       <Container className="pb-32">
         <div className="flex flex-col items-center pb-8 text-center">
           <div className="pb-4">
-            <Image src={DashedLine} alt="dashed line" />
+            <DashedLine />
           </div>
           <Heading level={2} className="text-3xl capitalize">
             Gabrielle's contributors

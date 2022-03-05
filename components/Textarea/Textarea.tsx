@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from 'react'
+import React, { forwardRef, useEffect, useRef } from 'react'
 import clsx from 'clsx'
 
 const MAX_LENGTH = 256
@@ -23,6 +23,21 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
     const defaultClassName = 'relative'
     const allClassNames = clsx(defaultClassName, className)
     const placeholderRef = useRef(null)
+    const textContent =
+      ref && 'current' in ref && ref.current && ref.current.textContent
+
+    useEffect(() => {
+      if (
+        ref &&
+        'current' in ref &&
+        ref.current &&
+        ref.current.textContent?.trim().length
+      ) {
+        if (placeholderRef.current) {
+          ;(placeholderRef.current as HTMLSpanElement).textContent = ''
+        }
+      }
+    }, [textContent])
 
     const onKeyPress = (e) => {
       const value = e.target.textContent + e.key
@@ -45,14 +60,27 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
       }
     }
 
+    const onKeyDown = (e) => {
+      const charCode = String.fromCharCode(e.which).toLowerCase()
+
+      if ((e.ctrlKey || e.metaKey) && charCode === 'v') {
+        const placeholderEl = placeholderRef.current
+
+        if (placeholderEl) {
+          ;(placeholderEl as HTMLSpanElement).textContent = ''
+        }
+      }
+    }
+
     return (
-      <div className={allClassNames}>
+      <div className={allClassNames} tabIndex={-1}>
         <div
           ref={ref}
-          className="w-full break-all outline-none"
+          className={clsx('w-full break-all outline-none', className)}
           contentEditable="true"
           onKeyPress={onKeyPress}
           onKeyUp={onKeyUp}
+          onKeyDown={onKeyDown}
           {...rest}
         ></div>
         <span
