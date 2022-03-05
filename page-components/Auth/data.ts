@@ -58,11 +58,6 @@ export const topics = [
     name: 'nextjs',
   },
   {
-    label: 'Development',
-    value: 'Development',
-    name: 'development',
-  },
-  {
     label: 'Typescript',
     value: 'Typescript',
     name: 'typescript',
