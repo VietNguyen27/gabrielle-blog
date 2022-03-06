@@ -11,6 +11,7 @@ type TSelectProps = {
   multiple?: boolean
   autoFill?: boolean
   maxOptions?: number
+  maxHeight?: number
   placeholder: string
   placeholderAfterChange?: string
   selectedOptions: object[] | null
@@ -95,6 +96,7 @@ const Select = ({
   multiple,
   autoFill = true,
   maxOptions = 4,
+  maxHeight = 300,
   placeholder,
   placeholderAfterChange,
   selectedOptions,
@@ -137,7 +139,7 @@ const Select = ({
     const { value } = e.target
     const TAB_KEYCODE = 9
 
-    if (e.keyCode === TAB_KEYCODE) {
+    if (e.keyCode === TAB_KEYCODE && value.trim().length) {
       e.preventDefault()
       const option = {
         value,
@@ -193,6 +195,7 @@ const Select = ({
                 ref={inputRef}
                 value={inputValue}
                 onFocus={() => setShowOptions(true)}
+                onBlur={() => setShowOptions(false)}
                 {...(autoFill && {
                   onChange: handleFilter,
                   onKeyDown: handleFill,
@@ -216,7 +219,10 @@ const Select = ({
         {selectedOptions && selectedOptions.length === maxOptions ? (
           <p className="px-4 py-2">Only {maxOptions} selections allowed</p>
         ) : (
-          <ul className="mx-1 flex max-h-[400px] flex-col items-stretch overflow-auto py-2 font-semibold">
+          <ul
+            className="mx-1 flex flex-col items-stretch overflow-auto py-2 font-semibold"
+            style={{ maxHeight }}
+          >
             {filteredOptions.map((option: any, index) => (
               <Option
                 key={index}
