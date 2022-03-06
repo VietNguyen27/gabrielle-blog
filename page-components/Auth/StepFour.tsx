@@ -1,6 +1,7 @@
 import { EInputVariants, Input } from '@components/Input'
 import { TitleQuestion } from '@components/Title'
 import React from 'react'
+import { useFormContext } from 'react-hook-form'
 import StepWrapper from './StepWrapper'
 
 type TStepProps = {
@@ -10,6 +11,8 @@ type TStepProps = {
 }
 
 const StepFour = (props: TStepProps) => {
+  const { register } = useFormContext()
+
   return (
     <StepWrapper {...props} lastStep>
       <TitleQuestion
@@ -26,6 +29,7 @@ const StepFour = (props: TStepProps) => {
         variant={EInputVariants.SECONDARY}
         placeholder="Your full name"
         className="mb-3 text-xl"
+        {...register('username')}
       />
     </StepWrapper>
   )

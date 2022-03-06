@@ -11,7 +11,7 @@ const userSchema = new Schema(
     username: String,
     slug: String,
     position: String,
-    image: String,
+    profilePicture: String,
     bio: String,
     backdrop: String,
     skills: [String],

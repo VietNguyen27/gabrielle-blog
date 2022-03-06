@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StepWrapper from './StepWrapper'
 import { TitleQuestion } from '@components/Title'
 import { Choices } from '@components/Choices'
 import { positions } from './data'
+import { useFormContext } from 'react-hook-form'
 
 type TStepProps = {
   step: number
@@ -12,6 +13,11 @@ type TStepProps = {
 
 const StepTwo = (props: TStepProps) => {
   const [positionSelected, setPositionSelected] = useState<string>('')
+  const { setValue } = useFormContext()
+
+  useEffect(() => {
+    setValue('position', positionSelected)
+  }, [positionSelected])
 
   return (
     <StepWrapper {...props}>
