@@ -7,6 +7,7 @@ import StepWrapper from './StepWrapper'
 type TStepProps = {
   step: number
   currentStep: number
+  error: any
   setCurrentStep: (index: number) => void
 }
 
@@ -29,6 +30,7 @@ const StepFour = (props: TStepProps) => {
         variant={EInputVariants.SECONDARY}
         placeholder="Your full name"
         className="mb-3 text-xl"
+        error={props.error['username']}
         {...register('username')}
       />
     </StepWrapper>

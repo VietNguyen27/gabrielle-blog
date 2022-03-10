@@ -8,6 +8,7 @@ import { useFormContext } from 'react-hook-form'
 type TStepProps = {
   step: number
   currentStep: number
+  error: any
   setCurrentStep: (index: number) => void
 }
 
@@ -34,6 +35,8 @@ const StepTwo = (props: TStepProps) => {
       <Choices
         options={positions}
         onChange={setPositionSelected}
+        error={props.error['position']}
+        errorName="position"
         customizable
       />
     </StepWrapper>
