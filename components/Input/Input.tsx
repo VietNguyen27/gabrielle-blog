@@ -1,6 +1,10 @@
 import React, { forwardRef, ReactNode, useRef, useState } from 'react'
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline'
 import clsx from 'clsx'
+import { useError } from '@lib/store'
+import { Error } from '@components/Error'
+import { ChangeHandler } from 'react-hook-form'
+import { removeErrorFromObject } from '@utils/utils'
 
 const MAX_LENGTH_INPUT = 64
 
@@ -36,13 +40,16 @@ type TInputProps = {
   type?: EInputTypes
   size?: EInputSizes
   rounded?: EInputRounded
+  name: string
   label?: string
   placeholder?: string
   className?: string
+  error?: string
   maxLength?: number
   readOnly?: boolean
   prefix?: ReactNode
   suffix?: ReactNode
+  onBlur?: ChangeHandler
 }
 
 const Input = forwardRef<HTMLInputElement, TInputProps>(
@@ -52,12 +59,15 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
       type = EInputTypes.TEXT,
       size = EInputSizes.MEDIUM,
       rounded = EInputRounded.SMALL,
+      name,
       label,
       placeholder,
       className,
+      error,
       maxLength = MAX_LENGTH_INPUT,
       prefix,
       suffix,
+      onBlur,
       ...rest
     },
     ref
@@ -65,20 +75,30 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [isFocus, setIsFocus] = useState<boolean>(false)
     const inputContainerRef = useRef(null)
+    const { error: allError, setError } = useError()
     const isInputPassword = type === EInputTypes.PASSWORD
     const iconClassNames = 'w-5 h-5'
 
-    const onBlur = (e) => {
+    const handleBlur = (e) => {
       const { value } = e.target
 
       if (!value) {
         setIsFocus(false)
       }
+
+      if (onBlur) {
+        onBlur(e)
+      }
+    }
+
+    const onKeyPress = () => {
+      const newError = removeErrorFromObject(allError, name)
+      setError(newError)
     }
 
     if (variant === EInputVariants.PRIMARY) {
       const defaultClassName =
-        'flex items-stretch border border-gray-200 focus-within:border-gray-700'
+        'relative flex items-stretch border border-gray-200 mb-3 focus-within:border-gray-700'
       const allClassNames = clsx(defaultClassName, rounded, className)
 
       return (
@@ -118,8 +138,10 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
               autoCapitalize="off"
               spellCheck="false"
               ref={ref}
+              name={name}
               onFocus={() => setIsFocus(true)}
-              onBlur={onBlur}
+              onBlur={handleBlur}
+              onKeyPress={onKeyPress}
               {...rest}
             />
           </div>
@@ -137,12 +159,13 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
               )}
             </button>
           )}
+          {error && <Error className="absolute top-full">{error}</Error>}
         </div>
       )
     }
 
     const defaultClassName =
-      'flex items-end py-1 border-b-2 border-gray-200 transition-all focus-within:border-gray-700'
+      'relative flex items-end py-1 border-b-2 border-gray-200 transition-all focus-within:border-gray-700'
     const allClassNames = clsx(defaultClassName, className)
 
     return (
@@ -162,7 +185,9 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
             spellCheck="false"
             placeholder={placeholder}
             ref={ref}
-            onBlur={onBlur}
+            name={name}
+            onBlur={handleBlur}
+            onKeyPress={onKeyPress}
             {...rest}
           />
         </label>
@@ -180,6 +205,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
             )}
           </button>
         )}
+        {error && <Error className="absolute top-full pt-0.5">{error}</Error>}
       </div>
     )
   }

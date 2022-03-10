@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { CheckIcon } from '@heroicons/react/outline'
 import clsx from 'clsx'
+import { Error } from '@components/Error'
+import { useError } from '@lib/store'
+import { removeErrorFromObject } from '@utils/utils'
 
 enum EChoiceTypes {
   CHECKBOX = 'checkbox',
@@ -17,6 +20,8 @@ type TChoicesProps = {
   className?: string
   options: any
   onChange?: any
+  error?: string
+  errorName?: string
   multiple?: boolean
   customizable?: boolean
 }
@@ -28,6 +33,7 @@ type TChoiceProps = {
   value?: string
   type?: string
   onChange?: any
+  errorName?: string
   isCustomize?: boolean
   setIsCustomize?: any
   isSelected?: boolean
@@ -56,6 +62,7 @@ const Choice = ({
   value,
   type,
   onChange,
+  errorName,
   isCustomize,
   setIsCustomize,
   isSelected,
@@ -64,6 +71,7 @@ const Choice = ({
   setCustomizeValue,
 }: TChoiceProps) => {
   const ref = useRef<any>(null)
+  const { error: allError, setError } = useError()
 
   useEffect(() => {
     const isInViewport = (element) => {
@@ -124,6 +132,11 @@ const Choice = ({
     }
   }, [isCustomize, customizeValue])
 
+  const onMouseDown = () => {
+    const newError = removeErrorFromObject(allError, errorName)
+    setError(newError)
+  }
+
   const handleChange = (element) => {
     const { value } = element
     if (type === EChoiceTypes.RADIO) {
@@ -142,7 +155,10 @@ const Choice = ({
   if (type === EChoiceTypes.CUSTOMIZE) {
     if (isCustomize) {
       return (
-        <div className="flex h-9 items-stretch rounded border border-gray-700 bg-gray-100 py-1 pl-1.5 pr-1">
+        <div
+          className="flex h-9 items-stretch rounded border border-gray-700 bg-gray-100 py-1 pl-1.5 pr-1"
+          onMouseDown={onMouseDown}
+        >
           <input
             ref={ref}
             type="text"
@@ -169,6 +185,7 @@ const Choice = ({
       <div
         className="group relative flex h-9 cursor-pointer items-center p-1.5 pr-8 text-lg"
         onClick={() => setIsCustomize(true)}
+        onMouseDown={onMouseDown}
       >
         <input
           ref={ref}
@@ -210,7 +227,10 @@ const Choice = ({
   }
 
   return (
-    <label className="group relative flex cursor-pointer items-center p-1.5 pr-8 text-lg">
+    <label
+      className="group relative flex cursor-pointer items-center p-1.5 pr-8 text-lg"
+      onMouseDown={onMouseDown}
+    >
       <input
         ref={ref}
         type={type}
@@ -236,6 +256,8 @@ const Choices = ({
   className,
   options,
   onChange,
+  error,
+  errorName,
   multiple = false,
   customizable = false,
 }: TChoicesProps) => {
@@ -248,46 +270,51 @@ const Choices = ({
   const [isSelected, setIsSelected] = useState<boolean>(false)
 
   return (
-    <div
-      className={allClassNames}
-      style={{
-        gridTemplateColumns: `repeat(${TOTAL_COLUMN}, minmax(0, 1fr))`,
-      }}
-    >
-      {options.map((option, index) => {
-        const keyValues = ALPHABET_KEYCODE_VALUES[index]
-        const type = multiple ? EChoiceTypes.CHECKBOX : EChoiceTypes.RADIO
+    <>
+      <div
+        className={allClassNames}
+        style={{
+          gridTemplateColumns: `repeat(${TOTAL_COLUMN}, minmax(0, 1fr))`,
+        }}
+      >
+        {options.map((option, index) => {
+          const keyValues = ALPHABET_KEYCODE_VALUES[index]
+          const type = multiple ? EChoiceTypes.CHECKBOX : EChoiceTypes.RADIO
 
-        return (
+          return (
+            <Choice
+              key={index}
+              keyValues={keyValues}
+              type={type}
+              onChange={onChange}
+              errorName={errorName}
+              isCustomize={isCustomize}
+              setIsCustomize={setIsCustomize}
+              isSelected={isSelected}
+              setIsSelected={setIsSelected}
+              customizeValue={customizeValue}
+              setCustomizeValue={setCustomizeValue}
+              {...option}
+            />
+          )
+        })}
+        {customizable && (
           <Choice
-            key={index}
-            keyValues={keyValues}
-            type={type}
+            keyValues={ALPHABET_KEYCODE_VALUES[options.length]}
+            type={EChoiceTypes.CUSTOMIZE}
             onChange={onChange}
+            errorName={errorName}
             isCustomize={isCustomize}
             setIsCustomize={setIsCustomize}
             isSelected={isSelected}
             setIsSelected={setIsSelected}
             customizeValue={customizeValue}
             setCustomizeValue={setCustomizeValue}
-            {...option}
           />
-        )
-      })}
-      {customizable && (
-        <Choice
-          keyValues={ALPHABET_KEYCODE_VALUES[options.length]}
-          type={EChoiceTypes.CUSTOMIZE}
-          onChange={onChange}
-          isCustomize={isCustomize}
-          setIsCustomize={setIsCustomize}
-          isSelected={isSelected}
-          setIsSelected={setIsSelected}
-          customizeValue={customizeValue}
-          setCustomizeValue={setCustomizeValue}
-        />
-      )}
-    </div>
+        )}
+      </div>
+      {error && <Error className="pt-2">{error}</Error>}
+    </>
   )
 }
 

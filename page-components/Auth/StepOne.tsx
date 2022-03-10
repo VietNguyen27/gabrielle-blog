@@ -7,6 +7,7 @@ import StepWrapper from './StepWrapper'
 type TStepProps = {
   step: number
   currentStep: number
+  error: any
   setCurrentStep: (index: number) => void
 }
 
@@ -28,7 +29,8 @@ const StepOne = (props: TStepProps) => {
         variant={EInputVariants.SECONDARY}
         label="Email:"
         placeholder="name@example.com"
-        className="mb-3 text-xl"
+        className="mb-4 text-xl"
+        error={props.error['email']}
         {...register('email')}
       />
       <Input
@@ -36,7 +38,8 @@ const StepOne = (props: TStepProps) => {
         type={EInputTypes.PASSWORD}
         label="Password:"
         placeholder="Must be between 8-24 characters"
-        className="mb-3 text-xl"
+        className="mb-4 text-xl"
+        error={props.error['password']}
         {...register('password')}
       />
       <Input
@@ -44,7 +47,8 @@ const StepOne = (props: TStepProps) => {
         type={EInputTypes.PASSWORD}
         label="Password confirmation:"
         placeholder="Numbers are also allowed"
-        className="mb-3 text-xl"
+        className="mb-4 text-xl"
+        error={props.error['passwordConfirmation']}
         {...register('passwordConfirmation')}
       />
     </StepWrapper>

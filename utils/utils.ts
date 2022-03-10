@@ -55,3 +55,29 @@ export const insertHtmlAtCaret = (text, insertBetween = false) => {
     }
   }
 }
+
+export const getErrorFromJoiMessage = (error: object[]): object => {
+  interface Error {
+    context?: object | any
+    message?: string
+  }
+
+  return error.reduce((acc, curr) => {
+    const { context, message }: Error = curr
+
+    return {
+      ...acc,
+      [context.label]: message,
+    }
+  }, {})
+}
+
+export const isIntersection = (array1, array2): boolean => {
+  return array1.some((element) => array2.includes(element))
+}
+
+export const removeErrorFromObject = (obj, error) => {
+  const { [error]: value, ...rest } = obj
+
+  return rest
+}

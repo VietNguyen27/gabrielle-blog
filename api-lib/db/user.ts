@@ -13,8 +13,7 @@ export async function findUserForAuth(db, userId) {
 export async function findUserWithEmailAndPassword(db, email, password) {
   email = normalizeEmail(email)
   const user = await db.collection('users').findOne({ email })
-  const matchedPassword = await bcrypt.compare(password, user.password)
-  if (user && matchedPassword) {
+  if (user && (await bcrypt.compare(password, user.password))) {
     return { ...user, password: undefined }
   }
   return null

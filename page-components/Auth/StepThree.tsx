@@ -8,6 +8,7 @@ import { useFormContext } from 'react-hook-form'
 type TStepProps = {
   step: number
   currentStep: number
+  error: any
   setCurrentStep: (index: number) => void
 }
 
@@ -33,7 +34,13 @@ const StepThree = (props: TStepProps) => {
         }
         description="Choose as many as you like."
       />
-      <Choices options={topics} onChange={setTopicsSelected} multiple />
+      <Choices
+        options={topics}
+        onChange={setTopicsSelected}
+        error={props.error['interests']}
+        errorName="interests"
+        multiple
+      />
     </StepWrapper>
   )
 }

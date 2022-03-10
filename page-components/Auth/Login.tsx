@@ -8,17 +8,26 @@ import { Form } from '@components/Form'
 import { useFormContext } from 'react-hook-form'
 import { fetcher } from '@lib/fetcher'
 import { useCurrentUser } from '@lib/user'
+import { getErrorFromJoiMessage } from '@utils/utils'
+import { useError, useLoading } from '@lib/store'
 
 const FormFields = () => {
   const { register } = useFormContext()
+  const { error } = useError()
 
   return (
     <>
-      <Input label="Email" className="mb-2" {...register('email')} />
+      <Input
+        label="Email"
+        className="mb-2"
+        error={error['email']}
+        {...register('email')}
+      />
       <Input
         type={EInputTypes.PASSWORD}
         label="Password"
         className="mb-2"
+        error={error['password']}
         {...register('password')}
       />
       <div className="flex justify-between">
@@ -35,14 +44,15 @@ const FormFields = () => {
 }
 
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(false)
   const { data: { user } = {}, mutate } = useCurrentUser()
+  const { loading, toggleLoading } = useLoading()
+  const { setError, resetError } = useError()
 
   const onSubmit = useCallback(
     async (data) => {
       const { email, password } = data
 
-      setIsLoading(true)
+      toggleLoading(true)
       try {
         const response = await fetcher('/api/auth', {
           method: 'POST',
@@ -53,10 +63,15 @@ const Login = () => {
           }),
         })
         mutate({ user: response.user }, false)
-      } catch (e) {
-        console.log(e)
+        resetError()
+      } catch (error: any) {
+        if (error.length) {
+          setError(getErrorFromJoiMessage(error))
+        } else {
+          setError({ password: 'Invalid email or password' })
+        }
       } finally {
-        setIsLoading(false)
+        toggleLoading(false)
       }
     },
     [mutate]

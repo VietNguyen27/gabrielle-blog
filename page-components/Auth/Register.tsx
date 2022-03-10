@@ -12,6 +12,8 @@ import { Form } from '@components/Form'
 import { fetcher } from 'lib/fetcher'
 import { useCurrentUser } from '@lib/user'
 import { useRouter } from 'next/router'
+import { useError, useLoading } from '@lib/store'
+import { getErrorFromJoiMessage, isIntersection } from '@utils/utils'
 
 const registrationSteps = [StepOne, StepTwo, StepThree, StepFour]
 const SCROLL_UP = 'up'
@@ -19,13 +21,15 @@ const SCROLL_DOWN = 'down'
 
 const Register = () => {
   const [started, setStarted] = useState<boolean>(false)
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const [currentStep, setCurrentStep] = useState<number>(-1)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const prevStep = usePrevious(currentStep)
   const mainRef = useRef<any>(null)
   const scrollDirection = useRef<string>(SCROLL_DOWN)
   const { mutate } = useCurrentUser()
   const route = useRouter()
+  const { loading, toggleLoading } = useLoading()
+  const { error, setError, resetError } = useError()
 
   useEffect(() => {
     let hold = false
@@ -93,32 +97,67 @@ const Register = () => {
     }
   }, [started, scrollDirection])
 
+  useEffect(() => {
+    if (Object.keys(error).length) {
+      const stepValues = {
+        0: ['email', 'password', 'passwordConfirmation'],
+        1: ['position'],
+        2: ['interests'],
+        3: ['username'],
+      }
+
+      if (isSubmitted) {
+        Object.entries(stepValues).some(([step, values]) => {
+          if (isIntersection(Object.keys(error), values)) {
+            setCurrentStep(Number(step))
+            setIsSubmitted(false)
+            return true
+          }
+        })
+      }
+    }
+  }, [error])
+
   const onSubmit = useCallback(
     async (data) => {
-      const { email, password, position, interests, username } = data
+      const {
+        email,
+        password,
+        passwordConfirmation,
+        position,
+        interests,
+        username,
+      } = data
 
       try {
-        setIsLoading(true)
+        toggleLoading(true)
+        setIsSubmitted(true)
         const response = await fetcher('/api/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email,
             password,
+            passwordConfirmation,
             position,
             interests,
             username,
           }),
         })
         mutate({ user: response.user }, false)
-      } catch (e) {
-        console.log(e)
+        resetError()
+      } catch (error: any) {
+        setError(getErrorFromJoiMessage(error))
       } finally {
-        setIsLoading(false)
+        toggleLoading(false)
       }
     },
     [mutate, route]
   )
+
+  const onKeyDown = (e) => {
+    if (e.code === 'Enter') e.preventDefault()
+  }
 
   const startRegistration = () => {
     setStarted(true)
@@ -138,7 +177,7 @@ const Register = () => {
         transition={{ duration: 0.6 }}
         ref={mainRef}
       >
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit} onKeyDown={(e) => onKeyDown(e)}>
           <AnimatePresence>
             {!started && (
               <motion.div
@@ -179,6 +218,7 @@ const Register = () => {
               <Step
                 key={index}
                 step={index}
+                error={error}
                 currentStep={currentStep}
                 setCurrentStep={setCurrentStep}
               />
