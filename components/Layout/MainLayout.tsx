@@ -18,6 +18,7 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
   return (
     <>
       <Head>
+        <title>Gabrielle Community</title>
         <meta
           name="description"
           content="Gabrielle is a website which provides Blogging tips, Technology news and reviews, plus you can create your own blog to share interesting knowledge with everyone."

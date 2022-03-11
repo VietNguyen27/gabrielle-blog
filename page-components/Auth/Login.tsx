@@ -40,8 +40,8 @@ const FormFields = () => {
       </div>
       <Button
         type={loading ? EButtonTypes.BUTTON : EButtonTypes.SUBMIT}
-        rounded={EButtonRounded.SMALL}
         loading={loading}
+        className="rounded-md py-2"
       >
         Login
       </Button>

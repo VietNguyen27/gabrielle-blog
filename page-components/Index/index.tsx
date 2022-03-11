@@ -109,7 +109,7 @@ const Home = () => {
               <Button
                 href="/write"
                 buttonAs={EButtonAs.LINK}
-                size={EButtonSizes.LARGE}
+                className="rounded-3xl px-5 py-2.5"
               >
                 Start writing
               </Button>

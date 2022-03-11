@@ -63,7 +63,7 @@ const Footer = () => {
             buttonAs={EButtonAs.LINK}
             href="/register"
             variant={EButtonVariants.TERTIARY}
-            size={EButtonSizes.LARGE}
+            className="rounded-3xl px-5 py-2.5"
           >
             Let's begin
           </Button>

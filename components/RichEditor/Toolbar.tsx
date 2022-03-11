@@ -14,6 +14,7 @@ import StrikeIcon from '@public/static/images/toolbar_strike.svg'
 import DividerIcon from '@public/static/images/toolbar_divider.svg'
 import { insertHtmlAtCaret } from '@utils/utils'
 import { Tooltip } from '@components/Tooltip'
+import { Button, EButtonRounded, EButtonVariants } from '@components/Button'
 
 const toolbarItems = [
   { label: 'Bold', value: 'bold', icon: BoldIcon },
@@ -97,7 +98,7 @@ const Toolbar = forwardRef<HTMLDivElement>((props, ref) => {
       <div className="flex flex-wrap items-stretch gap-1">
         {toolbarItems.map(({ label, value, icon: Icon }, index) => {
           const className =
-            'focus:outline-indigo-500" rounded p-1.5 hover:bg-indigo-100 hover:fill-tertiary-900 focus:bg-indigo-50 focus:outline-1'
+            'focus:outline-indigo-500 rounded p-1.5 hover:bg-indigo-100 hover:fill-tertiary-900 focus:bg-indigo-50 focus:outline-1'
           if (value === 'image') {
             return (
               <Tooltip key={index} message={label}>
@@ -111,16 +112,17 @@ const Toolbar = forwardRef<HTMLDivElement>((props, ref) => {
 
           return (
             <Tooltip key={index} message={label}>
-              <button
+              <Button
                 key={index}
-                className={className}
+                variant={EButtonVariants.QUATERNARY}
+                className="p-1.5"
                 tabIndex={0}
                 value={value}
                 aria-label={label}
                 onClick={onClick}
               >
                 <Icon className="pointer-events-none" />
-              </button>
+              </Button>
             </Tooltip>
           )
         })}

@@ -30,18 +30,16 @@ const StepWrapper = ({
       {lastStep ? (
         <Button
           type={loading ? EButtonTypes.BUTTON : EButtonTypes.SUBMIT}
-          size={EButtonSizes.MEDIUM}
-          rounded={EButtonRounded.EXTRA_SMALL}
           loading={loading}
+          className="rounded-md px-4 py-2"
         >
           Submit
         </Button>
       ) : (
         <Button
-          size={EButtonSizes.MEDIUM}
-          rounded={EButtonRounded.EXTRA_SMALL}
           onClick={() => setCurrentStep(step + 1)}
           onPressEnter={() => setCurrentStep(step + 1)}
+          className="rounded-md px-4 py-2"
         >
           Next
           <CheckIcon className="h-6 w-6" />

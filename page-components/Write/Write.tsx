@@ -72,7 +72,7 @@ const Write = () => {
               <Button
                 buttonAs={EButtonAs.LABEL}
                 variant={EButtonVariants.SECONDARY}
-                rounded={EButtonRounded.SMALL}
+                className="rounded-lg px-5 py-2"
               >
                 Add a cover image
                 <input type="file" className="hidden" />
@@ -93,7 +93,7 @@ const Write = () => {
             <div className="mt-6 flex items-center justify-between gap-4">
               <Button
                 variant={EButtonVariants.TERTIARY}
-                rounded={EButtonRounded.SMALL}
+                className="rounded-md px-3.5 py-2"
               >
                 Create
               </Button>
