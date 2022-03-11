@@ -215,10 +215,9 @@ const Register = () => {
                     looking for.
                   </p>
                   <Button
-                    size={EButtonSizes.EXTRA_LARGE}
-                    rounded={EButtonRounded.EXTRA_SMALL}
                     onClick={startRegistration}
                     onPressEnter={startRegistration}
+                    className="rounded-md px-5 py-2.5"
                   >
                     Let's talk
                   </Button>
@@ -242,18 +241,14 @@ const Register = () => {
       {started && (
         <div className="fixed bottom-8 right-8 flex items-stretch">
           <Button
-            size={EButtonSizes.EXTRA_SMALL}
-            rounded={EButtonRounded.NONE}
-            className="rounded-tl rounded-bl"
+            className="rounded-tl rounded-bl px-1.5 py-1"
             disabled={currentStep === 0}
             onClick={() => setCurrentStep((prevState) => prevState - 1)}
           >
             <ChevronUpIcon className="my-0.5 h-5 w-5" />
           </Button>
           <Button
-            size={EButtonSizes.EXTRA_SMALL}
-            rounded={EButtonRounded.NONE}
-            className="rounded-tr rounded-br"
+            className="rounded-tr rounded-br px-1.5 py-1"
             disabled={currentStep === registrationSteps.length - 1}
             onClick={() => setCurrentStep((prevState) => prevState + 1)}
           >

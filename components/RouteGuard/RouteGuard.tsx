@@ -21,17 +21,9 @@ const RouteGuard = ({ children }) => {
   }, [user])
 
   const authCheck = (url) => {
-    const publicPaths = [
-      '/',
-      '/about',
-      '/login',
-      '/register',
-      '/policy',
-      '/terms',
-      '/contact',
-    ]
+    const privatePaths = ['/write', '/bookmark', '/settings']
     const path = url.split('?')[0]
-    if (!user && !publicPaths.includes(path)) {
+    if (!user && privatePaths.includes(path)) {
       setAuthorized(false)
       router.push({
         pathname: '/login',

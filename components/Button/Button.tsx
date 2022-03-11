@@ -19,31 +19,13 @@ export enum EButtonVariants {
   PRIMARY = 'bg-primary-900 text-white border-none hover:bg-primary-500 disabled:hover:bg-primary-900',
   SECONDARY = 'bg-transparent text-gray-800 border-gray-200 hover:border-gray-800 disabled:hover:bg-transparent',
   TERTIARY = 'bg-tertiary-900 text-white border-none hover:bg-tertiary-500 disabled:hover:bg-tertiary-900',
-}
-
-export enum EButtonSizes {
-  EXTRA_SMALL = 'px-2 py-1 text-xs',
-  SMALL = 'px-3 py-1.5 text-sm',
-  MEDIUM = 'px-4 py-2 text-base',
-  LARGE = 'px-5 py-2 text-lg',
-  EXTRA_LARGE = 'px-6 py-2.5 text-xl',
-}
-
-export enum EButtonRounded {
-  NONE = '',
-  EXTRA_SMALL = 'rounded',
-  SMALL = 'rounded-lg',
-  MEDIUM = 'rounded-xl',
-  LARGE = 'rounded-3xl',
-  EXTRA_LARGE = 'rounded-full',
+  QUATERNARY = 'rounded border-none hover:bg-indigo-50 hover:text-tertiary-900 hover:fill-tertiary-900 active:bg-indigo-100',
 }
 
 type TBaseProps = {
   children: ReactNode
   variant?: EButtonVariants
   type?: EButtonTypes
-  size?: EButtonSizes
-  rounded?: EButtonRounded
   fluid?: boolean
   loading?: boolean
   className?: string
@@ -52,29 +34,27 @@ type TBaseProps = {
   onPressEnter?: () => void
 }
 
-type TEButtonAsButton = TBaseProps &
+type TButtonAsButton = TBaseProps &
   Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof TBaseProps> & {
     buttonAs?: EButtonAs.BUTTON
   }
 
-type TEButtonAsLink = TBaseProps &
+type TButtonAsLink = TBaseProps &
   Omit<LinkProps, keyof TBaseProps> & {
     buttonAs: EButtonAs.LINK
   }
 
-type TEButtonAsLabel = TBaseProps &
+type TButtonAsLabel = TBaseProps &
   Omit<React.LabelHTMLAttributes<HTMLLabelElement>, keyof TBaseProps> & {
     buttonAs: EButtonAs.LABEL
   }
 
-type TButtonProps = TEButtonAsButton | TEButtonAsLink | TEButtonAsLabel
+type TButtonProps = TButtonAsButton | TButtonAsLink | TButtonAsLabel
 
 const Button = ({
   children,
   variant = EButtonVariants.PRIMARY,
   type = EButtonTypes.BUTTON,
-  size = EButtonSizes.MEDIUM,
-  rounded = EButtonRounded.LARGE,
   fluid,
   loading,
   className,
@@ -90,9 +70,7 @@ const Button = ({
     defaultClassName,
     className,
     fluid ? 'w-full' : 'w-auto',
-    variant,
-    size,
-    rounded
+    variant
   )
 
   useEffect(() => {

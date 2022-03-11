@@ -93,7 +93,7 @@ export const removeErrorFromObject = (obj, error) => {
   return rest
 }
 
-export const slowLoading = async (delay = 50000): Promise<void> => {
+export const slowLoading = async (delay = 500): Promise<void> => {
   return new Promise(function (resolve, reject) {
     setTimeout(resolve, delay)
   })
