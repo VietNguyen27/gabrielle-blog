@@ -100,7 +100,7 @@ const Toolbar = forwardRef<HTMLDivElement>((props, ref) => {
             'focus:outline-indigo-500" rounded p-1.5 hover:bg-indigo-100 hover:fill-tertiary-900 focus:bg-indigo-50 focus:outline-1'
           if (value === 'image') {
             return (
-              <Tooltip message={label}>
+              <Tooltip key={index} message={label}>
                 <label role="button" className={className}>
                   <Icon />
                   <input type="file" className="hidden" />
@@ -110,7 +110,7 @@ const Toolbar = forwardRef<HTMLDivElement>((props, ref) => {
           }
 
           return (
-            <Tooltip message={label}>
+            <Tooltip key={index} message={label}>
               <button
                 key={index}
                 className={className}

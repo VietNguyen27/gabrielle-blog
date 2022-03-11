@@ -1,4 +1,4 @@
-import { getRandomColor } from '@utils/utils'
+import { getRandomColor, getRandomString } from '@utils/utils'
 import normalizeEmail from 'validator/lib/normalizeEmail'
 import bcrypt from 'bcrypt'
 import { ObjectId } from 'mongodb'
@@ -23,12 +23,13 @@ export async function insertUser(
   db,
   { email, password, username, position, interests }
 ) {
+  const seed = getRandomString()
   const user = {
     email,
     username,
     position,
     interests,
-    profilePicture: '',
+    profilePicture: `https://avatars.dicebear.com/api/open-peeps/${seed}.svg?size=120`,
     bio: '',
     backdrop: getRandomColor(),
     skills: [],

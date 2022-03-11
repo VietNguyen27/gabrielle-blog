@@ -2,7 +2,7 @@ import nextConnect from 'next-connect'
 import middleware from '@api-lib/middlewares/middleware'
 import { passport } from '@api-lib/auth'
 import { extractUser } from '@lib/user'
-import next, { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 import { loginSchema } from '@api-lib/schemas'
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>()
@@ -22,7 +22,7 @@ handler.post(
   },
   passport.authenticate('local'),
   (req: any, res) => {
-    res.json({ user: extractUser(req.user) })
+    res.json({ user: extractUser(req) })
   }
 )
 

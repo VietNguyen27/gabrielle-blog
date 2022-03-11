@@ -26,10 +26,23 @@ const Register = () => {
   const prevStep = usePrevious(currentStep)
   const mainRef = useRef<any>(null)
   const scrollDirection = useRef<string>(SCROLL_DOWN)
-  const { mutate } = useCurrentUser()
+  const { data: { user } = {}, mutate } = useCurrentUser()
   const route = useRouter()
-  const { loading, toggleLoading } = useLoading()
+  const { toggleLoading } = useLoading()
   const { error, setError, resetError } = useError()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user) {
+      const { query } = router
+
+      if (query.returnUrl) {
+        router.replace(query.returnUrl as string)
+      } else {
+        router.replace('/')
+      }
+    }
+  }, [user, router])
 
   useEffect(() => {
     let hold = false

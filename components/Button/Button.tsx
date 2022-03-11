@@ -1,6 +1,7 @@
 import React, { ReactNode, useEffect, useRef } from 'react'
 import Link, { LinkProps } from 'next/link'
 import clsx from 'clsx'
+import { Loading } from '@components/Loading'
 
 export enum EButtonTypes {
   BUTTON = 'button',
@@ -44,6 +45,7 @@ type TBaseProps = {
   size?: EButtonSizes
   rounded?: EButtonRounded
   fluid?: boolean
+  loading?: boolean
   className?: string
   prefix?: ReactNode
   suffix?: ReactNode
@@ -74,6 +76,7 @@ const Button = ({
   size = EButtonSizes.MEDIUM,
   rounded = EButtonRounded.LARGE,
   fluid,
+  loading,
   className,
   prefix,
   suffix,
@@ -82,7 +85,7 @@ const Button = ({
 }: TButtonProps) => {
   const ref = useRef<any>(null)
   const defaultClassName =
-    'relative inline-flex justify-center items-center gap-1 border outline-none font-semibold transition-all disabled:text-gray-500'
+    'relative inline-flex justify-center items-center gap-1 border outline-none font-semibold overflow-hidden transition-all disabled:text-gray-500'
   const allClassNames = clsx(
     defaultClassName,
     className,
@@ -165,6 +168,7 @@ const Button = ({
       {prefix && prefix}
       {children}
       {suffix && suffix}
+      {loading && <Loading className="bg-primary-900" />}
     </button>
   )
 }

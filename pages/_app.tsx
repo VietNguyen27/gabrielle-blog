@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import { Provider, useCreateStore } from '@lib/store'
 import '@styles/globals.css'
 import { MainLayout } from '@components/Layout'
+import { RouteGuard } from '@components/RouteGuard'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactNode) => ReactNode
@@ -19,7 +20,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <Provider createStore={createStore}>
-      <MainLayout>{getLayout(<Component {...pageProps} />)}</MainLayout>
+      <MainLayout>
+        <RouteGuard>{getLayout(<Component {...pageProps} />)}</RouteGuard>
+      </MainLayout>
     </Provider>
   )
 }

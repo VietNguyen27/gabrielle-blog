@@ -9,6 +9,17 @@ export const getRandomColor = (): string => {
   return color
 }
 
+export const getRandomString = (): string => {
+  const LETTERS = 'abcdefghijklmnopqrstuvwxyz'
+  let string = ''
+
+  for (let i = 0; i < 6; i++) {
+    string += LETTERS[Math.floor(Math.random() * LETTERS.length)]
+  }
+
+  return string
+}
+
 export const capitalizeFirstLetter = (string: string): string => {
   return string
     .split(' ')
@@ -80,4 +91,10 @@ export const removeErrorFromObject = (obj, error) => {
   const { [error]: value, ...rest } = obj
 
   return rest
+}
+
+export const slowLoading = async (delay = 50000): Promise<void> => {
+  return new Promise(function (resolve, reject) {
+    setTimeout(resolve, delay)
+  })
 }

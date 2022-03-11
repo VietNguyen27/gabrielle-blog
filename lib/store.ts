@@ -27,7 +27,7 @@ export const initializeStore = (preloadedState = {}) => {
       set({ error })
     },
     resetError: () => {
-      set({ error: [] })
+      set({ error: {} })
     },
     toggleLoading: (loading: boolean) => {
       set({
