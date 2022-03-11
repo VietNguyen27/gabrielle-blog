@@ -78,6 +78,15 @@ module.exports = {
         'header-sticky': 'var(--header-sticky-height)',
         footer: 'var(--footer-height)',
       },
+      zIndex: {
+        negative: 'var(--z-negative)',
+        elevate: 'var(--z-elevate)',
+        sticky: 'var(--z-sticky)',
+        drawer: 'var(--z-drawer)',
+        dropdown: 'var(--z-dropdown)',
+        modal: 'var(--z-modal)',
+        popover: 'var(--z-popover)',
+      },
       animation: {
         'slide-up': 'slide-up 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards',
         'slide-down': 'slide-down 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards',
@@ -104,6 +113,31 @@ module.exports = {
           '50%': {
             opacity: 0.3,
           },
+        },
+      },
+    },
+    animation: {
+      'dash-loading': 'dash 1.5s ease-in-out infinite',
+      'rotate-loading': 'rotate 2s linear infinite',
+    },
+    keyframes: {
+      rotate: {
+        '100%': {
+          transform: 'rotate(360deg)',
+        },
+      },
+      dash: {
+        '0%': {
+          strokeDasharray: '1, 150',
+          strokeDashoffset: '0',
+        },
+        '50%': {
+          strokeDasharray: '90, 150',
+          strokeDashoffset: '-35',
+        },
+        '100%': {
+          strokeDasharray: '90, 150',
+          strokeDashoffset: '-124',
         },
       },
     },

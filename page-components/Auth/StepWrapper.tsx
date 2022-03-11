@@ -6,6 +6,7 @@ import {
   EButtonSizes,
   EButtonTypes,
 } from '@components/Button'
+import { useLoading } from '@lib/store'
 
 type TStepWrapperProps = {
   step: number
@@ -21,14 +22,17 @@ const StepWrapper = ({
   children,
   setCurrentStep,
 }: TStepWrapperProps) => {
+  const { loading } = useLoading()
+
   return (
     <div className="mx-auto flex h-screen w-full flex-col items-start justify-center md:w-2/3 xl:w-1/2">
       <div className="w-full pb-4">{children}</div>
       {lastStep ? (
         <Button
-          type={EButtonTypes.SUBMIT}
+          type={loading ? EButtonTypes.BUTTON : EButtonTypes.SUBMIT}
           size={EButtonSizes.MEDIUM}
           rounded={EButtonRounded.EXTRA_SMALL}
+          loading={loading}
         >
           Submit
         </Button>

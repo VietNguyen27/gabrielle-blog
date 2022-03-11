@@ -1,7 +1,7 @@
-import { useError } from '@lib/store'
+import React, { ReactNode, useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React, { Fragment, ReactNode, useEffect } from 'react'
+import { useError } from '@lib/store'
 
 type TMainLayoutProps = {
   children: ReactNode

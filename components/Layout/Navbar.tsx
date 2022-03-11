@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import Container from './Container'
 import { Anchor } from '@components/Anchor'
 import { Button, EButtonAs, EButtonSizes } from '@components/Button'
 import clsx from 'clsx'
+import { useCurrentUser } from '@lib/user'
+import { fetcher } from '@lib/fetcher'
 
 type TMenuToggle = {
   active: boolean
@@ -33,6 +35,7 @@ const navLinks = [
 const variants = {
   open: {
     opacity: 1,
+    display: 'block',
     transition: { staggerChildren: 0.07, delayChildren: 0.1 },
   },
   closed: {
@@ -93,6 +96,18 @@ const MenuToggle = ({ active, toggle }: TMenuToggle) => {
 const Navbar = () => {
   const { pathname } = useRouter()
   const [isMenuExpanded, setIsMenuExpanded] = useState<boolean>(false)
+  const { data: { user } = {}, mutate } = useCurrentUser()
+
+  const onSignOut = useCallback(async () => {
+    try {
+      await fetcher('/api/auth', {
+        method: 'DELETE',
+      })
+      mutate({ user: null })
+    } catch (error) {
+      console.log(error)
+    }
+  }, [mutate])
 
   return (
     <nav>

@@ -10,9 +10,7 @@ export const fetcher = (url, opts) => {
     if (res.ok) {
       return payload
     } else {
-      return Promise.reject(
-        payload.details || new Error('Something went wrong')
-      )
+      return Promise.reject(payload || new Error('Something went wrong'))
     }
   })
 }

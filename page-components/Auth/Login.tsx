@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { Header } from '@components/Layout'
 import { EInputTypes, Input } from '@components/Input'
@@ -10,10 +10,12 @@ import { fetcher } from '@lib/fetcher'
 import { useCurrentUser } from '@lib/user'
 import { getErrorFromJoiMessage } from '@utils/utils'
 import { useError, useLoading } from '@lib/store'
+import { useRouter } from 'next/router'
 
 const FormFields = () => {
   const { register } = useFormContext()
   const { error } = useError()
+  const { loading } = useLoading()
 
   return (
     <>
@@ -36,7 +38,11 @@ const FormFields = () => {
           <a className="text-sm text-gray-700">Forgot password?</a>
         </Link>
       </div>
-      <Button type={EButtonTypes.SUBMIT} rounded={EButtonRounded.SMALL}>
+      <Button
+        type={loading ? EButtonTypes.BUTTON : EButtonTypes.SUBMIT}
+        rounded={EButtonRounded.SMALL}
+        loading={loading}
+      >
         Login
       </Button>
     </>
@@ -45,8 +51,21 @@ const FormFields = () => {
 
 const Login = () => {
   const { data: { user } = {}, mutate } = useCurrentUser()
-  const { loading, toggleLoading } = useLoading()
+  const { toggleLoading } = useLoading()
   const { setError, resetError } = useError()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user) {
+      const { query } = router
+
+      if (query.returnUrl) {
+        router.replace(query.returnUrl as string)
+      } else {
+        router.replace('/')
+      }
+    }
+  }, [user, router])
 
   const onSubmit = useCallback(
     async (data) => {
