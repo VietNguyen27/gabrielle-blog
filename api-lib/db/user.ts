@@ -1,4 +1,4 @@
-import { getRandomColor, getRandomString } from '@utils/utils'
+import { getRandomColor } from '@utils/utils'
 import normalizeEmail from 'validator/lib/normalizeEmail'
 import bcrypt from 'bcrypt'
 import { ObjectId } from 'mongodb'
@@ -19,21 +19,36 @@ export async function findUserWithEmailAndPassword(db, email, password) {
   return null
 }
 
+export async function findUserByUsername(db, username) {
+  return db
+    .collection('users')
+    .findOne({ username }, { projection: { password: 0 } })
+    .then((user) => user || null)
+}
+
+export async function findUserByEmail(db, email) {
+  email = normalizeEmail(email)
+  return db
+    .collection('users')
+    .findOne({ email }, { projection: { password: 0 } })
+    .then((user) => user || null)
+}
+
 export async function insertUser(
   db,
   { email, password, username, position, interests }
 ) {
-  const seed = getRandomString()
   const user = {
     email,
     username,
     position,
     interests,
-    profilePicture: `https://avatars.dicebear.com/api/open-peeps/${seed}.svg?size=120`,
+    profilePicture: `https://avatars.dicebear.com/api/identicon/${username}.svg?size=120`,
     bio: '',
     backdrop: getRandomColor(),
     skills: [],
     bookmarks: [],
+    postsCount: 0,
     followers: [],
     followersCount: 0,
     following: [],

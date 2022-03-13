@@ -3,6 +3,4 @@ export {
   EButtonTypes,
   EButtonAs,
   EButtonVariants,
-  EButtonSizes,
-  EButtonRounded,
 } from './Button'

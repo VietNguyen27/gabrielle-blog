@@ -14,7 +14,7 @@ import StrikeIcon from '@public/static/images/toolbar_strike.svg'
 import DividerIcon from '@public/static/images/toolbar_divider.svg'
 import { insertHtmlAtCaret } from '@utils/utils'
 import { Tooltip } from '@components/Tooltip'
-import { Button, EButtonRounded, EButtonVariants } from '@components/Button'
+import { Button, EButtonVariants } from '@components/Button'
 
 const toolbarItems = [
   { label: 'Bold', value: 'bold', icon: BoldIcon },

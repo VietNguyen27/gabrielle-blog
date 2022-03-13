@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Logo } from '@components/Logo'
-import { Button, EButtonRounded, EButtonSizes } from '@components/Button'
+import { Button } from '@components/Button'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/outline'
 import { usePrevious } from '@hooks/usePrevious'
@@ -160,6 +160,7 @@ const Register = () => {
         mutate({ user: response.user }, false)
         resetError()
       } catch (error: any) {
+        console.log(error)
         setError(getErrorFromJoiMessage(error))
       } finally {
         toggleLoading(false)

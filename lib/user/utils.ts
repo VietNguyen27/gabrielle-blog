@@ -1,11 +1,14 @@
 import slug from 'slug'
 
-export const extractUser = (req) => {
-  if (!req.user) return null
-  const { password, status, reportReceived, ...rest } = req.user
+export const extractUser = (user) => {
+  if (!user) return null
+  const { password, status, reportReceived, createdAt, updatedAt, ...rest } =
+    user
 
   return {
     ...rest,
+    createdAt: createdAt.getTime(),
+    updatedAt: updatedAt.getTime(),
   }
 }
 

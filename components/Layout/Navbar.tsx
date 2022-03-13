@@ -3,13 +3,7 @@ import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import Container from './Container'
 import { Anchor } from '@components/Anchor'
-import {
-  Button,
-  EButtonAs,
-  EButtonRounded,
-  EButtonSizes,
-  EButtonVariants,
-} from '@components/Button'
+import { Button, EButtonAs, EButtonVariants } from '@components/Button'
 import clsx from 'clsx'
 import { useCurrentUser } from '@lib/user'
 import { fetcher } from '@lib/fetcher'
@@ -112,12 +106,12 @@ const MenuToggle = ({ active, toggle }: TMenuToggle) => {
 const MenuDropdown = ({ username, email }, onLogOut) => {
   return (
     <Menu className="w-[250px]">
-      <MenuItem href="/#" menuItemAs={EMenuItemAs.LINK}>
+      <MenuItem href={`/${username}`} menuItemAs={EMenuItemAs.LINK}>
         <p className="font-semibold line-clamp-1">{username}</p>
         <span className="text-sm line-clamp-1">{email}</span>
       </MenuItem>
       <MenuDivider />
-      <MenuItem href="/#" menuItemAs={EMenuItemAs.LINK}>
+      <MenuItem href="/write" menuItemAs={EMenuItemAs.LINK}>
         Create Post
       </MenuItem>
       <MenuItem href="/#" menuItemAs={EMenuItemAs.LINK}>
@@ -189,8 +183,11 @@ const Navbar = () => {
           </li>
           <li>
             <Dropdown overlay={MenuDropdown(user, onLogOut)}>
-              <Button variant={EButtonVariants.QUATERNARY} className="p-1">
-                <span className="relative h-8 w-8">
+              <Button
+                variant={EButtonVariants.QUATERNARY}
+                className="rounded-full p-1"
+              >
+                <span className="relative h-8 w-8 overflow-hidden rounded-full outline outline-2 outline-gray-200">
                   <img
                     src={user.profilePicture}
                     className="absolute top-0 left-0 h-full w-full object-cover"

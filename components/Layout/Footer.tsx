@@ -2,18 +2,14 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Container from './Container'
-import {
-  Button,
-  EButtonAs,
-  EButtonSizes,
-  EButtonVariants,
-} from '@components/Button'
+import { Button, EButtonAs, EButtonVariants } from '@components/Button'
 import { Logo } from '@components/Logo'
 import { Anchor } from '@components/Anchor'
 import TwitterLogo from '@public/static/images/twitter-logo.svg'
 import DribbbleLogo from '@public/static/images/dribbble-logo.svg'
 import InstagramLogo from '@public/static/images/instagram-logo.svg'
 import FacebookLogo from '@public/static/images/facebook-logo.svg'
+import { useCurrentUser } from '@lib/user'
 
 export const socials = [
   {
@@ -51,26 +47,29 @@ export const links = [
 
 const Footer = () => {
   const { pathname } = useRouter()
+  const { data: { user } = {} } = useCurrentUser()
 
   return (
-    <footer className="min-h-footer overflow-hidden bg-gray-100">
-      <Container>
-        <div className="flex flex-col items-center justify-center py-6 text-center lg:flex-row lg:py-10">
-          <h2 className="mr-0 mb-2 text-4xl font-bold lg:mb-0 lg:mr-6">
-            Join a network of curious minds.
-          </h2>
-          <Button
-            buttonAs={EButtonAs.LINK}
-            href="/register"
-            variant={EButtonVariants.TERTIARY}
-            className="rounded-3xl px-5 py-2.5"
-          >
-            Let's begin
-          </Button>
-        </div>
-      </Container>
-      <Container>
-        <div className="border-divider flex items-end justify-between border-t pt-4 pb-2 md:flex-row md:items-center lg:pt-8 lg:pb-4">
+    <footer className="overflow-hidden bg-gray-100">
+      {!user && (
+        <Container>
+          <div className="border-divider flex flex-col items-center justify-center border-b py-6 text-center lg:flex-row lg:py-10">
+            <h2 className="mr-0 mb-2 text-4xl font-bold lg:mb-0 lg:mr-6">
+              Join a network of curious minds.
+            </h2>
+            <Button
+              buttonAs={EButtonAs.LINK}
+              href="/register"
+              variant={EButtonVariants.TERTIARY}
+              className="rounded-3xl px-5 py-2.5"
+            >
+              Let's begin
+            </Button>
+          </div>
+        </Container>
+      )}
+      <Container className="py-6">
+        <div className="flex items-end justify-between pb-4 md:flex-row md:items-center">
           <Logo />
           <div className="flex items-center gap-4">
             {socials.map(({ slug, img: Image }, index) => (
@@ -82,7 +81,7 @@ const Footer = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-2 py-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center">
             {links.map(({ slug, label }, index) => (
               <Anchor
