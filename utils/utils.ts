@@ -9,17 +9,6 @@ export const getRandomColor = (): string => {
   return color
 }
 
-export const getRandomString = (): string => {
-  const LETTERS = 'abcdefghijklmnopqrstuvwxyz'
-  let string = ''
-
-  for (let i = 0; i < 6; i++) {
-    string += LETTERS[Math.floor(Math.random() * LETTERS.length)]
-  }
-
-  return string
-}
-
 export const capitalizeFirstLetter = (string: string): string => {
   return string
     .split(' ')
@@ -97,4 +86,28 @@ export const slowLoading = async (delay = 500): Promise<void> => {
   return new Promise(function (resolve, reject) {
     setTimeout(resolve, delay)
   })
+}
+
+export const getFormattedDate = (date: Date): string => {
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
+  const newDate = new Date(date)
+  const day = newDate.getDate()
+  const monthIndex = newDate.getMonth()
+  const monthName = monthNames[monthIndex]
+  const year = newDate.getFullYear()
+
+  return `${day} ${monthName}, ${year}`
 }

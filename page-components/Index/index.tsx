@@ -1,7 +1,7 @@
 import { Container } from '@components/Layout'
 import { Post, PostLarge, TrendingPost } from '@components/Post'
 import { TrendingUpIcon } from '@heroicons/react/outline'
-import { Button, EButtonAs, EButtonSizes } from '@components/Button'
+import { Button, EButtonAs } from '@components/Button'
 import { Heading } from '@components/Heading'
 import HeroImg from '@public/static/images/hero.png'
 

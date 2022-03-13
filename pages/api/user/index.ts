@@ -7,7 +7,7 @@ const handler = nextConnect()
 
 handler.use(middleware)
 handler.get(async (req: NextApiRequest, res: NextApiResponse) =>
-  res.json({ user: extractUser(req) })
+  res.json({ user: extractUser((req as any).user) })
 )
 
 export default handler

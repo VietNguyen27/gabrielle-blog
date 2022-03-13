@@ -17,12 +17,12 @@ handler.post(
       stripUnknown: true,
     })
 
-    if (error) return res.status(400).json(error)
+    if (error) return res.status(400).json(error.details)
     return next()
   },
   passport.authenticate('local'),
   (req: any, res) => {
-    res.json({ user: extractUser(req) })
+    res.json({ user: extractUser(req.user) })
   }
 )
 

@@ -88,18 +88,25 @@
   --z-popover: 500;
 
   --header-height: 100px;
-  --header-sticky-height: 70px;
-  --footer-height: 250px;
-  --content-height: calc(100vh - var(--header-height) - var(--footer-height));
 }
 
 body {
+  min-width: 100vw;
+  overflow-x: hidden;
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: var(--ff-quicksand);
   font-weight: var(--fw-medium);
   font-size: var(--fs-base);
   line-height: var(--lh-base);
+}
+
+body > div {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
 h1,
@@ -112,7 +119,7 @@ h6 {
 }
 
 main {
-  min-height: var(--content-height);
+  flex-grow: 1;
 }
 
 ::-webkit-scrollbar {

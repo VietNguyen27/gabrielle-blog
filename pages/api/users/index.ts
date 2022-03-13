@@ -1,6 +1,5 @@
 import nextConnect from 'next-connect'
 import { NextApiResponse } from 'next'
-import isEmail from 'validator/lib/isEmail'
 import normalizeEmail from 'validator/lib/normalizeEmail'
 import { middleware, validate } from '@api-lib/middlewares'
 import { registerSchema } from '@api-lib/schemas'
@@ -15,21 +14,41 @@ handler.post(
     const { username, password, position, interests } = req.body
     const email = normalizeEmail(req.body.email)
 
-    if (!isEmail(email)) {
-      res.status(400).send('The email you entered is invalid.')
-      return
-    }
-    if (!password || !username) {
-      res.status(400).send('Missing field(s)')
-      return
-    }
-
     const existedEmail = await req.db
       .collection('users')
       .countDocuments({ email })
 
     if (existedEmail) {
-      res.status(403).send('The email has already been used.')
+      res.status(403).json([
+        {
+          context: {
+            label: 'email',
+            value: '',
+            key: 'email',
+          },
+          message: 'The email has already been used.',
+        },
+      ])
+      return
+    }
+
+    const regex = new RegExp(['^', username, '$'].join(''), 'i')
+    const existedUsername = await req.db
+      .collection('users')
+      .countDocuments({ username: regex })
+
+    if (existedUsername) {
+      res.status(403).json([
+        {
+          context: {
+            label: 'username',
+            value: '',
+            key: 'username',
+          },
+          message: 'The username has already been used.',
+        },
+      ])
+      return
     }
 
     const user = await insertUser(req.db, {

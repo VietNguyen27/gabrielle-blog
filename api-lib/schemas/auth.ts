@@ -14,8 +14,8 @@ export const registerSchema = Joi.object({
     .required()
     .messages({
       'string.email': 'Not a valid email address.',
-      'string.min': `Email must be between ${MIN_LENGTH_8} and ${MAX_LENGTH_255} characters.`,
-      'string.max': `Email must be between ${MIN_LENGTH_8} and ${MAX_LENGTH_255} characters.`,
+      'string.min': `Email must be at least ${MIN_LENGTH_8} characters long.`,
+      'string.max': `Email must be less than or equal to ${MAX_LENGTH_255} characters long.`,
       'string.empty': 'Email is not allowed to be empty.',
     }),
   password: Joi.string()
@@ -23,8 +23,8 @@ export const registerSchema = Joi.object({
     .max(MAX_LENGTH_24)
     .required()
     .messages({
-      'string.min': `Password must be between ${MIN_LENGTH_8} and ${MAX_LENGTH_24} characters.`,
-      'string.max': `Password must be between ${MIN_LENGTH_8} and ${MAX_LENGTH_24} characters.`,
+      'string.min': `Password must be at least ${MIN_LENGTH_8} characters long.`,
+      'string.max': `Password must be less than or equal to ${MAX_LENGTH_24} characters long.`,
       'string.empty': 'Password is not allowed to be empty.',
     }),
   passwordConfirmation: Joi.string()
@@ -43,12 +43,15 @@ export const registerSchema = Joi.object({
     'array.min': 'Please select at least one option.',
   }),
   username: Joi.string()
+    .alphanum()
     .min(MIN_LENGTH_6)
-    .max(MAX_LENGTH_255)
+    .max(MAX_LENGTH_24)
     .required()
     .messages({
-      'string.max': `Username must be between ${MIN_LENGTH_6} and ${MAX_LENGTH_255} characters.`,
+      'string.min': `Username must be at least ${MIN_LENGTH_6} characters long.`,
+      'string.max': `Username must be less than or equal to ${MAX_LENGTH_24} characters long.`,
       'string.empty': 'Username is not allowed to be empty.',
+      'string.alphanum': 'Username must only contain alpha-numeric characters.',
     }),
 })
 

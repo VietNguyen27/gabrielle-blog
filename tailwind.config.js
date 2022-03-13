@@ -68,15 +68,8 @@ module.exports = {
       },
       height: {
         header: 'var(--header-height)',
-        'header-sticky': 'var(--header-sticky-height)',
-        footer: 'var(--footer-height)',
         checkbox: 'var(--checkbox-size)',
         'switch-toggle': 'var(--switch-toggle-size)',
-      },
-      minHeight: {
-        header: 'var(--header-height)',
-        'header-sticky': 'var(--header-sticky-height)',
-        footer: 'var(--footer-height)',
       },
       zIndex: {
         negative: 'var(--z-negative)',

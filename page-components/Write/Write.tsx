@@ -1,11 +1,6 @@
 import React, { useState } from 'react'
 import { Container } from '@components/Layout'
-import {
-  Button,
-  EButtonAs,
-  EButtonRounded,
-  EButtonVariants,
-} from '@components/Button'
+import { Button, EButtonAs, EButtonVariants } from '@components/Button'
 import { topics } from '@page-components/Auth/data'
 import { Textarea } from '@components/Textarea'
 import { Select } from '@components/Select'

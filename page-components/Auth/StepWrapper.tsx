@@ -1,11 +1,6 @@
 import React, { ReactNode } from 'react'
 import { CheckIcon } from '@heroicons/react/solid'
-import {
-  Button,
-  EButtonRounded,
-  EButtonSizes,
-  EButtonTypes,
-} from '@components/Button'
+import { Button, EButtonTypes } from '@components/Button'
 import { useLoading } from '@lib/store'
 
 type TStepWrapperProps = {
