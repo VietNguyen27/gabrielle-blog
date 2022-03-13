@@ -141,6 +141,15 @@ main {
   background-color: var(--scrollbar-hover);
 }
 
+/* Remove annoying div element, dont know where it came from */
+#__next-build-watcher {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  user-select: none !important;
+  pointer-events: none !important;
+}
+
 @media screen and (min-width: 968px) {
   :root {
     --ratio: 1;

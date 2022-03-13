@@ -78,7 +78,7 @@ const HintThree = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="p-2">&gt; quoted text</td>
+                    <td className="p-2">| quoted text</td>
                     <td className="p-2">
                       <span className="border-0 border-l-2 border-solid pl-2">
                         quoted text
