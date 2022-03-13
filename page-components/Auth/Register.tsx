@@ -160,7 +160,6 @@ const Register = () => {
         mutate({ user: response.user }, false)
         resetError()
       } catch (error: any) {
-        console.log(error)
         setError(getErrorFromJoiMessage(error))
       } finally {
         toggleLoading(false)
