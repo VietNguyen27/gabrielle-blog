@@ -195,7 +195,6 @@ const Select = ({
                 ref={inputRef}
                 value={inputValue}
                 onFocus={() => setShowOptions(true)}
-                onBlur={() => setShowOptions(false)}
                 {...(autoFill && {
                   onChange: handleFilter,
                   onKeyDown: handleFill,

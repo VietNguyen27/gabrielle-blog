@@ -2,13 +2,17 @@ import React, { useRef } from 'react'
 import Toolbar from './Toolbar'
 import ContentBox from './ContentBox'
 
-const RichEditor = () => {
-  const contentRef = useRef(null)
+type TRichEditorProps = {
+  content: any
+}
+
+const RichEditor = ({ content }: TRichEditorProps) => {
+  const textareaRef = useRef(null)
 
   return (
     <div className="relative">
-      <Toolbar ref={contentRef} />
-      <ContentBox ref={contentRef} />
+      <Toolbar ref={textareaRef} content={content} />
+      <ContentBox ref={textareaRef} content={content} />
     </div>
   )
 }

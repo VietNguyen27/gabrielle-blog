@@ -26,7 +26,7 @@ const toolbarItems = [
   { label: 'Quote', value: 'quote', icon: QuoteIcon },
   { label: 'Code', value: 'code', icon: CodeIcon },
   { label: 'Code Block', value: 'codeblock', icon: CodeBlockIcon },
-  { label: 'Image', value: 'image', icon: ImageIcon },
+  // { label: 'Image', value: 'image', icon: ImageIcon },
   { label: 'Underline', value: 'underline', icon: UnderlineIcon },
   { label: 'Strikethrough', value: 'strike', icon: StrikeIcon },
   { label: 'Line divider', value: 'divider', icon: DividerIcon },
@@ -51,21 +51,21 @@ const toolbarItemOptions = {
     syntax: '*.&nbsp;',
   },
   heading: {
-    syntax: '#.&nbsp;',
+    syntax: '## &nbsp;',
   },
   quote: {
-    syntax: '>.&nbsp;',
+    syntax: '| &nbsp;',
   },
   code: {
     syntax: '`',
     insertBetween: true,
   },
   codeblock: {
-    syntax: '<div>```</div>',
+    syntax: '<div><br>```</div>',
     insertBetween: true,
   },
   underline: {
-    syntax: '_',
+    syntax: '__',
     insertBetween: true,
   },
   strike: {
@@ -73,62 +73,69 @@ const toolbarItemOptions = {
     insertBetween: true,
   },
   divider: {
-    syntax: '<div><br />---<br /></div>',
+    syntax: '<div><br>---</div>',
   },
 }
 
-const Toolbar = forwardRef<HTMLDivElement>((props, ref) => {
-  const onClick = (e) => {
-    const { value } = e.target
-    const options = toolbarItemOptions[value]
+type TToolbarProps = {
+  content: any
+}
 
-    if (ref && 'current' in ref && ref.current) {
-      ref.current.focus()
+const Toolbar = forwardRef<HTMLDivElement, TToolbarProps>(
+  ({ content }, ref) => {
+    const onClick = (e) => {
+      const { value } = e.target
+      const options = toolbarItemOptions[value]
 
-      if (options) {
-        const { syntax, insertBetween = false } = options
+      if (ref && 'current' in ref && ref.current) {
+        ref.current.focus()
 
-        insertHtmlAtCaret(syntax, insertBetween)
+        if (options) {
+          const { syntax, insertBetween = false } = options
+
+          insertHtmlAtCaret(syntax, insertBetween)
+        }
+        content.current = ref.current.innerText
       }
     }
-  }
 
-  return (
-    <div className="sticky -top-6 z-30 mb-4 -ml-8 -mr-8 bg-gray-50 py-1 px-8">
-      <div className="flex flex-wrap items-stretch gap-1">
-        {toolbarItems.map(({ label, value, icon: Icon }, index) => {
-          const className =
-            'focus:outline-indigo-500 rounded p-1.5 hover:bg-indigo-100 hover:fill-tertiary-900 focus:bg-indigo-50 focus:outline-1'
-          if (value === 'image') {
+    return (
+      <div className="sticky -top-6 z-30 mb-4 -ml-8 -mr-8 bg-gray-50 py-1 px-8">
+        <div className="flex flex-wrap items-stretch gap-1">
+          {toolbarItems.map(({ label, value, icon: Icon }, index) => {
+            const className =
+              'focus:outline-indigo-500 rounded p-1.5 hover:bg-indigo-100 hover:fill-tertiary-900 focus:bg-indigo-50 focus:outline-1'
+            if (value === 'image') {
+              return (
+                <Tooltip key={index} message={label}>
+                  <label role="button" className={className}>
+                    <Icon />
+                    <input type="file" className="hidden" />
+                  </label>
+                </Tooltip>
+              )
+            }
+
             return (
               <Tooltip key={index} message={label}>
-                <label role="button" className={className}>
-                  <Icon />
-                  <input type="file" className="hidden" />
-                </label>
+                <Button
+                  key={index}
+                  variant={EButtonVariants.QUATERNARY}
+                  className="p-1.5"
+                  tabIndex={0}
+                  value={value}
+                  aria-label={label}
+                  onClick={onClick}
+                >
+                  <Icon className="pointer-events-none" />
+                </Button>
               </Tooltip>
             )
-          }
-
-          return (
-            <Tooltip key={index} message={label}>
-              <Button
-                key={index}
-                variant={EButtonVariants.QUATERNARY}
-                className="p-1.5"
-                tabIndex={0}
-                value={value}
-                aria-label={label}
-                onClick={onClick}
-              >
-                <Icon className="pointer-events-none" />
-              </Button>
-            </Tooltip>
-          )
-        })}
+          })}
+        </div>
       </div>
-    </div>
-  )
-})
+    )
+  }
+)
 
 export default Toolbar

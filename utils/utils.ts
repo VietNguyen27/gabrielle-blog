@@ -17,26 +17,40 @@ export const capitalizeFirstLetter = (string: string): string => {
 }
 
 export const insertHtmlAtCaret = (text, insertBetween = false) => {
-  let selection, range
+  let selection, selectedText, range
 
   if (window.getSelection) {
     selection = window.getSelection()
+
+    const { anchorNode, anchorOffset, extentOffset } = selection
+
+    if (anchorNode.data) {
+      selectedText = anchorNode.data.substring(anchorOffset, extentOffset)
+    }
 
     if (selection.getRangeAt && selection.rangeCount) {
       range = selection.getRangeAt(0)
       range.deleteContents()
 
-      let startElement = document.createElement('div')
-      let endElement = document.createElement('div')
+      const startElement = document.createElement('div')
+      const middleElement = document.createElement('div')
+      const endElement = document.createElement('div')
       startElement.innerHTML = text
+      middleElement.innerHTML = selectedText
       endElement.innerHTML = text
-      let frag = document.createDocumentFragment(),
-        startNode,
-        endNode,
-        lastNode
+      let frag = document.createDocumentFragment()
+      let startNode
+      let middleNode
+      let endNode
+      let lastNode
 
       startNode = startElement.firstChild
       lastNode = frag.appendChild(startNode)
+
+      if (selectedText) {
+        middleNode = middleElement.firstChild
+        lastNode = frag.appendChild(middleNode)
+      }
 
       if (insertBetween) {
         endNode = endElement.firstChild
@@ -47,7 +61,7 @@ export const insertHtmlAtCaret = (text, insertBetween = false) => {
 
       if (lastNode) {
         range = range.cloneRange()
-        range.setStartAfter(startNode)
+        range.setStartAfter(selectedText ? middleNode : startNode)
         range.collapse(true)
         selection.removeAllRanges()
         selection.addRange(range)
@@ -110,4 +124,23 @@ export const getFormattedDate = (date: Date): string => {
   const year = newDate.getFullYear()
 
   return `${day} ${monthName}, ${year}`
+}
+
+export const encodeHtml = (string: string): string => {
+  return string
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/\x3C/g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
+export const decodeHtml = (string: string): string => {
+  return string
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
 }

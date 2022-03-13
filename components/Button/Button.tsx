@@ -28,6 +28,7 @@ type TBaseProps = {
   type?: EButtonTypes
   fluid?: boolean
   loading?: boolean
+  loadingBackground?: string
   className?: string
   prefix?: ReactNode
   suffix?: ReactNode
@@ -57,6 +58,7 @@ const Button = ({
   type = EButtonTypes.BUTTON,
   fluid,
   loading,
+  loadingBackground = 'bg-primary-900',
   className,
   prefix,
   suffix,
@@ -146,7 +148,7 @@ const Button = ({
       {prefix && prefix}
       {children}
       {suffix && suffix}
-      {loading && <Loading className="bg-primary-900" />}
+      {loading && <Loading className={loadingBackground} />}
     </button>
   )
 }

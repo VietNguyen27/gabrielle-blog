@@ -18,6 +18,7 @@ type TTabProps = {
   className?: string
   label: string
   ref?: any
+  onChange?: () => void
 }
 
 type TTabLabelProps = {
@@ -71,6 +72,9 @@ export const Tabs = ({
               isActive={child.props.label === activeTab}
               className={labelClassName}
               onClick={() => {
+                if (child.props.onChange) {
+                  child.props.onChange()
+                }
                 changeTab(child.props.label)
               }}
             >

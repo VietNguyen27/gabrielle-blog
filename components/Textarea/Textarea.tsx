@@ -8,6 +8,7 @@ type TTextareaProps = {
   className?: string
   maxLength?: number
   readOnly?: boolean
+  contentRef?: any
 }
 
 const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
@@ -16,6 +17,7 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
       placeholder = 'Type something here',
       className,
       maxLength = MAX_LENGTH,
+      contentRef,
       ...rest
     },
     ref
@@ -49,7 +51,16 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
     }
 
     const onKeyUp = (e) => {
+      const SPACEBAR_CODE = 32
       const placeholderEl = placeholderRef.current
+
+      if (e.keyCode === SPACEBAR_CODE && placeholderEl) {
+        ;(placeholderEl as HTMLSpanElement).textContent = ''
+      }
+
+      if (contentRef && e.key !== 'Enter') {
+        contentRef.current = e.target.innerText
+      }
 
       if (placeholderEl && (e.key === 'Backspace' || e.key === 'Delete')) {
         const isEmpty = !e.target.textContent.trim()
