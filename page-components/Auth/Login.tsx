@@ -100,7 +100,7 @@ const Login = () => {
     <>
       <Header />
       <main className="flex h-full items-center justify-center py-14 px-4">
-        <div className="flex flex-col items-stretch pt-8 text-center">
+        <div className="-mt-8 flex flex-col items-stretch text-center">
           <h1 className="text-3xl font-bold">Welcome back!</h1>
           <p className="px-4 pt-2 pb-6">
             Sign in to get the most out of Gabrielle.
