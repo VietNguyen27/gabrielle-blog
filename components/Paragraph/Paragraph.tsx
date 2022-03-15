@@ -7,7 +7,7 @@ type TParagraphProps = {
 }
 
 const Paragraph = ({ children, className }: TParagraphProps) => {
-  const defaultClassName = 'mb-3'
+  const defaultClassName = 'mb-4'
   const allClassNames = clsx(defaultClassName, className)
 
   return <p className={allClassNames}>{children}</p>

@@ -34,7 +34,7 @@ const HintThree = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="p-2">*italics* or _italics_</td>
+                    <td className="p-2">_italics_</td>
                     <td className="p-2">
                       <span className="italic">italics</span>
                     </td>
@@ -67,8 +67,9 @@ const HintThree = () => {
                   </tr>
                   <tr>
                     <td className="p-2">
-                      1 item 1
-                      <br />2 item 2
+                      1. item 1
+                      <br />
+                      2. item 2
                     </td>
                     <td className="p-2">
                       <ol type="1" className="list-decimal pl-5">
@@ -108,6 +109,18 @@ const HintThree = () => {
                       <div className="overflow-hidden rounded-md bg-gray-900 p-2 text-xs text-white">
                         <code>code block</code>
                       </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">__underlined__</td>
+                    <td className="p-2">
+                      <u>underlined</u>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">~~strikethrough~~</td>
+                    <td className="p-2">
+                      <del>strikethrough</del>
                     </td>
                   </tr>
                 </tbody>

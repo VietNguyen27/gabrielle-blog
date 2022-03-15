@@ -144,3 +144,44 @@ export const decodeHtml = (string: string): string => {
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, "'")
 }
+
+export const parseMarkdown = (markdownText: string): string => {
+  const htmlText = markdownText
+    .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
+    .replace(
+      /\[(.*?)\]\((.*?)\)/gim,
+      "<a class='markdown-link' href='$2'>$1</a>"
+    )
+    .replace(/^\s*\n\*/gm, "<ul class='markdown-ul'>\n*")
+    .replace(/^(\*.+)\s*\n([^\*])/gm, '$1\n</ul>\n\n$2')
+    .replace(/^\*(.+)/gm, '<li>$1</li>')
+    .replace(/^\s*\n\d\./gm, "<ol class='markdown-ol'>\n1.")
+    .replace(/^(\d\..+)\s*\n([^\d\.])/gm, '$1\n</ol>\n\n$2')
+    .replace(/^\d\.(.+)/gm, '<li>$1</li>')
+    .replace(/^###### (.*$)/gim, "<h6 class='font-bold text-lg'>$1</h6>")
+    .replace(/^##### (.*$)/gim, "<h5 class='font-bold text-lg'>$1</h5>")
+    .replace(/^#### (.*$)/gim, "<h4 class='font-bold text-xl'>$1</h4>")
+    .replace(/^### (.*$)/gim, "<h3 class='font-bold text-2xl'>$1</h3>")
+    .replace(/^## (.*$)/gim, "<h2 class='font-bold text-3xl'>$1</h2>")
+    .replace(/^# (.*$)/gim, "<h1 class='font-bold text-4xl'>$1</h1>")
+    .replace(
+      /^\| (.*$)/gim,
+      "<blockquote class='markdown-quote'>$1</blockquote>"
+    )
+    .replace(
+      /```\s*([^]+?.*?[^]+?[^]+?)```/g,
+      "<div class='markdown-codeblock'><pre><code>$1</code></pre></div>"
+    )
+    .replace(/\`(.*)\`/gim, "<code class='markdown-code'>$1</code>")
+    .replace(/\_\_(.*)\_\_/gim, '<u>$1</u>')
+    .replace(/\~\~(.*)\~\~/gim, '<del>$1</del>')
+    .replace(/\-\-\-/gim, "<hr class='markdown-divider'>")
+    .replace(/\_(.*)\_/gim, '<i>$1</i>')
+    .replace(/^\s*(\n)?(.+)/gm, function (markdown) {
+      return /\<(\/)?(h\d|ul|ol|li|blockquote|pre|img)/.test(markdown)
+        ? markdown
+        : '<p>' + markdown + '</p>'
+    })
+
+  return htmlText.trim()
+}

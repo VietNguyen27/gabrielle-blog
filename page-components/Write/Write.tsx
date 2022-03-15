@@ -15,8 +15,8 @@ import { RichEditor } from '@components/RichEditor'
 import HintWrapper from './HintWrapper'
 import { useForm } from 'react-hook-form'
 import { Form } from '@components/Form'
-import { decodeHtml, encodeHtml } from '@utils/utils'
-import { Paragraph } from '@components/Paragraph'
+import { encodeHtml, parseMarkdown } from '@utils/utils'
+import DOMPurify from 'dompurify'
 import Link from 'next/link'
 
 const Title = ({ setValue }) => {
@@ -108,52 +108,50 @@ const Write = () => {
 
   return (
     <main>
-      <Container>
-        <Tabs>
-          <Tab label="Edit" className="flex items-stretch pb-8">
+      <Container className="flex flex-1 flex-col">
+        <Tabs className="flex-1">
+          <Tab label="Edit" className="flex flex-1 items-stretch pb-8">
             <div className="hidden w-16 lg:block"></div>
-            <div className="w-full lg:w-2/3">
-              <Form onSubmit={() => setSaving(true)}>
-                <div className="relative max-h-[523px] overflow-auto rounded-md border border-gray-300 px-12 py-6 shadow">
-                  <Button
-                    buttonAs={EButtonAs.LABEL}
-                    variant={EButtonVariants.SECONDARY}
-                    className="rounded-lg px-5 py-2"
+            <Form className="w-full lg:w-2/3" onSubmit={() => setSaving(true)}>
+              <div className="relative h-[calc(100vh-235px)] overflow-auto rounded-md border border-gray-300 px-12 py-6 shadow">
+                <Button
+                  buttonAs={EButtonAs.LABEL}
+                  variant={EButtonVariants.SECONDARY}
+                  className="rounded-lg px-5 py-2"
+                >
+                  Add a cover image
+                  <input type="file" className="hidden" />
+                </Button>
+                {writeSections.map((Component, index) => (
+                  <div
+                    key={index}
+                    tabIndex={-1}
+                    onFocus={(e) => {
+                      setHint(index)
+                      setHintPosition(e, index)
+                    }}
                   >
-                    Add a cover image
-                    <input type="file" className="hidden" />
-                  </Button>
-                  {writeSections.map((Component, index) => (
-                    <div
-                      key={index}
-                      tabIndex={-1}
-                      onFocus={(e) => {
-                        setHint(index)
-                        setHintPosition(e, index)
-                      }}
-                    >
-                      <Component setValue={setValue} />
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-6 flex items-center justify-between gap-4">
-                  <Button
-                    type={saving ? EButtonTypes.BUTTON : EButtonTypes.SUBMIT}
-                    variant={EButtonVariants.TERTIARY}
-                    className="rounded-md px-3.5 py-2"
-                    loading={saving}
-                    loadingBackground="bg-tertiary-900"
-                  >
-                    Create
-                  </Button>
-                  <Switch
-                    label="Published?"
-                    active={published}
-                    toggle={() => setPublished((prevState) => !prevState)}
-                  />
-                </div>
-              </Form>
-            </div>
+                    <Component setValue={setValue} />
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex items-center justify-between gap-4">
+                <Button
+                  type={saving ? EButtonTypes.BUTTON : EButtonTypes.SUBMIT}
+                  variant={EButtonVariants.TERTIARY}
+                  className="rounded-md px-3.5 py-2"
+                  loading={saving}
+                  loadingBackground="bg-tertiary-900"
+                >
+                  Create
+                </Button>
+                <Switch
+                  label="Published?"
+                  active={published}
+                  toggle={() => setPublished((prevState) => !prevState)}
+                />
+              </div>
+            </Form>
             <div className="hidden w-1/3 px-4 lg:block">
               {typeof hint === 'number' && (
                 <HintWrapper hint={hint} top={topOffset} />
@@ -162,14 +160,14 @@ const Write = () => {
           </Tab>
           <Tab
             label="Preview"
-            className="flex items-stretch pb-8"
+            className="flex flex-1 items-stretch pb-8"
             onChange={() => setSaving(true)}
           >
             <div className="hidden w-16 lg:block"></div>
             <div className="w-full lg:w-2/3">
-              <div className="relative max-h-[523px] min-h-[523px] overflow-auto rounded-md border border-gray-300 px-12 py-6 shadow">
+              <div className="relative h-[calc(100vh-235px)] overflow-auto rounded-md border border-gray-300 px-12 py-6 shadow">
                 {post && post.title && (
-                  <h1 className="mb-2 text-4xl font-bold">{post.title}</h1>
+                  <h1 className="mb-2 text-5xl font-bold">{post.title}</h1>
                 )}
                 {post && post.topic && (
                   <div>
@@ -182,9 +180,12 @@ const Write = () => {
                 )}
                 {post && post.content && (
                   <div className="mt-8 text-lg">
-                    {post.content.split('\n').map((paragraph) => (
-                      <Paragraph>{decodeHtml(paragraph)}</Paragraph>
-                    ))}
+                    <div
+                      className="markdown-container"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(parseMarkdown(post.content)),
+                      }}
+                    ></div>
                   </div>
                 )}
               </div>
