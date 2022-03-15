@@ -48,20 +48,20 @@ const toolbarItemOptions = {
     syntax: '1.&nbsp;',
   },
   ul: {
-    syntax: '*.&nbsp;',
+    syntax: '*&nbsp;',
   },
   heading: {
-    syntax: '## &nbsp;',
+    syntax: '##&nbsp;',
   },
   quote: {
-    syntax: '| &nbsp;',
+    syntax: '|&nbsp;',
   },
   code: {
     syntax: '`',
     insertBetween: true,
   },
   codeblock: {
-    syntax: '<div><br>```</div>',
+    syntax: '<div>```</div>',
     insertBetween: true,
   },
   underline: {
