@@ -12,4 +12,4 @@ export const extractUser = (user) => {
   }
 }
 
-export const slugUsername = (username) => slug(username, '_')
+export const slugUsername = (username) => slug(username, '-')
