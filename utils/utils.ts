@@ -164,10 +164,7 @@ export const parseMarkdown = (markdownText: string): string => {
     .replace(/[\#]{3} (.+)/g, "<h3 class='font-bold text-2xl'>$1</h3>")
     .replace(/[\#]{2} (.+)/g, "<h2 class='font-bold text-3xl'>$1</h2>")
     .replace(/[\#]{1} (.+)/g, "<h1 class='font-bold text-4xl'>$1</h1>")
-    .replace(
-      /^\| (.*$)/gim,
-      "<blockquote class='markdown-quote'>$1</blockquote>"
-    )
+    .replace(/^\| (.+)/gm, "<blockquote class='markdown-quote'>$1</blockquote>")
     .replace(
       /```\s*([^]+?.*?[^]+?[^]+?)```/g,
       "<div class='markdown-codeblock'><pre><code>$1</code></pre></div>"
