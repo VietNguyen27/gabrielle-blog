@@ -68,18 +68,13 @@ const Write = () => {
     }
   }
 
-  const onAvatarChange = useCallback(
+  const onCoverChange = useCallback(
     (e) => {
       const file = e.currentTarget.files?.[0]
       if (!file) return
       const reader = new FileReader()
-      reader.onload = async (file: any) => {
-        const imageResize = await resizeImage(
-          file.currentTarget.result,
-          1000,
-          400
-        )
-        setCover(imageResize)
+      reader.onload = (file: any) => {
+        setCover(file.currentTarget.result)
       }
       reader.readAsDataURL(file)
     },
@@ -100,8 +95,8 @@ const Write = () => {
 
   const onSubmit = useCallback(async (data) => {
     const { title, topic, content: contentUnsafe } = data
-    const AVERAGE_WPM = 250
-    const readingTime = Math.ceil(contentUnsafe.length / AVERAGE_WPM)
+    const AVERAGE_CPM = 1000
+    const readingTime = Math.ceil(contentUnsafe.length / AVERAGE_CPM)
     const content = encodeHtml(contentUnsafe)
 
     setPost({
@@ -112,21 +107,26 @@ const Write = () => {
 
     try {
       toggleLoading(true)
+
+      const formData = new FormData()
+
+      formData.append('title', title)
+      formData.append('topic', JSON.stringify(topic))
+      formData.append('content', content)
+      formData.append('contentUnsafe', contentUnsafe)
+      formData.append('readingTime', String(readingTime))
+      formData.append('published', String(published))
+
+      if ((coverRef.current as any).files[0]) {
+        formData.append('cover', (coverRef.current as any).files[0])
+      }
+
       const { insertedId } = await fetcher('/api/posts', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          topic,
-          cover,
-          content,
-          contentUnsafe,
-          readingTime,
-          published,
-        }),
+        body: formData,
       })
       router.push({
-        pathname: `/${user.username}/post/${insertedId}}`,
+        pathname: `/${user.username}/post/${insertedId}`,
       })
       resetError()
     } catch (error: any) {
@@ -182,7 +182,7 @@ const Write = () => {
                         className="hidden"
                         accept="image/*"
                         ref={coverRef}
-                        onChange={onAvatarChange}
+                        onChange={onCoverChange}
                       />
                     </Button>
                   </div>

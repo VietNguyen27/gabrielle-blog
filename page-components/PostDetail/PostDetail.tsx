@@ -33,6 +33,7 @@ const PostDetail = ({
   content,
   cover,
   creator,
+  readingTime,
   likesCount,
   bookmarksCount,
   createdAt,
@@ -84,8 +85,10 @@ const PostDetail = ({
                   />
                   <div className="flex flex-col">
                     <div className="text-lg font-bold">{creator.username}</div>
-                    <div className="text-sm">
-                      Posted on {getFormattedDate(createdAt)}
+                    <div className="flex items-center gap-1.5 text-sm">
+                      <span>Posted on {getFormattedDate(createdAt)}</span>
+                      <span className="h-1 w-1 rounded-full bg-gray-800"></span>
+                      <span>{readingTime} min read</span>
                     </div>
                   </div>
                 </div>
