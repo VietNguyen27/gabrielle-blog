@@ -23,10 +23,7 @@ export const postSchema = Joi.object({
   topic: Joi.array().min(1).required().messages({
     'array.min': 'Please at least one topic.',
   }),
-  cover: Joi.string().required().messages({
-    'string.empty': 'Please choose cover photo.',
-  }),
-  content: Joi.string()
+  contentUnsafe: Joi.string()
     .min(MIN_LENGTH_8)
     .max(MAX_LENGTH_10000)
     .required()

@@ -25,6 +25,7 @@ type TMenuProps = {
   children: ReactChild | ReactChildren | ReactChild[] | ReactChildren[]
   open?: boolean
   className?: string
+  position?: string
 }
 
 type TMenuItemBaseProps = {
@@ -62,7 +63,11 @@ export const Dropdown = ({ children, overlay, className }: TDropdownProps) => {
   return (
     <div className={allClassNames} ref={dropdownRef}>
       {React.cloneElement(children, { onClick: onToggle })}
-      <Menu className={overlay.props.className} open={open}>
+      <Menu
+        className={overlay.props.className}
+        position={overlay.props.position}
+        open={open}
+      >
         {overlay.props.children.map((menuItem, index) => (
           <Fragment key={index}>
             {React.cloneElement(menuItem, { onClose })}
@@ -73,10 +78,15 @@ export const Dropdown = ({ children, overlay, className }: TDropdownProps) => {
   )
 }
 
-export const Menu = ({ children, open, className }: TMenuProps) => {
+export const Menu = ({
+  children,
+  open,
+  className,
+  position = 'top-full right-0',
+}: TMenuProps) => {
   const defaultClassName =
-    'absolute top-full min-w-[200px] right-0 bg-white p-2 mt-1 shadow-md border border-gray-200 rounded-md overflow-hidden'
-  const allClassNames = clsx(defaultClassName, className)
+    'absolute min-w-[200px] bg-white p-2 mt-1 shadow-md border border-gray-200 rounded-md overflow-hidden'
+  const allClassNames = clsx(defaultClassName, className, position)
 
   return open ? <ul className={allClassNames}>{children}</ul> : <></>
 }
@@ -92,7 +102,7 @@ export const MenuItem = ({
   ...rest
 }: TMenuItemProps) => {
   const defaultClassName =
-    'text-left font-medium px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-tertiary-900 active:bg-indigo-100'
+    'flex justify-between items-center text-left font-medium px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-tertiary-900 active:bg-indigo-100'
   const allClassNames = clsx(defaultClassName, className)
 
   if (rest.menuItemAs === EMenuItemAs.LINK) {

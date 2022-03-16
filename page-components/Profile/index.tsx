@@ -12,6 +12,7 @@ import {
 import { getFormattedDate } from '@utils/utils'
 import { useCurrentUser } from '@lib/user'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
+import { ImageRatio } from '@components/ImageRatio'
 
 const Profile = ({
   username,
@@ -38,18 +39,14 @@ const Profile = ({
           <div className="flex -translate-y-12 flex-col items-stretch">
             <div className="mb-4 flex flex-col items-stretch rounded-md border border-gray-200 bg-white shadow-sm">
               <div className="relative p-6">
-                <div
-                  className="absolute left-6 top-0 h-[60px] w-[60px] -translate-y-1/2 overflow-hidden rounded-full bg-white outline outline-4 md:left-1/2 md:h-[120px] md:w-[120px] md:-translate-x-1/2 md:outline-8"
+                <ImageRatio
+                  className="absolute left-6 top-0 w-[60px] -translate-y-1/2 rounded-full bg-white outline outline-4 md:left-1/2 md:w-[120px] md:-translate-x-1/2 md:outline-8"
                   style={{ outlineColor: backdrop }}
-                >
-                  <img
-                    className="absolute top-0 left-0 h-full w-full object-cover"
-                    src={profilePicture}
-                    alt={`${username} profile picture`}
-                  />
-                </div>
+                  src={profilePicture}
+                  alt={`${username} profile picture`}
+                />
                 <div className="flex justify-end gap-2">
-                  {user ? (
+                  {user && user.username === username ? (
                     <Button
                       href="/settings"
                       buttonAs={EButtonAs.LINK}

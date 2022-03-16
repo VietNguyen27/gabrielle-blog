@@ -13,21 +13,19 @@ handler.post(
       return res.status(401).end()
     }
 
-    const { cover, title, slug, content, topic, readingTime, published } =
-      req.body
+    const { cover, title, content, topic, readingTime, published } = req.body
 
-    await insertPost(req.db, {
+    const insertedId = await insertPost(req.db, {
       creatorId: req.user._id,
       cover,
       title,
-      slug,
       content,
       topic,
       readingTime,
       published,
     })
 
-    return res.json({ slug })
+    return res.json({ insertedId })
   })
 )
 

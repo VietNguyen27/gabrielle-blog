@@ -158,12 +158,12 @@ export const parseMarkdown = (markdownText: string): string => {
     .replace(/^\s*\n\d\./gm, "<ol class='markdown-ol'>\n1.")
     .replace(/^(\d\..+)\s*\n([^\d\.])/gm, '$1\n</ol>\n\n$2')
     .replace(/^\d\.(.+)/gm, '<li>$1</li>')
-    .replace(/^###### (.*$)/gim, "<h6 class='font-bold text-lg'>$1</h6>")
-    .replace(/^##### (.*$)/gim, "<h5 class='font-bold text-lg'>$1</h5>")
-    .replace(/^#### (.*$)/gim, "<h4 class='font-bold text-xl'>$1</h4>")
-    .replace(/^### (.*$)/gim, "<h3 class='font-bold text-2xl'>$1</h3>")
-    .replace(/^## (.*$)/gim, "<h2 class='font-bold text-3xl'>$1</h2>")
-    .replace(/^# (.*$)/gim, "<h1 class='font-bold text-4xl'>$1</h1>")
+    .replace(/[\#]{6} (.+)/g, "<h6 class='font-bold text-lg'>$1</h6>")
+    .replace(/[\#]{5} (.+)/g, "<h5 class='font-bold text-lg'>$1</h5>")
+    .replace(/[\#]{4} (.+)/g, "<h4 class='font-bold text-xl'>$1</h4>")
+    .replace(/[\#]{3} (.+)/g, "<h3 class='font-bold text-2xl'>$1</h3>")
+    .replace(/[\#]{2} (.+)/g, "<h2 class='font-bold text-3xl'>$1</h2>")
+    .replace(/[\#]{1} (.+)/g, "<h1 class='font-bold text-4xl'>$1</h1>")
     .replace(
       /^\| (.*$)/gim,
       "<blockquote class='markdown-quote'>$1</blockquote>"
