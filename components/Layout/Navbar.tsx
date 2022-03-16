@@ -15,7 +15,7 @@ import {
   MenuDivider,
   MenuItem,
 } from '@components/Dropdown'
-import Link from 'next/link'
+import { ImageRatio } from '@components/ImageRatio'
 
 type TMenuToggle = {
   active: boolean
@@ -107,8 +107,10 @@ const MenuDropdown = ({ username, email }, onLogOut) => {
   return (
     <Menu className="w-[250px]">
       <MenuItem href={`/${username}`} menuItemAs={EMenuItemAs.LINK}>
-        <p className="font-semibold line-clamp-1">{username}</p>
-        <span className="text-sm line-clamp-1">{email}</span>
+        <div className="flex flex-col">
+          <p className="font-semibold line-clamp-1">{username}</p>
+          <span className="text-sm line-clamp-1">{email}</span>
+        </div>
       </MenuItem>
       <MenuDivider />
       <MenuItem href="/write" menuItemAs={EMenuItemAs.LINK}>
@@ -161,6 +163,7 @@ const Navbar = () => {
             <Button
               href="/register"
               buttonAs={EButtonAs.LINK}
+              target="_blank"
               className="rounded-3xl px-4 py-2"
             >
               Get in touch
@@ -187,12 +190,10 @@ const Navbar = () => {
                 variant={EButtonVariants.QUATERNARY}
                 className="rounded-full p-1"
               >
-                <span className="relative h-8 w-8 overflow-hidden rounded-full outline outline-2 outline-gray-200">
-                  <img
-                    src={user.profilePicture}
-                    className="absolute top-0 left-0 h-full w-full object-cover"
-                  />
-                </span>
+                <ImageRatio
+                  className="w-8 rounded-full outline outline-2 outline-gray-200"
+                  src={user.profilePicture}
+                />
               </Button>
             </Dropdown>
           </li>

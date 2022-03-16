@@ -6,12 +6,8 @@ import {
   EButtonTypes,
   EButtonVariants,
 } from '@components/Button'
-import { topics } from '@page-components/Auth/data'
-import { Textarea } from '@components/Textarea'
-import { Select } from '@components/Select'
 import { Switch } from '@components/Switch'
 import { Tab, Tabs } from '@components/Tabs'
-import { RichEditor } from '@components/RichEditor'
 import HintWrapper from './HintWrapper'
 import { useForm } from 'react-hook-form'
 import { Form } from '@components/Form'
@@ -23,58 +19,14 @@ import {
 } from '@utils/utils'
 import DOMPurify from 'dompurify'
 import Link from 'next/link'
+import Title from './Title'
+import Topic from './Topic'
+import TextEditor from './TextEditor'
 import { fetcher } from '@lib/fetcher'
 import { useError, useLoading } from '@lib/store'
-import { slugPostTitle } from '@lib/post'
-
-const Title = ({ setValue }) => {
-  const title = useRef<any>(null)
-
-  useEffect(() => {
-    setValue('title', title.current || '')
-  }, [title.current])
-
-  return (
-    <div className="my-4">
-      <Textarea
-        className="text-4xl font-bold"
-        placeholder="New post title here"
-        contentRef={title}
-      />
-    </div>
-  )
-}
-
-const Topic = ({ setValue }) => {
-  const [topic, setTopic] = useState([])
-
-  useEffect(() => {
-    setValue('topic', topic || '')
-  }, [topic])
-
-  return (
-    <Select
-      title="Top topics"
-      options={topics}
-      placeholder="Select topics..."
-      selectedOptions={topic}
-      maxHeight={270}
-      onChange={setTopic}
-      maxOptions={4}
-      multiple
-    />
-  )
-}
-
-const TextEditor = ({ setValue }) => {
-  const content = useRef<any>(null)
-
-  useEffect(() => {
-    setValue('content', content.current || '')
-  }, [content.current])
-
-  return <RichEditor content={content} />
-}
+import { ImageRatio } from '@components/ImageRatio'
+import { useCurrentUser } from '@lib/user'
+import { useRouter } from 'next/router'
 
 const writeSections = [Title, Topic, TextEditor]
 
@@ -90,6 +42,8 @@ const Write = () => {
   const { setValue, handleSubmit } = useForm()
   const { toggleLoading } = useLoading()
   const { error, setError, resetError } = useError()
+  const { data: { user } = {} } = useCurrentUser()
+  const router = useRouter()
 
   useEffect(() => {
     if (changeTab) {
@@ -114,20 +68,23 @@ const Write = () => {
     }
   }
 
-  const onAvatarChange = useCallback((e) => {
-    const file = e.currentTarget.files?.[0]
-    if (!file) return
-    const reader = new FileReader()
-    reader.onload = async (file: any) => {
-      const imageResize = await resizeImage(
-        file.currentTarget.result,
-        1000,
-        400
-      )
-      setCover(imageResize)
-    }
-    reader.readAsDataURL(file)
-  }, [])
+  const onAvatarChange = useCallback(
+    (e) => {
+      const file = e.currentTarget.files?.[0]
+      if (!file) return
+      const reader = new FileReader()
+      reader.onload = async (file: any) => {
+        const imageResize = await resizeImage(
+          file.currentTarget.result,
+          1000,
+          400
+        )
+        setCover(imageResize)
+      }
+      reader.readAsDataURL(file)
+    },
+    [cover]
+  )
 
   const onChangeTab = (data) => {
     const { title, topic, content: contentUnsafe } = data
@@ -145,7 +102,6 @@ const Write = () => {
     const { title, topic, content: contentUnsafe } = data
     const AVERAGE_WPM = 250
     const readingTime = Math.ceil(contentUnsafe.length / AVERAGE_WPM)
-    const slug = slugPostTitle(title)
     const content = encodeHtml(contentUnsafe)
 
     setPost({
@@ -156,18 +112,21 @@ const Write = () => {
 
     try {
       toggleLoading(true)
-      await fetcher('/api/posts', {
+      const { insertedId } = await fetcher('/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title,
           topic,
-          slug,
           cover,
           content,
+          contentUnsafe,
           readingTime,
           published,
         }),
+      })
+      router.push({
+        pathname: `/${user.username}/post/${insertedId}}`,
       })
       resetError()
     } catch (error: any) {
@@ -179,9 +138,9 @@ const Write = () => {
 
   return (
     <main>
-      <Container className="flex flex-1 flex-col">
-        <Tabs className="flex-1">
-          <Tab label="Edit" className="flex flex-1 items-stretch pb-8">
+      <Container>
+        <Tabs>
+          <Tab label="Edit" className="flex items-stretch pb-8">
             <div className="hidden w-16 lg:block"></div>
             <Form className="w-full lg:w-2/3" onSubmit={() => setSaving(true)}>
               <div className="relative h-[calc(100vh-235px)] overflow-auto rounded-md border border-gray-300 shadow">
@@ -195,7 +154,8 @@ const Write = () => {
                         const [label, content] = err
                         return (
                           <li key={index}>
-                            {label}: {content}
+                            {label === 'contentUnsafe' ? 'content' : label}:{' '}
+                            {content}
                           </li>
                         )
                       })}
@@ -205,12 +165,11 @@ const Write = () => {
                 <div className="px-12 py-6">
                   <div className="flex items-center gap-4">
                     {cover && (
-                      <div className="relative h-[100px] w-[250px]">
-                        <img
-                          src={cover}
-                          className="absolute top-0 left-0 h-full w-full object-cover"
-                        />
-                      </div>
+                      <ImageRatio
+                        src={cover}
+                        className="w-[250px]"
+                        ratio={2.5}
+                      />
                     )}
                     <Button
                       buttonAs={EButtonAs.LABEL}
@@ -266,20 +225,19 @@ const Write = () => {
           </Tab>
           <Tab
             label="Preview"
-            className="flex flex-1 items-stretch pb-8"
+            className="flex items-stretch pb-8"
             onChange={() => setChangeTab(true)}
           >
             <div className="hidden w-16 lg:block"></div>
             <div className="w-full lg:w-2/3">
               <div className="relative h-[calc(100vh-235px)] overflow-auto rounded-md border border-gray-300 shadow">
                 {cover && (
-                  <div className="relative h-0 w-full pb-[40%]">
-                    <img
-                      src={cover}
-                      alt="Post thumbnail"
-                      className="cover absolute top-0 left-0 h-full w-full"
-                    />
-                  </div>
+                  <ImageRatio
+                    src={cover}
+                    className="w-full"
+                    alt="Post thumbnail"
+                    ratio={2.5}
+                  />
                 )}
                 <div className="px-12 py-6">
                   {post && post.title && (

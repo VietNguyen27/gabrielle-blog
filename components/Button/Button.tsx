@@ -30,6 +30,7 @@ type TBaseProps = {
   loading?: boolean
   loadingBackground?: string
   className?: string
+  target?: string
   prefix?: ReactNode
   suffix?: ReactNode
   onPressEnter?: () => void
@@ -60,6 +61,7 @@ const Button = ({
   loading,
   loadingBackground = 'bg-primary-900',
   className,
+  target = '_self',
   prefix,
   suffix,
   onPressEnter,
@@ -105,7 +107,7 @@ const Button = ({
   if (rest.buttonAs === EButtonAs.LINK) {
     return (
       <Link {...rest}>
-        <a className={allClassNames}>
+        <a className={allClassNames} target={target}>
           {prefix && prefix}
           {children}
           {suffix && suffix}

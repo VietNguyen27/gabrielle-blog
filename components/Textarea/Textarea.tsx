@@ -41,6 +41,19 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
       }
     }, [textContent])
 
+    useEffect(() => {
+      const handlePasteText = (e) => {
+        if (ref && 'current' in ref && ref.current) {
+          e.preventDefault()
+          const text = e.clipboardData.getData('text/plain')
+          document.execCommand('insertHTML', false, text)
+        }
+      }
+
+      window.addEventListener('paste', handlePasteText)
+      return () => window.removeEventListener('paste', handlePasteText)
+    }, [])
+
     const onKeyPress = (e) => {
       const value = e.target.textContent + e.key
       const placeholderEl = placeholderRef.current

@@ -166,6 +166,7 @@ const Select = ({
       onChange([option])
       setShowOptions(false)
     }
+    setInputValue('')
   }
 
   const removeSelect = (index) => {

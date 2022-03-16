@@ -15,18 +15,18 @@ export const positions = [
     name: 'position',
   },
   {
-    value: 'Front-End Development',
-    label: 'Front-End Development',
+    value: 'Front-End Developer',
+    label: 'Front-End Developer',
     name: 'position',
   },
   {
-    value: 'Back-End Development',
-    label: 'Back-End Development',
+    value: 'Back-End Developer',
+    label: 'Back-End Developer',
     name: 'position',
   },
   {
-    value: 'Mobile Development',
-    label: 'Mobile Development',
+    value: 'Mobile Developer',
+    label: 'Mobile Developer',
     name: 'position',
   },
   {

@@ -196,7 +196,7 @@ const Choice = ({
         />
         <span
           className={clsx(
-            'invisible absolute top-1/2 right-[calc(100%-13px)] z-10 hidden h-6 -translate-y-1/2 items-center rounded-tl-sm rounded-bl-sm border border-r-0 border-gray-700 px-1 text-xs font-semibold group-hover:visible md:inline-flex',
+            'invisible absolute top-1/2 right-[calc(100%-13px)] z-10 hidden h-6 -translate-y-1/2 items-center whitespace-nowrap rounded-tl-sm rounded-bl-sm border border-r-0 border-gray-700 px-1 text-xs font-semibold group-hover:visible md:inline-flex',
             isSelected ? 'bg-gray-700 text-white' : 'bg-white'
           )}
         >
@@ -239,7 +239,7 @@ const Choice = ({
         onChange={(e) => handleChange(e.target)}
         className="peer hidden"
       />
-      <span className="invisible absolute top-1/2 right-[calc(100%-13px)] z-10 hidden h-6 -translate-y-1/2 items-center rounded-tl-sm rounded-bl-sm border border-r-0 border-gray-700 bg-white px-1 text-xs font-semibold group-hover:visible peer-checked:bg-gray-700 peer-checked:text-white md:inline-flex">
+      <span className="invisible absolute top-1/2 right-[calc(100%-13px)] z-10 hidden h-6 -translate-y-1/2 items-center whitespace-nowrap rounded-tl-sm rounded-bl-sm border border-r-0 border-gray-700 bg-white px-1 text-xs font-semibold group-hover:visible peer-checked:bg-gray-700 peer-checked:text-white md:inline-flex">
         Key
       </span>
       <span className="relative mr-2 hidden h-6 w-6 flex-shrink-0 items-center justify-center rounded-sm border border-gray-700 bg-white text-xs font-bold peer-checked:bg-gray-700 peer-checked:text-white md:inline-flex">

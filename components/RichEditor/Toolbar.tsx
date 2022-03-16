@@ -51,7 +51,7 @@ const toolbarItemOptions = {
     syntax: '*&nbsp;',
   },
   heading: {
-    syntax: '##&nbsp;',
+    syntax: '## ',
   },
   quote: {
     syntax: '|&nbsp;',
@@ -100,7 +100,7 @@ const Toolbar = forwardRef<HTMLDivElement, TToolbarProps>(
     }
 
     return (
-      <div className="sticky -top-6 z-30 mb-4 -ml-8 -mr-8 bg-gray-50 py-1 px-8">
+      <div className="sticky -top-1 z-30 mb-4 -ml-8 -mr-8 bg-gray-50 py-1 px-8">
         <div className="flex flex-wrap items-stretch gap-1">
           {toolbarItems.map(({ label, value, icon: Icon }, index) => {
             const className =

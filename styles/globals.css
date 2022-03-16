@@ -87,7 +87,7 @@
   --z-modal: 500;
   --z-popover: 500;
 
-  --header-height: 100px;
+  --header-height: 96px;
 }
 
 * {
@@ -195,6 +195,34 @@ main {
 .markdown-divider {
   width: 35%;
   margin: 1.5rem auto;
+}
+
+[style*='--aspect-ratio'] > :first-child {
+  width: 100%;
+}
+
+[style*='--aspect-ratio'] > img {
+  height: auto;
+  object-fit: cover;
+}
+
+@supports (--custom: property) {
+  [style*='--aspect-ratio'] {
+    overflow: hidden;
+  }
+
+  [style*='--aspect-ratio']::before {
+    content: '';
+    display: block;
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+  }
+
+  [style*='--aspect-ratio'] > :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
 }
 
 /* Remove annoying div element, dont know where it came from */
