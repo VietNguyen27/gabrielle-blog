@@ -46,7 +46,7 @@ export async function findPosts(db, by, not, limit = 10) {
       },
       { $unwind: '$creator' },
       {
-        $project: { content: 0, cover: 0, ...dbProjectionCreators('creator.') },
+        $project: { content: 0, ...dbProjectionCreators('creator.') },
       },
     ])
     .toArray()

@@ -102,7 +102,7 @@ export const slowLoading = async (delay = 500): Promise<void> => {
   })
 }
 
-export const getFormattedDate = (date: Date): string => {
+export const getFormattedDate = (date: Date | number): string => {
   const monthNames = [
     'Jan',
     'Feb',

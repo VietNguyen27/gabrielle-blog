@@ -75,6 +75,7 @@ const Write = () => {
       const reader = new FileReader()
       reader.onload = (file: any) => {
         setCover(file.currentTarget.result)
+        setValue('cover', file.currentTarget.result)
       }
       reader.readAsDataURL(file)
     },
@@ -94,7 +95,7 @@ const Write = () => {
   }
 
   const onSubmit = useCallback(async (data) => {
-    const { title, topic, content: contentUnsafe } = data
+    const { title, topic, cover: rawCover, content: contentUnsafe } = data
     const AVERAGE_CPM = 1000
     const readingTime = Math.ceil(contentUnsafe.length / AVERAGE_CPM)
     const content = encodeHtml(contentUnsafe)
@@ -118,6 +119,7 @@ const Write = () => {
       formData.append('published', String(published))
 
       if ((coverRef.current as any).files[0]) {
+        formData.append('rawCover', rawCover)
         formData.append('cover', (coverRef.current as any).files[0])
       }
 
@@ -151,13 +153,8 @@ const Write = () => {
                     </p>
                     <ul className="markdown-ul">
                       {Object.entries(error).map((err, index) => {
-                        const [label, content] = err
-                        return (
-                          <li key={index}>
-                            {label === 'contentUnsafe' ? 'content' : label}:{' '}
-                            {content}
-                          </li>
-                        )
+                        const [_, content]: any = err
+                        return <li key={index}>{content}</li>
                       })}
                     </ul>
                   </div>
