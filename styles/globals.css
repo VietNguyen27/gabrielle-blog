@@ -49,6 +49,10 @@
   --secondary-900: #ff7a52;
   --tertiary-500: #0256db;
   --tertiary-900: #0063ff;
+  --success-100: #dcfce7;
+  --success-900: #16a34a;
+  --error-100: #fee2e2;
+  --error-900: #dc2626;
   --gray-100: #f5f2f5;
   --gray-200: #d8dadd;
   --gray-700: #5b6066;

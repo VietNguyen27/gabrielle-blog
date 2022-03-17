@@ -51,7 +51,7 @@ const toolbarItemOptions = {
     syntax: '*&nbsp;',
   },
   heading: {
-    syntax: '## ',
+    syntax: '##&nbsp;',
   },
   quote: {
     syntax: '|&nbsp;',

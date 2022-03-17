@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useError } from '@lib/store'
+import { Message } from '@components/Message'
 
 type TMainLayoutProps = {
   children: ReactNode
@@ -26,6 +27,7 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <>{children}</>
+      <Message />
     </>
   )
 }
