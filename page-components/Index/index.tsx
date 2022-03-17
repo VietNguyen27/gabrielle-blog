@@ -1,43 +1,12 @@
-import { Container } from '@components/Layout'
-import { Post, PostLarge, TrendingPost } from '@components/Post'
+import { Container, Sidebar } from '@components/Layout'
+import { Post, TrendingPost } from '@components/Post'
 import { TrendingUpIcon } from '@heroicons/react/outline'
 import { Button, EButtonAs } from '@components/Button'
 import { Heading } from '@components/Heading'
 import HeroImg from '@public/static/images/hero.png'
 
-import BlogImg1 from '@public/static/images/dummy-blog-1.png'
-import BlogImg2 from '@public/static/images/dummy-blog-2.png'
 import UserImg1 from '@public/static/images/dummy-user-1.jpeg'
 import UserImg2 from '@public/static/images/dummy-user-2.jpeg'
-
-const dummyPosts = [
-  {
-    title: "Finding the I's in Product Development",
-    subTitle:
-      'This article will provide an overview of how you can benefit from using a feature toggle and how you can implement it into your development or production environments.',
-    coverImg: BlogImg1,
-    tag: 'Product',
-    author: {
-      displayName: 'Catarina Ricca',
-      photoURL: UserImg1,
-      position: 'Product Owner',
-    },
-    createdAt: 'February 9, 2022',
-  },
-  {
-    title: 'Yarn, npm, or pnpm?',
-    subTitle:
-      'Yarn is probably the most used alternative, but lately is becoming slower. The newest kid in town, pnpm, was a new way to manage package cache that makes it faster on installing/upgrading packages.',
-    coverImg: BlogImg2,
-    tag: 'Development',
-    author: {
-      displayName: 'Gil Mendes',
-      photoURL: UserImg2,
-      position: 'Principal Developer',
-    },
-    createdAt: 'January 17, 2022',
-  },
-]
 
 const dummyTrendingPosts = [
   {
@@ -91,7 +60,7 @@ const dummyTags = [
   },
 ]
 
-const Home = () => {
+const Home = ({ posts }) => {
   return (
     <>
       <section className="border-divider mb-6 overflow-x-hidden border-t border-b">
@@ -138,23 +107,22 @@ const Home = () => {
       </section>
       <section className="pb-12">
         <Container>
-          <div className="relative flex flex-col items-start gap-0 xl:flex-row xl:gap-8">
-            <div className="order-2 w-full xl:order-1 xl:w-3/4">
-              <div className="mt-4 mb-14">
-                <PostLarge {...dummyPosts[0]} />
-              </div>
-              <div className="mb-14 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2">
-                {[...Array(8).keys()].map((_, index) => {
-                  const post = dummyPosts[(index + 1) % 2]
-
-                  return <Post key={index} {...post} />
-                })}
-              </div>
+          <div className="relative flex items-start">
+            <div className="sticky top-20 hidden w-[200px] px-2 md:block lg:w-[240px]">
+              <Sidebar />
             </div>
-            <div className="static top-20 order-1 w-full xl:sticky xl:order-2 xl:w-1/4">
-              <Heading className="text-lg capitalize">Popular tags</Heading>
+            <div className="flex flex-1 flex-col items-stretch">
+              {posts &&
+                posts.map((post, index) => (
+                  <Post key={post._id} {...post} hasCover={index === 0} />
+                ))}
+            </div>
+            <div className="sticky top-20 hidden w-1/4 px-2 lg:block">
+              <Heading level={2} className="pl-4 text-lg capitalize">
+                Popular tags
+              </Heading>
               <nav className="mt-2 pr-2">
-                <ul className="flex flex-row gap-y-2 overflow-y-auto pb-4 xl:flex-col">
+                <ul className="flex flex-col gap-y-2 pb-4">
                   {dummyTags.map(({ slug, label }, index) => (
                     <li key={index}>
                       <a

@@ -21,7 +21,7 @@ const RouteGuard = ({ children }) => {
   }, [user])
 
   const authCheck = (url) => {
-    const privatePaths = ['/write', '/bookmark', '/settings']
+    const privatePaths = ['/write', '/bookmarks', '/settings']
     const path = url.split('?')[0]
     if (!user && privatePaths.includes(path)) {
       setAuthorized(false)

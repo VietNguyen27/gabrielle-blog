@@ -20,6 +20,7 @@ export enum EButtonVariants {
   SECONDARY = 'bg-transparent text-gray-800 border-gray-200 hover:border-gray-800 disabled:hover:bg-transparent',
   TERTIARY = 'bg-tertiary-900 text-white border-none hover:bg-tertiary-500 disabled:hover:bg-tertiary-900',
   QUATERNARY = 'rounded border-none hover:bg-indigo-50 hover:text-tertiary-900 hover:fill-tertiary-900 active:bg-indigo-100',
+  QUINARY = 'rounded border-none text-gray-600 hover:bg-gray-100 active:bg-gray-200',
 }
 
 type TBaseProps = {

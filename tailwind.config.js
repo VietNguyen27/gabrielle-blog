@@ -60,6 +60,10 @@ module.exports = {
           700: 'var(--gray-700)',
           800: 'var(--gray-800)',
         },
+        topic: {
+          100: 'var(--topic-background)',
+          900: 'var(--topic-border)',
+        },
       },
       width: {
         checkbox: 'var(--checkbox-size)',

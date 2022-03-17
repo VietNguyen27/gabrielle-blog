@@ -20,8 +20,12 @@ export const postSchema = Joi.object({
     .messages({
       'string.max': `Description must be less than or equal to ${MAX_LENGTH_255} characters long.`,
     }),
-  topic: Joi.required().messages({
+  topic: Joi.string().min(3).required().messages({
     'any.required': 'Please at least one topic.',
+    'string.min': 'Please at least one topic.',
+  }),
+  rawCover: Joi.string().required().messages({
+    'any.required': 'Please choose a cover image.',
   }),
   contentUnsafe: Joi.string()
     .min(MIN_LENGTH_8)

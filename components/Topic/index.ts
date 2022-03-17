@@ -1,0 +1,1 @@
+export { TopicAnchor } from './Topic'
