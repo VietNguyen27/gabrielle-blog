@@ -1,1 +1,1 @@
-export { Post, PostLarge, TrendingPost } from './Post'
+export { Post, TrendingPost } from './Post'

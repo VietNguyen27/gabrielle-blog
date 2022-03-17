@@ -1,7 +1,7 @@
 import { Container, Sidebar } from '@components/Layout'
 import { Post, TrendingPost } from '@components/Post'
 import { TrendingUpIcon } from '@heroicons/react/outline'
-import { Button, EButtonAs } from '@components/Button'
+import { Button } from '@components/Button'
 import { Heading } from '@components/Heading'
 import HeroImg from '@public/static/images/hero.png'
 
@@ -75,11 +75,7 @@ const Home = ({ posts }) => {
                 It's easy and free to sharing your knowledge, thinking on any
                 topic and connect with another readers.
               </p>
-              <Button
-                href="/write"
-                buttonAs={EButtonAs.LINK}
-                className="rounded-3xl px-5 py-2.5"
-              >
+              <Button href="/write" as="a" className="rounded-3xl px-5 py-2.5">
                 Start writing
               </Button>
             </div>

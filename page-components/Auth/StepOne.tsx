@@ -1,4 +1,4 @@
-import { EInputTypes, EInputVariants, Input } from '@components/Input'
+import { Input } from '@components/Input'
 import { TitleQuestion } from '@components/Title'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -26,7 +26,7 @@ const StepOne = (props: TStepProps) => {
         }
       />
       <Input
-        variant={EInputVariants.SECONDARY}
+        variant="secondary"
         label="Email:"
         placeholder="name@example.com"
         className="mb-4 text-xl"
@@ -34,8 +34,8 @@ const StepOne = (props: TStepProps) => {
         {...register('email')}
       />
       <Input
-        variant={EInputVariants.SECONDARY}
-        type={EInputTypes.PASSWORD}
+        variant="secondary"
+        type="password"
         label="Password:"
         placeholder="Must be between 8-24 characters"
         className="mb-4 text-xl"
@@ -43,8 +43,8 @@ const StepOne = (props: TStepProps) => {
         {...register('password')}
       />
       <Input
-        variant={EInputVariants.SECONDARY}
-        type={EInputTypes.PASSWORD}
+        variant="secondary"
+        type="password"
         label="Password confirmation:"
         placeholder="Numbers are also allowed"
         className="mb-4 text-xl"

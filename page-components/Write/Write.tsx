@@ -1,22 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Container } from '@components/Layout'
-import {
-  Button,
-  EButtonAs,
-  EButtonTypes,
-  EButtonVariants,
-} from '@components/Button'
+import { Button } from '@components/Button'
 import { Switch } from '@components/Switch'
 import { Tab, Tabs } from '@components/Tabs'
 import HintWrapper from './HintWrapper'
 import { useForm } from 'react-hook-form'
 import { Form } from '@components/Form'
-import {
-  encodeHtml,
-  getErrorFromJoiMessage,
-  parseMarkdown,
-  resizeImage,
-} from '@utils/utils'
+import { encodeHtml, getErrorFromJoiMessage, parseMarkdown } from '@utils/utils'
 import DOMPurify from 'dompurify'
 import Link from 'next/link'
 import Title from './Title'
@@ -169,8 +159,8 @@ const Write = () => {
                       />
                     )}
                     <Button
-                      buttonAs={EButtonAs.LABEL}
-                      variant={EButtonVariants.SECONDARY}
+                      as="label"
+                      variant="secondary"
                       className="rounded-lg px-5 py-2"
                     >
                       {cover ? 'Change' : 'Add a cover image'}
@@ -199,8 +189,8 @@ const Write = () => {
               </div>
               <div className="mt-6 flex items-center justify-between gap-4">
                 <Button
-                  type={saving ? EButtonTypes.BUTTON : EButtonTypes.SUBMIT}
-                  variant={EButtonVariants.TERTIARY}
+                  type={saving ? 'button' : 'submit'}
+                  variant="tertiary"
                   className="rounded-md px-3.5 py-2"
                   loading={saving}
                   loadingBackground="bg-tertiary-900"

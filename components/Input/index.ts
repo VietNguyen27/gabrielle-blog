@@ -1,7 +1,1 @@
-export {
-  default as Input,
-  EInputVariants,
-  EInputTypes,
-  EInputSizes,
-  EInputRounded,
-} from './Input'
+export { default as Input } from './Input'

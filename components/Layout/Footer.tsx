@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Container from './Container'
-import { Button, EButtonAs, EButtonVariants } from '@components/Button'
+import { Button } from '@components/Button'
 import { Logo } from '@components/Logo'
 import { Anchor } from '@components/Anchor'
 import TwitterLogo from '@public/static/images/twitter-logo.svg'
@@ -58,9 +58,9 @@ const Footer = () => {
               Join a network of curious minds.
             </h2>
             <Button
-              buttonAs={EButtonAs.LINK}
+              as="a"
               href="/register"
-              variant={EButtonVariants.TERTIARY}
+              variant="tertiary"
               className="rounded-3xl px-5 py-2.5"
             >
               Let's begin

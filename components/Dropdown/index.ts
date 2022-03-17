@@ -1,1 +1,1 @@
-export { Dropdown, Menu, MenuItem, MenuDivider, EMenuItemAs } from './Dropdown'
+export { Dropdown, Menu, MenuItem, MenuDivider } from './Dropdown'

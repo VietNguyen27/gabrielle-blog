@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { Header } from '@components/Layout'
-import { EInputTypes, Input } from '@components/Input'
+import { Input } from '@components/Input'
 import { Checkbox } from '@components/Checkbox'
-import { Button, EButtonTypes } from '@components/Button'
+import { Button } from '@components/Button'
 import { Form } from '@components/Form'
 import { useFormContext } from 'react-hook-form'
 import { fetcher } from '@lib/fetcher'
@@ -26,7 +26,7 @@ const FormFields = () => {
         {...register('email')}
       />
       <Input
-        type={EInputTypes.PASSWORD}
+        type="password"
         label="Password"
         className="mb-2"
         error={error['password']}
@@ -39,7 +39,7 @@ const FormFields = () => {
         </Link>
       </div>
       <Button
-        type={loading ? EButtonTypes.BUTTON : EButtonTypes.SUBMIT}
+        type={loading ? 'button' : 'submit'}
         loading={loading}
         className="rounded-md py-2"
       >

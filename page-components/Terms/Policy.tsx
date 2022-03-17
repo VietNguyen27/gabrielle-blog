@@ -1,6 +1,6 @@
 import { Heading } from '@components/Heading'
 import { Container } from '@components/Layout'
-import { EListType, List, ListItem } from '@components/List'
+import { List, ListItem } from '@components/List'
 import { Paragraph } from '@components/Paragraph'
 import { Title } from '@components/Title'
 import React from 'react'
@@ -196,7 +196,7 @@ const Policy = () => {
               accusantium ratione. Vero possimus ipsum fugiat in, temporibus
               neque quasi:
             </Paragraph>
-            <List type={EListType.ORDERED}>
+            <List type="ol">
               <ListItem>
                 Animi suscipit quis dicta corporis rem! Nostrum eos reiciendis
                 deserunt ut! Accusantium deleniti in enim officiis ipsum
