@@ -1,4 +1,4 @@
-import { EInputVariants, Input } from '@components/Input'
+import { Input } from '@components/Input'
 import { TitleQuestion } from '@components/Title'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -27,7 +27,7 @@ const StepFour = (props: TStepProps) => {
         description="Please provide the appropriate name."
       />
       <Input
-        variant={EInputVariants.SECONDARY}
+        variant="secondary"
         placeholder="Your full name"
         className="mb-3 text-xl"
         error={props.error['username']}

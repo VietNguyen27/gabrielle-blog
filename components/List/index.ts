@@ -1,1 +1,1 @@
-export { List, ListItem, EListType } from './List'
+export { List, ListItem } from './List'

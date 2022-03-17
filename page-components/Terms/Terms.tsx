@@ -1,6 +1,6 @@
 import { Heading } from '@components/Heading'
 import { Container } from '@components/Layout'
-import { EListType, List, ListItem } from '@components/List'
+import { List, ListItem } from '@components/List'
 import { Paragraph } from '@components/Paragraph'
 import { Title } from '@components/Title'
 import React from 'react'
@@ -204,7 +204,7 @@ const Terms = () => {
               nesciunt laudantium voluptatem labore blanditiis sapiente dolorum
               vero expedita dolorem explicabo. Magni:
             </Paragraph>
-            <List type={EListType.ORDERED}>
+            <List type="ol">
               <ListItem>
                 Sit amet consectetur adipisicing elit. Vel soluta delectus quia
                 accusantium. Maiores laboriosam nemo in iste repellat architecto

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { CheckIcon } from '@heroicons/react/solid'
-import { Button, EButtonTypes } from '@components/Button'
+import { Button } from '@components/Button'
 import { useLoading } from '@lib/store'
 
 type TStepWrapperProps = {
@@ -24,7 +24,7 @@ const StepWrapper = ({
       <div className="w-full pb-4">{children}</div>
       {lastStep ? (
         <Button
-          type={loading ? EButtonTypes.BUTTON : EButtonTypes.SUBMIT}
+          type={loading ? 'button' : 'submit'}
           loading={loading}
           className="rounded-md px-4 py-2"
         >

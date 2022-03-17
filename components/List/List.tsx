@@ -1,13 +1,10 @@
 import React, { ReactNode } from 'react'
 import clsx from 'clsx'
 
-export enum EListType {
-  ORDERED = 'o',
-  UNORDERED = 'u',
-}
+type TListTypes = 'ol' | 'ul'
 
 type TListProps = {
-  type?: EListType
+  type?: TListTypes
   children: ReactNode
   className?: string
 }
@@ -16,20 +13,15 @@ type TListItemProps = {
   children: ReactNode
 }
 
-export const List = ({
-  type = EListType.UNORDERED,
-  children,
-  className,
-}: TListProps) => {
+export const List = ({ type = 'ul', children, className }: TListProps) => {
   const defaultClassName = 'mb-4 pl-8'
   const allClassNames = clsx(
     defaultClassName,
     className,
-    type === EListType.ORDERED ? 'list-decimal' : 'list-disc'
+    type === 'ul' ? 'list-decimal' : 'list-disc'
   )
-  const listTag = `${type}l`
 
-  return React.createElement(listTag, { className: allClassNames }, children)
+  return React.createElement(type, { className: allClassNames }, children)
 }
 
 export const ListItem = ({ children }: TListItemProps) => {

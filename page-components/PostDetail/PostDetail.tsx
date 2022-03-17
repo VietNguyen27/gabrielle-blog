@@ -10,7 +10,7 @@ import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import Link from 'next/link'
 import DOMPurify from 'dompurify'
 import { getFormattedDate, parseMarkdown } from '@utils/utils'
-import { Button, EButtonAs, EButtonVariants } from '@components/Button'
+import { Button } from '@components/Button'
 import { ImageRatio } from '@components/ImageRatio'
 import { CardSecondary } from '@components/Card'
 import { useCurrentUser } from '@lib/user'
@@ -144,8 +144,8 @@ const PostDetail = ({
                     </div>
                     {user && user.username === creator.username ? (
                       <Button
-                        variant={EButtonVariants.SECONDARY}
-                        buttonAs={EButtonAs.LINK}
+                        variant="secondary"
+                        as="a"
                         href="/settings"
                         className="rounded-md py-2"
                         fluid
@@ -154,7 +154,7 @@ const PostDetail = ({
                       </Button>
                     ) : (
                       <Button
-                        variant={EButtonVariants.TERTIARY}
+                        variant="tertiary"
                         className="rounded-md py-2"
                         fluid
                       >

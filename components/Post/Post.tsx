@@ -4,7 +4,7 @@ import { ImageRatio } from '@components/ImageRatio'
 import Link from 'next/link'
 import { getFormattedDate } from '@utils/utils'
 import { TopicAnchor } from '@components/Topic'
-import { Button, EButtonAs, EButtonVariants } from '@components/Button'
+import { Button } from '@components/Button'
 import clsx from 'clsx'
 
 type TCreator = {
@@ -87,18 +87,18 @@ export const Post = ({
           <div className="flex flex-col items-start justify-between gap-y-2 xs:flex-row xs:items-center">
             <div className="relative z-elevate flex items-center gap-2">
               <Button
-                buttonAs={EButtonAs.LINK}
+                as="a"
                 href={`/${creator.username}/post/${_id}`}
-                variant={EButtonVariants.QUINARY}
+                variant="quinary"
                 className="rounded-md px-2 py-1.5"
               >
                 <HeartIcon className="mr-1 h-5 w-5" />
                 {likesCount} reactions
               </Button>
               <Button
-                buttonAs={EButtonAs.LINK}
+                as="a"
                 href={`/${creator.username}/post/${_id}`}
-                variant={EButtonVariants.QUINARY}
+                variant="quinary"
                 className="rounded-md px-2 py-1.5"
               >
                 <ChatAlt2Icon className="mr-1 h-5 w-5" />

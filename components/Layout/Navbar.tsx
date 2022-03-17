@@ -1,36 +1,30 @@
 import React, { useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { Anchor } from '@components/Anchor'
-import { Button, EButtonAs, EButtonVariants } from '@components/Button'
+import { Button } from '@components/Button'
 import { useCurrentUser } from '@lib/user'
 import { fetcher } from '@lib/fetcher'
 import { BellIcon } from '@heroicons/react/outline'
-import {
-  Dropdown,
-  EMenuItemAs,
-  Menu,
-  MenuDivider,
-  MenuItem,
-} from '@components/Dropdown'
+import { Dropdown, Menu, MenuDivider, MenuItem } from '@components/Dropdown'
 import { ImageRatio } from '@components/ImageRatio'
 
 const MenuDropdown = ({ username, email }, onLogOut) => {
   return (
     <Menu className="w-[250px]">
-      <MenuItem href={`/${username}`} menuItemAs={EMenuItemAs.LINK}>
+      <MenuItem href={`/${username}`} as="a">
         <div className="flex flex-col">
           <p className="font-semibold line-clamp-1">{username}</p>
           <span className="text-sm line-clamp-1">{email}</span>
         </div>
       </MenuItem>
       <MenuDivider />
-      <MenuItem href="/write" menuItemAs={EMenuItemAs.LINK}>
+      <MenuItem href="/write" as="a">
         Create Post
       </MenuItem>
-      <MenuItem href="/#" menuItemAs={EMenuItemAs.LINK}>
+      <MenuItem href="/#" as="a">
         Bookmark
       </MenuItem>
-      <MenuItem href="/#" menuItemAs={EMenuItemAs.LINK}>
+      <MenuItem href="/#" as="a">
         Settings
       </MenuItem>
       <MenuDivider />
@@ -67,7 +61,7 @@ const Navbar = () => {
             <li>
               <Button
                 href="/register"
-                buttonAs={EButtonAs.LINK}
+                as="a"
                 target="_blank"
                 className="rounded-3xl px-4 py-2"
               >
@@ -85,8 +79,8 @@ const Navbar = () => {
             <li>
               <Button
                 href="/notifications"
-                buttonAs={EButtonAs.LINK}
-                variant={EButtonVariants.QUATERNARY}
+                as="a"
+                variant="quaternary"
                 className="p-2"
               >
                 <BellIcon className="h-6 w-6" />
@@ -94,10 +88,7 @@ const Navbar = () => {
             </li>
             <li>
               <Dropdown overlay={MenuDropdown(user, onLogOut)}>
-                <Button
-                  variant={EButtonVariants.QUATERNARY}
-                  className="rounded-full p-1"
-                >
+                <Button variant="quaternary" className="rounded-full p-1">
                   <ImageRatio
                     className="w-8 rounded-full outline outline-2 outline-gray-200"
                     src={user.profilePicture}

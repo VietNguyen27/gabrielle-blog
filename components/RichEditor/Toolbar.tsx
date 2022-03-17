@@ -14,7 +14,7 @@ import StrikeIcon from '@public/static/images/toolbar_strike.svg'
 import DividerIcon from '@public/static/images/toolbar_divider.svg'
 import { insertHtmlAtCaret } from '@utils/utils'
 import { Tooltip } from '@components/Tooltip'
-import { Button, EButtonVariants } from '@components/Button'
+import { Button } from '@components/Button'
 
 const toolbarItems = [
   { label: 'Bold', value: 'bold', icon: BoldIcon },
@@ -120,7 +120,7 @@ const Toolbar = forwardRef<HTMLDivElement, TToolbarProps>(
               <Tooltip key={index} message={label}>
                 <Button
                   key={index}
-                  variant={EButtonVariants.QUATERNARY}
+                  variant="quaternary"
                   className="p-1.5"
                   tabIndex={0}
                   value={value}

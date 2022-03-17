@@ -10,10 +10,7 @@ import React, {
   useState,
 } from 'react'
 
-export enum EMenuItemAs {
-  BUTTON = 'button',
-  LINK = 'a',
-}
+type TMenuItemAs = 'button' | 'a'
 
 type TDropdownProps = {
   children: ReactElement
@@ -39,12 +36,12 @@ type TMenuItemAsButton = TMenuItemBaseProps &
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     keyof TMenuItemBaseProps
   > & {
-    menuItemAs?: EMenuItemAs.BUTTON
+    as?: 'button'
   }
 
 type TMenuItemAsLink = TMenuItemBaseProps &
   Omit<LinkProps, keyof TMenuItemBaseProps> & {
-    menuItemAs: EMenuItemAs.LINK
+    as: 'a'
   }
 
 type TMenuItemProps = TMenuItemAsButton | TMenuItemAsLink
@@ -105,10 +102,11 @@ export const MenuItem = ({
     'flex justify-between items-center text-left font-medium px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-tertiary-900 active:bg-indigo-100'
   const allClassNames = clsx(defaultClassName, className)
 
-  if (rest.menuItemAs === EMenuItemAs.LINK) {
+  if (rest.as === 'a') {
+    const { as, ...otherAttr } = rest
     return (
       <li className="flex flex-col items-stretch" onClick={onClose}>
-        <Link {...rest}>
+        <Link {...otherAttr}>
           <a className={allClassNames}>{children}</a>
         </Link>
       </li>

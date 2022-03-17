@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, EButtonAs, EButtonVariants } from '@components/Button'
+import { Button } from '@components/Button'
 import { Container } from '@components/Layout'
 import {
   CakeIcon,
@@ -49,8 +49,8 @@ const Profile = ({
                   {user && user.username === username ? (
                     <Button
                       href="/settings"
-                      buttonAs={EButtonAs.LINK}
-                      variant={EButtonVariants.TERTIARY}
+                      as="a"
+                      variant="tertiary"
                       className="rounded-md px-4 py-2"
                     >
                       Edit profile
@@ -58,7 +58,7 @@ const Profile = ({
                   ) : (
                     <>
                       <Button
-                        variant={EButtonVariants.TERTIARY}
+                        variant="tertiary"
                         className="rounded-md px-4 py-2"
                       >
                         Follow
@@ -71,10 +71,7 @@ const Profile = ({
                           </Menu>
                         }
                       >
-                        <Button
-                          variant={EButtonVariants.QUATERNARY}
-                          className="rounded-md p-2"
-                        >
+                        <Button variant="quaternary" className="rounded-md p-2">
                           <DotsHorizontalIcon className="h-5 w-5" />
                         </Button>
                       </Dropdown>

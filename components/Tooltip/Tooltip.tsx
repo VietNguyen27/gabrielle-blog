@@ -1,31 +1,28 @@
 import React, { ReactChild, ReactChildren } from 'react'
 import cx from 'clsx'
 
-export enum ETooltipDirection {
-  TOP = 'TOP',
-  BOTTOM = 'BOTTOM',
-  LEFT = 'LEFT',
-  RIGHT = 'RIGHT',
-}
-
-export enum ETooltipMessageDirection {
-  TOP = 'bottom-full left-1/2 -translate-x-1/2 translate-y-1.5 group-hover:translate-y-0 mb-1',
-  BOTTOM = 'top-full left-1/2 -translate-x-1/2 -translate-y-1.5 group-hover:translate-y-0 mt-1',
-  LEFT = 'right-full top-1/2 -translate-y-1/2 translate-x-1.5 group-hover:translate-x-0 mr-1',
-  RIGHT = 'left-full top-1/2 -translate-y-1/2 -translate-x-1.5 group-hover:translate-x-0 ml-1',
-}
+type TTooltipDirection = 'top' | 'bottom' | 'left' | 'right'
 
 type TTooltipProps = {
-  direction?: ETooltipDirection
+  direction?: TTooltipDirection
   message: string
   children: ReactChild | ReactChildren
   className?: string
 }
 
+const tooltipMessageDirections = {
+  top: 'bottom-full left-1/2 -translate-x-1/2 translate-y-1.5 group-hover:translate-y-0 mb-1',
+  bottom:
+    'top-full left-1/2 -translate-x-1/2 -translate-y-1.5 group-hover:translate-y-0 mt-1',
+  left: 'right-full top-1/2 -translate-y-1/2 translate-x-1.5 group-hover:translate-x-0 mr-1',
+  right:
+    'left-full top-1/2 -translate-y-1/2 -translate-x-1.5 group-hover:translate-x-0 ml-1',
+}
+
 const Tooltip = ({
   className,
   message,
-  direction = ETooltipDirection.TOP,
+  direction = 'top',
   children,
 }: TTooltipProps) => {
   const isAbsolute = className && className.includes('absolute')
@@ -37,7 +34,7 @@ const Tooltip = ({
   )
   const tooltipClassName = cx(
     'absolute bg-black text-white text-left text-sm px-3 py-1.5 whitespace-nowrap rounded opacity-0 invisible delay-300 transition-all group-hover:opacity-100 group-hover:visible',
-    ETooltipMessageDirection[direction]
+    tooltipMessageDirections[direction]
   )
 
   return (

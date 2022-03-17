@@ -3,30 +3,18 @@ import Link, { LinkProps } from 'next/link'
 import clsx from 'clsx'
 import { Loading } from '@components/Loading'
 
-export enum EButtonTypes {
-  BUTTON = 'button',
-  SUBMIT = 'submit',
-  RESET = 'reset',
-}
-
-export enum EButtonAs {
-  BUTTON = 'button',
-  LINK = 'a',
-  LABEL = 'label',
-}
-
-export enum EButtonVariants {
-  PRIMARY = 'bg-primary-900 text-white border-none hover:bg-primary-500 disabled:hover:bg-primary-900',
-  SECONDARY = 'bg-transparent text-gray-800 border-gray-200 hover:border-gray-800 disabled:hover:bg-transparent',
-  TERTIARY = 'bg-tertiary-900 text-white border-none hover:bg-tertiary-500 disabled:hover:bg-tertiary-900',
-  QUATERNARY = 'rounded border-none hover:bg-indigo-50 hover:text-tertiary-900 hover:fill-tertiary-900 active:bg-indigo-100',
-  QUINARY = 'rounded border-none text-gray-600 hover:bg-gray-100 active:bg-gray-200',
-}
+type TButtonTypes = 'button' | 'submit' | 'reset'
+type TButtonVariants =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'quaternary'
+  | 'quinary'
 
 type TBaseProps = {
   children: ReactNode
-  variant?: EButtonVariants
-  type?: EButtonTypes
+  variant?: TButtonVariants
+  type?: TButtonTypes
   fluid?: boolean
   loading?: boolean
   loadingBackground?: string
@@ -39,25 +27,38 @@ type TBaseProps = {
 
 type TButtonAsButton = TBaseProps &
   Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof TBaseProps> & {
-    buttonAs?: EButtonAs.BUTTON
+    as?: 'button'
   }
 
 type TButtonAsLink = TBaseProps &
   Omit<LinkProps, keyof TBaseProps> & {
-    buttonAs: EButtonAs.LINK
+    as: 'a'
   }
 
 type TButtonAsLabel = TBaseProps &
   Omit<React.LabelHTMLAttributes<HTMLLabelElement>, keyof TBaseProps> & {
-    buttonAs: EButtonAs.LABEL
+    as: 'label'
   }
 
 type TButtonProps = TButtonAsButton | TButtonAsLink | TButtonAsLabel
 
+const buttonVariants = {
+  primary:
+    'bg-primary-900 text-white border-none hover:bg-primary-500 disabled:hover:bg-primary-900',
+  secondary:
+    'bg-transparent text-gray-800 border-gray-200 hover:border-gray-800 disabled:hover:bg-transparent',
+  tertiary:
+    'bg-tertiary-900 text-white border-none hover:bg-tertiary-500 disabled:hover:bg-tertiary-900',
+  quaternary:
+    'rounded border-none hover:bg-indigo-50 hover:text-tertiary-900 hover:fill-tertiary-900 active:bg-indigo-100',
+  quinary:
+    'rounded border-none text-gray-600 hover:bg-gray-100 active:bg-gray-200',
+}
+
 const Button = ({
   children,
-  variant = EButtonVariants.PRIMARY,
-  type = EButtonTypes.BUTTON,
+  variant = 'primary',
+  type = 'button',
   fluid,
   loading,
   loadingBackground = 'bg-primary-900',
@@ -74,8 +75,8 @@ const Button = ({
   const allClassNames = clsx(
     defaultClassName,
     className,
-    fluid ? 'w-full' : 'w-auto',
-    variant
+    buttonVariants[variant],
+    fluid ? 'w-full' : 'w-auto'
   )
 
   useEffect(() => {
@@ -105,9 +106,11 @@ const Button = ({
     }
   }, [])
 
-  if (rest.buttonAs === EButtonAs.LINK) {
+  if (rest.as === 'a') {
+    const { as, ...otherAttr } = rest
+
     return (
-      <Link {...rest}>
+      <Link {...otherAttr}>
         <a className={allClassNames} target={target}>
           {prefix && prefix}
           {children}
@@ -117,8 +120,8 @@ const Button = ({
     )
   }
 
-  if (rest.buttonAs === EButtonAs.LABEL) {
-    const { buttonAs, ...otherAttr } = rest
+  if (rest.as === 'label') {
+    const { as, ...otherAttr } = rest
 
     return (
       <label role="button" className={allClassNames} {...otherAttr}>
@@ -130,7 +133,7 @@ const Button = ({
   }
 
   if (typeof onPressEnter === 'function') {
-    const { buttonAs, ...otherAttr } = rest
+    const { as, ...otherAttr } = rest
 
     return (
       <div className="relative" ref={ref}>
@@ -146,8 +149,9 @@ const Button = ({
     )
   }
 
+  const { as, ...otherAttr } = rest
   return (
-    <button type={type} className={allClassNames} ref={ref} {...rest}>
+    <button type={type} className={allClassNames} ref={ref} {...otherAttr}>
       {prefix && prefix}
       {children}
       {suffix && suffix}
