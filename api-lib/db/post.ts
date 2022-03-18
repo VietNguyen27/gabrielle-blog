@@ -24,7 +24,7 @@ export async function findPostById(db, id) {
   return changeDataObjectToString(post[0])
 }
 
-export async function findPosts(db, by, not, limit = 10) {
+export async function findPosts(db, by, not, limit = 10, skip = 0) {
   const posts = await db
     .collection('posts')
     .aggregate([
@@ -34,8 +34,9 @@ export async function findPosts(db, by, not, limit = 10) {
           ...(not && { _id: { $ne: new ObjectId(not) } }),
         },
       },
-      { $sort: { _id: -1 } },
+      { $skip: skip },
       { $limit: limit },
+      { $sort: { _id: -1 } },
       {
         $lookup: {
           from: 'users',

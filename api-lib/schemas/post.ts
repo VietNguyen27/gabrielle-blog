@@ -1,5 +1,5 @@
 import {
-  MAX_LENGTH_10000,
+  MAX_LENGTH_20000,
   MAX_LENGTH_255,
   MIN_LENGTH_8,
 } from '@utils/constants'
@@ -29,11 +29,11 @@ export const postSchema = Joi.object({
   }),
   contentUnsafe: Joi.string()
     .min(MIN_LENGTH_8)
-    .max(MAX_LENGTH_10000)
+    .max(MAX_LENGTH_20000)
     .required()
     .messages({
       'string.min': `Content must be at least ${MIN_LENGTH_8} characters long.`,
-      'string.max': `Content must be less than or equal to ${MAX_LENGTH_10000} characters long.`,
+      'string.max': `Content must be less than or equal to ${MAX_LENGTH_20000} characters long.`,
       'string.empty': 'Content is not allowed to be empty.',
     }),
 })

@@ -157,7 +157,7 @@ export const parseMarkdown = (markdownText: string): string => {
     .replace(/^\*\s(.+)/gm, '<li>$1</li>')
     .replace(/^\s*\n\d\./gm, "<ol class='markdown-ol'>\n1.")
     .replace(/^(\d\..+)*\n([^\d\.])/gm, '$1\n</ol>\n\n$2')
-    .replace(/^\d\s\.(.+)/gm, '<li>$1</li>')
+    .replace(/^\d\.\s(.+)/gm, '<li>$1</li>')
     .replace(/[\#]{6}\s(.+)/g, "<h6 class='font-bold text-lg'>$1</h6>")
     .replace(/[\#]{5}\s(.+)/g, "<h5 class='font-bold text-lg'>$1</h5>")
     .replace(/[\#]{4}\s(.+)/g, "<h4 class='font-bold text-xl'>$1</h4>")
@@ -169,10 +169,10 @@ export const parseMarkdown = (markdownText: string): string => {
       "<blockquote class='markdown-quote'>$1</blockquote>"
     )
     .replace(
-      /```\s*([^]+?.*?[^]+?[^]+?)```/g,
+      /```*([^]+?.*?[^]+?[^]+?)```/g,
       "<div class='markdown-codeblock'><pre>$1</pre></div>"
     )
-    .replace(/\`(.*)\`/gim, "<code class='markdown-code'>$1</code>")
+    .replace(/[\`]{1}([^\`]+)[\`]{1}/g, "<code class='markdown-code'>$1</code>")
     .replace(/\_\_(.*)\_\_/gim, '<u>$1</u>')
     .replace(/\~\~(.*)\~\~/gim, '<del>$1</del>')
     .replace(/\-\-\-/gim, "<hr class='markdown-divider'>")
@@ -182,7 +182,6 @@ export const parseMarkdown = (markdownText: string): string => {
         ? markdown
         : '<p>' + markdown + '</p>'
     })
-    .replace(/(<pre[^>]*>)([\s\S]*?)(<\/pre>)/gim, '$2')
 
   return htmlText.trim()
 }

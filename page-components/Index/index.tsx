@@ -7,6 +7,9 @@ import HeroImg from '@public/static/images/hero.png'
 
 import UserImg1 from '@public/static/images/dummy-user-1.jpeg'
 import UserImg2 from '@public/static/images/dummy-user-2.jpeg'
+import { usePostPages } from '@lib/post'
+import useOnScreen from '@hooks/useOnScreen'
+import { Fragment, useEffect, useRef, useState } from 'react'
 
 const dummyTrendingPosts = [
   {
@@ -60,7 +63,21 @@ const dummyTags = [
   },
 ]
 
-const Home = ({ posts }) => {
+const Home = () => {
+  const ref = useRef(null)
+  const isVisible = useOnScreen(ref)
+  const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
+    usePostPages()
+  const posts = data
+    ? data.reduce((acc, val) => [...acc, ...val.posts], [])
+    : []
+
+  useEffect(() => {
+    if (isVisible && !isReachingEnd && !isRefreshing && !isLoadingMore) {
+      setSize(size + 1)
+    }
+  }, [isVisible, isRefreshing])
+
   return (
     <>
       <section className="border-divider mb-6 overflow-x-hidden border-t border-b">
@@ -112,6 +129,9 @@ const Home = ({ posts }) => {
                 posts.map((post, index) => (
                   <Post key={post._id} {...post} hasCover={index === 0} />
                 ))}
+              <div className="pt-4 text-center text-xl font-semibold" ref={ref}>
+                {isReachingEnd && 'No more posts'}
+              </div>
             </div>
             <div className="sticky top-20 hidden w-1/4 px-2 lg:block">
               <Heading level={2} className="pl-4 text-lg capitalize">

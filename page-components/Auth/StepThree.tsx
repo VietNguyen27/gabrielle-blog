@@ -32,7 +32,7 @@ const StepThree = (props: TStepProps) => {
             </span>
           </>
         }
-        description="Choose as many as you like."
+        description="There is no topic suitable for you? Don't worry, we still have a lot of things for you to explore."
       />
       <Choices
         options={topics}
