@@ -153,21 +153,24 @@ export const parseMarkdown = (markdownText: string): string => {
       "<a class='markdown-link' href='$2'>$1</a>"
     )
     .replace(/^\s*\n\*/gm, "<ul class='markdown-ul'>\n*")
-    .replace(/^(\*.+)\s*\n([^\*])/gm, '$1\n</ul>\n\n$2')
-    .replace(/^\*(.+)/gm, '<li>$1</li>')
+    .replace(/^(\*.+)*\n([^\*])/gm, '$1\n</ul>\n\n$2')
+    .replace(/^\*\s(.+)/gm, '<li>$1</li>')
     .replace(/^\s*\n\d\./gm, "<ol class='markdown-ol'>\n1.")
-    .replace(/^(\d\..+)\s*\n([^\d\.])/gm, '$1\n</ol>\n\n$2')
-    .replace(/^\d\.(.+)/gm, '<li>$1</li>')
-    .replace(/[\#]{6} (.+)/g, "<h6 class='font-bold text-lg'>$1</h6>")
-    .replace(/[\#]{5} (.+)/g, "<h5 class='font-bold text-lg'>$1</h5>")
-    .replace(/[\#]{4} (.+)/g, "<h4 class='font-bold text-xl'>$1</h4>")
-    .replace(/[\#]{3} (.+)/g, "<h3 class='font-bold text-2xl'>$1</h3>")
-    .replace(/[\#]{2} (.+)/g, "<h2 class='font-bold text-3xl'>$1</h2>")
-    .replace(/[\#]{1} (.+)/g, "<h1 class='font-bold text-4xl'>$1</h1>")
-    .replace(/^\| (.+)/gm, "<blockquote class='markdown-quote'>$1</blockquote>")
+    .replace(/^(\d\..+)*\n([^\d\.])/gm, '$1\n</ol>\n\n$2')
+    .replace(/^\d\s\.(.+)/gm, '<li>$1</li>')
+    .replace(/[\#]{6}\s(.+)/g, "<h6 class='font-bold text-lg'>$1</h6>")
+    .replace(/[\#]{5}\s(.+)/g, "<h5 class='font-bold text-lg'>$1</h5>")
+    .replace(/[\#]{4}\s(.+)/g, "<h4 class='font-bold text-xl'>$1</h4>")
+    .replace(/[\#]{3}\s(.+)/g, "<h3 class='font-bold text-2xl'>$1</h3>")
+    .replace(/[\#]{2}\s(.+)/g, "<h2 class='font-bold text-3xl'>$1</h2>")
+    .replace(/[\#]{1}\s(.+)/g, "<h1 class='font-bold text-4xl'>$1</h1>")
+    .replace(
+      /^\|\s(.+)/gm,
+      "<blockquote class='markdown-quote'>$1</blockquote>"
+    )
     .replace(
       /```\s*([^]+?.*?[^]+?[^]+?)```/g,
-      "<div class='markdown-codeblock'><pre><code>$1</code></pre></div>"
+      "<div class='markdown-codeblock'><pre>$1</pre></div>"
     )
     .replace(/\`(.*)\`/gim, "<code class='markdown-code'>$1</code>")
     .replace(/\_\_(.*)\_\_/gim, '<u>$1</u>')
@@ -179,6 +182,7 @@ export const parseMarkdown = (markdownText: string): string => {
         ? markdown
         : '<p>' + markdown + '</p>'
     })
+    .replace(/(<pre[^>]*>)([\s\S]*?)(<\/pre>)/gim, '$2')
 
   return htmlText.trim()
 }

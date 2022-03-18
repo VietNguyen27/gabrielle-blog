@@ -19,7 +19,6 @@ export async function getServerSideProps(context) {
 }
 
 const HomePage = ({ posts }) => {
-  console.log(posts)
   return (
     <>
       <Head>

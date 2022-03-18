@@ -3,9 +3,16 @@ import create from 'zustand'
 import createContext from 'zustand/context'
 import shallow from 'zustand/shallow'
 
+type TMessageTypes = 'success' | 'error'
+type TMessageParams = {
+  message: string
+  type: TMessageTypes
+}
+
 type TStoreState = {
   error: any
   loading: boolean
+  message: any
 }
 
 let store
@@ -13,6 +20,7 @@ let store
 const initialState: TStoreState = {
   error: {},
   loading: false,
+  message: {},
 }
 const zustandContext = createContext()
 
@@ -32,6 +40,16 @@ export const initializeStore = (preloadedState = {}) => {
     toggleLoading: (loading: boolean) => {
       set({
         loading: !!loading,
+      })
+    },
+    setMessage: ({ message, type = 'success' }: TMessageParams) => {
+      set({
+        message: { message, type },
+      })
+    },
+    resetMessage: () => {
+      set({
+        message: {},
       })
     },
   }))
@@ -72,6 +90,17 @@ export const useError = () => {
       error: store.error,
       setError: store.setError,
       resetError: store.resetError,
+    }),
+    shallow
+  )
+}
+
+export const useMessage = () => {
+  return useStore(
+    (store: any) => ({
+      message: store.message,
+      setMessage: store.setMessage,
+      resetMessage: store.resetMessage,
     }),
     shallow
   )

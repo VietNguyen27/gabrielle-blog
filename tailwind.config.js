@@ -64,6 +64,10 @@ module.exports = {
           100: 'var(--topic-background)',
           900: 'var(--topic-border)',
         },
+        message: {
+          100: 'var(--message-100)',
+          900: 'var(--message-900)',
+        },
       },
       width: {
         checkbox: 'var(--checkbox-size)',

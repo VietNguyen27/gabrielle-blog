@@ -117,6 +117,8 @@ const Write = () => {
         method: 'POST',
         body: formData,
       })
+      setPost(null)
+      setCover('')
       router.push({
         pathname: `/${user.username}/post/${insertedId}`,
       })

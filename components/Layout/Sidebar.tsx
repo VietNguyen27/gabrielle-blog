@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import HomeIcon from '@public/static/images/nav-home.png'
+import WriteIcon from '@public/static/images/nav-write.png'
 import TopicsIcon from '@public/static/images/nav-topics.png'
 import BookmarksIcon from '@public/static/images/nav-bookmarks.png'
 import FaqIcon from '@public/static/images/nav-faq.png'
@@ -18,6 +19,11 @@ const navs = [
         slug: '/',
         label: 'Home',
         icon: HomeIcon,
+      },
+      {
+        slug: '/write',
+        label: 'Write',
+        icon: WriteIcon,
       },
       {
         slug: '/topics',
