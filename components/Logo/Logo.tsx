@@ -11,7 +11,7 @@ type TLogoProps = {
 const Logo = ({ width = 120, height = 20 }: TLogoProps) => {
   return (
     <Link href="/">
-      <a className="cursor-pointer">
+      <a className="cursor-pointer leading-none">
         <Image alt="Gabrielle logo" src={logo} width={width} height={height} />
       </a>
     </Link>

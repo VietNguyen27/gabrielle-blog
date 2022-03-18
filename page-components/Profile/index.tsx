@@ -13,6 +13,7 @@ import { getFormattedDate } from '@utils/utils'
 import { useCurrentUser } from '@lib/user'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import { ImageRatio } from '@components/ImageRatio'
+import { Post } from '@components/Post'
 
 const Profile = ({
   username,
@@ -28,6 +29,7 @@ const Profile = ({
   profilePicture,
   skills,
   createdAt,
+  posts,
 }) => {
   const { data: { user } = {} } = useCurrentUser()
 
@@ -125,7 +127,11 @@ const Profile = ({
                   </ul>
                 </div>
               </div>
-              <div className="flex w-full flex-col items-stretch md:w-2/3"></div>
+              <div className="flex w-full flex-col items-stretch md:w-2/3">
+                {posts.map((post) => (
+                  <Post key={post._id} {...post} />
+                ))}
+              </div>
             </div>
           </div>
         </div>

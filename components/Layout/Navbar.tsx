@@ -24,7 +24,7 @@ const MenuDropdown = ({ username, email }, onLogOut) => {
       <MenuItem href="/#" as="a">
         Bookmark
       </MenuItem>
-      <MenuItem href="/#" as="a">
+      <MenuItem href="/settings" as="a">
         Settings
       </MenuItem>
       <MenuDivider />
