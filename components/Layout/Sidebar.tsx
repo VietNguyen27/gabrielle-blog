@@ -83,7 +83,7 @@ const Sidebar = () => {
                 return (
                   <li key={index}>
                     <Link href={slug}>
-                      <a className="flex items-center gap-3 rounded-md px-3 py-2 hover:bg-indigo-100 hover:text-tertiary-900 focus:bg-indigo-50">
+                      <a className="flex items-center gap-3 rounded-md px-3 py-2 hover:bg-indigo-100 hover:text-tertiary-900 focus:bg-indigo-50 focus-visible:outline-tertiary-500">
                         <ImageRatio src={icon.src} className="w-5" />
                         {label}
                       </a>

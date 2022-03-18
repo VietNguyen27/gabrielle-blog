@@ -44,7 +44,7 @@ export const Post = ({
   hasCover,
 }: TPostProps) => {
   return (
-    <article className="relative mb-3 overflow-hidden rounded-md border border-gray-100 shadow-sm">
+    <article className="relative mb-4 overflow-hidden rounded-md border border-gray-200 shadow-sm">
       <Link href={`/${creator.username}/post/${_id}`}>
         <a className="absolute top-0 left-0 h-full w-full"></a>
       </Link>

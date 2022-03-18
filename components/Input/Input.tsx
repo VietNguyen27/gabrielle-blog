@@ -1,15 +1,22 @@
 import React, { forwardRef, ReactNode, useRef, useState } from 'react'
-import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline'
+import {
+  EyeIcon,
+  EyeOffIcon,
+  InformationCircleIcon,
+} from '@heroicons/react/outline'
 import clsx from 'clsx'
 import { useError } from '@lib/store'
 import { Error } from '@components/Error'
 import { ChangeHandler } from 'react-hook-form'
 import { removeErrorFromObject } from '@utils/utils'
+import { Tooltip } from '@components/Tooltip'
+import { ChromePicker } from 'react-color'
+import useOnClickOutside from '@hooks/useOnClickOutside'
 
 const MAX_LENGTH_INPUT = 64
 
 type TInputVariants = 'primary' | 'secondary'
-type TInputTypes = 'email' | 'text' | 'password'
+type TInputTypes = 'email' | 'text' | 'password' | 'color'
 type TInputSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 type TInputRounded = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
@@ -25,9 +32,12 @@ type TInputProps = {
   error?: string
   maxLength?: number
   readOnly?: boolean
+  defaultValue?: string
+  color?: string
   prefix?: ReactNode
   suffix?: ReactNode
   onBlur?: ChangeHandler
+  onChangeColor?: any
 }
 
 const inputSizes = {
@@ -59,19 +69,24 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
       className,
       error,
       maxLength = MAX_LENGTH_INPUT,
+      color,
       prefix,
       suffix,
       onBlur,
+      onChangeColor,
       ...rest
     },
     ref
   ) => {
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [isFocus, setIsFocus] = useState<boolean>(false)
+    const [displayColorPicker, setDisplayColorPicker] = useState(false)
     const inputContainerRef = useRef(null)
     const { error: allError, setError } = useError()
     const isInputPassword = type === 'password'
     const iconClassNames = 'w-5 h-5'
+
+    useOnClickOutside(inputContainerRef, () => setDisplayColorPicker(false))
 
     const handleBlur = (e) => {
       const { value } = e.target
@@ -88,6 +103,32 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
     const onKeyPress = () => {
       const newError = removeErrorFromObject(allError, name)
       setError(newError)
+    }
+
+    if (type === 'color') {
+      return (
+        <div className={className}>
+          <label className="block w-full">
+            <span className="mb-1 block text-base font-semibold">{label}</span>
+            <div className="relative flex items-center rounded-md border border-gray-300 p-1">
+              <div
+                className="mr-2 h-8 w-8 cursor-pointer rounded-md"
+                style={{ backgroundColor: color }}
+                onClick={() => setDisplayColorPicker(true)}
+              ></div>
+              <span>{color}</span>
+              {displayColorPicker && (
+                <div
+                  className="absolute top-full z-elevate"
+                  ref={inputContainerRef}
+                >
+                  <ChromePicker color={color} onChange={onChangeColor} />
+                </div>
+              )}
+            </div>
+          </label>
+        </div>
+      )
     }
 
     if (variant === 'primary') {
@@ -163,19 +204,28 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
     }
 
     const defaultClassName =
-      'relative flex items-end py-1 border-b-2 border-gray-200 transition-all focus-within:border-gray-700'
-    const allClassNames = clsx(defaultClassName, className)
+      'relative flex items-end py-1 border-b-2 border-gray-200 transition-all'
+    const allClassNames = clsx(
+      defaultClassName,
+      className,
+      !rest.readOnly && 'focus-within:border-gray-700'
+    )
 
     return (
       <div className={allClassNames}>
         <label className="block w-full">
-          <span className="text-base font-semibold">{label}</span>
+          <span className="mb-1 inline-block text-base font-semibold">
+            {label}
+          </span>
           <input
             {...(isInputPassword && showPassword
               ? { type: 'text' }
               : { type: 'password' })}
             {...(!isInputPassword && { type: type })}
-            className="w-full border-none bg-transparent outline-none"
+            className={clsx(
+              'w-full border-none bg-transparent outline-none',
+              rest.readOnly && 'pointer-events-none'
+            )}
             maxLength={maxLength}
             autoComplete="off"
             autoCorrect="off"
@@ -204,6 +254,14 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
           </button>
         )}
         {error && <Error className="absolute top-full pt-0.5">{error}</Error>}
+        {rest.readOnly && (
+          <Tooltip
+            className="absolute right-0"
+            message="This field cannot be edited"
+          >
+            <InformationCircleIcon className="h-5 w-5 text-gray-600" />
+          </Tooltip>
+        )}
       </div>
     )
   }

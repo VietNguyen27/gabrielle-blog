@@ -24,7 +24,7 @@ export async function findPostById(db, id) {
   return changeDataObjectToString(post[0])
 }
 
-export async function findPosts(db, by, not, limit = 10, skip = 0) {
+export async function findPosts(db, by, not, limit = 1000, skip = 0) {
   const posts = await db
     .collection('posts')
     .aggregate([
