@@ -18,7 +18,7 @@ import { TopicAnchor } from '@components/Topic'
 
 const MoreOptionsDropdown = () => {
   return (
-    <Menu className="w-[250px]" position="left-0">
+    <Menu className="w-[250px]" position="left-0 top-full">
       <MenuItem>
         <span className="font-bold">Copy Link</span>
         <DuplicateIcon className="h-6 w-6" />
@@ -47,7 +47,7 @@ const PostDetail = ({
     <div className="bg-gray-300/10 py-4">
       <Container>
         <div className="flex flex-col items-stretch pb-8 sm:flex-row">
-          <div className="relative pb-4 sm:z-dropdown sm:w-16 sm:pr-4 ">
+          <div className="relative pb-4 sm:z-elevate sm:w-16 sm:pr-4 ">
             <div className="static top-24 mt-8 flex flex-row items-center justify-center gap-4 rounded-md border border-gray-300 bg-white py-2 sm:sticky sm:flex-col sm:border-transparent sm:bg-transparent sm:py-0">
               <button className="group inline-flex flex-1 flex-row items-center justify-center sm:flex-auto sm:flex-col">
                 <span className="inline-block rounded-full p-2 transition-colors group-hover:bg-red-100 group-hover:text-red-700">
@@ -193,11 +193,11 @@ const PostDetail = ({
                   <div className="flex flex-col items-stretch">
                     {morePostsFromThisUser &&
                       morePostsFromThisUser.map((post) => (
-                        <CardSecondary {...post} />
+                        <CardSecondary key={post._id} {...post} />
                       ))}
                     {morePostsFromCommunity &&
                       morePostsFromCommunity.map((post) => (
-                        <CardSecondary {...post} />
+                        <CardSecondary key={post._id} {...post} />
                       ))}
                   </div>
                 </div>

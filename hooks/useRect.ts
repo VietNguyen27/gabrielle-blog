@@ -15,7 +15,7 @@ const getRect = (element: HTMLElement | null): TRectResult | null => {
   return element.getBoundingClientRect()
 }
 
-export const useRect = (): [
+const useRect = (): [
   TRectResult,
   React.MutableRefObject<HTMLDivElement | null>
 ] => {
@@ -53,3 +53,5 @@ export const useRect = (): [
 
   return [rect, ref]
 }
+
+export default useRect

@@ -1,10 +1,10 @@
 import { fetcher } from '@lib/fetcher'
 import useSWR from 'swr'
 
-export function useCurrentUser() {
+export const useCurrentUser = () => {
   return useSWR('/api/user', fetcher)
 }
 
-export function useUser(id) {
+export const useUser = (id) => {
   return useSWR(`/api/users/${id}`, fetcher)
 }

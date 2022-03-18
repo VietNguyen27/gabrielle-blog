@@ -5,14 +5,12 @@ global.mongo = global.mongo || {}
 let indexesCreated = false
 async function createIndexes(db) {
   await Promise.all([
+    db.collection('users').createIndexes([
+      { key: { email: 1 }, unique: true },
+      { key: { username: 1 }, unique: true },
+    ]),
     db
-      .collection('users')
-      .createIndexes([
-        { key: { email: 1 }, unique: true },
-        { key: { username: 1 } },
-      ]),
-    db
-      .collection('blogs')
+      .collection('posts')
       .createIndexes([{ key: { createdAt: -1 } }, { key: { user: -1 } }]),
     db
       .collection('comments')

@@ -33,7 +33,7 @@ type TSelectedOptionProps = {
   onChange: any
 }
 
-const randomColors = [...Array(100)].map(() => getRandomColor())
+const randomColors = [...Array(200)].map(() => getRandomColor())
 
 const SelectedOption = ({
   index,

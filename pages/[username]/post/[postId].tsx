@@ -13,7 +13,8 @@ export async function getServerSideProps(context) {
     context.req.db,
     post.creatorId,
     post._id,
-    3
+    3,
+    0
   )
 
   if (!post) {
@@ -27,7 +28,8 @@ export async function getServerSideProps(context) {
       context.req.db,
       null,
       post._id,
-      3
+      3,
+      0
     )
     return { props: { post, morePostsFromCommunity } }
   }

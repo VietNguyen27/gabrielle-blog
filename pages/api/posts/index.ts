@@ -1,5 +1,5 @@
 import nextConnect from 'next-connect'
-import { insertPost } from '@api-lib/db/post'
+import { findPosts, insertPost } from '@api-lib/db/post'
 import { middleware, validate } from '@api-lib/middlewares'
 import { postSchema } from '@api-lib/schemas'
 import { v2 as cloudinary } from 'cloudinary'
@@ -56,6 +56,18 @@ handler.post(
     return res.json({ insertedId })
   })
 )
+
+handler.get(async (req: any, res: any) => {
+  const posts = await findPosts(
+    req.db,
+    req.query.by,
+    null,
+    req.query.limit ? parseInt(req.query.limit, 10) : undefined,
+    req.query.skip ? parseInt(req.query.skip, 10) : undefined
+  )
+
+  res.json({ posts })
+})
 
 export const config = { api: { bodyParser: false } }
 

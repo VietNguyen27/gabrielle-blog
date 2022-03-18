@@ -28,9 +28,10 @@ const Write = () => {
   const [saving, setSaving] = useState<boolean>(false)
   const [changeTab, setChangeTab] = useState<boolean>(false)
   const coverRef = useRef(null)
+  const editorRef = useRef(null)
   const [cover, setCover] = useState('')
   const { setValue, handleSubmit } = useForm()
-  const { toggleLoading } = useLoading()
+  const { loading, toggleLoading } = useLoading()
   const { error, setError, resetError } = useError()
   const { data: { user } = {} } = useCurrentUser()
   const router = useRouter()
@@ -125,6 +126,9 @@ const Write = () => {
       resetError()
     } catch (error: any) {
       setError(getErrorFromJoiMessage(error))
+      if (editorRef.current) {
+        ;(editorRef.current as any).scrollTop = 0
+      }
     } finally {
       toggleLoading(false)
     }
@@ -137,7 +141,10 @@ const Write = () => {
           <Tab label="Edit" className="flex items-stretch pb-8">
             <div className="hidden w-16 lg:block"></div>
             <Form className="w-full lg:w-2/3" onSubmit={() => setSaving(true)}>
-              <div className="relative h-[calc(100vh-235px)] overflow-auto rounded-md border border-gray-300 shadow">
+              <div
+                ref={editorRef}
+                className="relative h-[calc(100vh-235px)] overflow-auto rounded-md border border-gray-300 shadow"
+              >
                 {!!Object.values(error).length && (
                   <div className="bg-red-100 p-4">
                     <p className="pb-3 text-lg font-bold text-red-700">
@@ -191,10 +198,10 @@ const Write = () => {
               </div>
               <div className="mt-6 flex items-center justify-between gap-4">
                 <Button
-                  type={saving ? 'button' : 'submit'}
+                  type={loading ? 'button' : 'submit'}
                   variant="tertiary"
                   className="rounded-md px-3.5 py-2"
-                  loading={saving}
+                  loading={loading}
                   loadingBackground="bg-tertiary-900"
                 >
                   Create
