@@ -92,6 +92,7 @@ module.exports = {
         'slide-up': 'slide-up 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards',
         'slide-down': 'slide-down 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards',
         flash: '0.25s ease 0s 2 normal none running flash',
+        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         'slide-up': {
@@ -113,6 +114,11 @@ module.exports = {
         flash: {
           '50%': {
             opacity: 0.3,
+          },
+        },
+        pulse: {
+          '50%': {
+            opacity: 0.5,
           },
         },
       },

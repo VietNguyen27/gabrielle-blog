@@ -5,8 +5,12 @@ import { TopicCard } from '@components/Topic'
 import { Form } from '@components/Form'
 import { Input } from '@components/Input'
 import { SearchIcon } from '@heroicons/react/outline'
+import { TopicCardSkeleton } from '@components/Skeleton'
+import { useTopics } from '@lib/topic'
 
-const Topics = ({ topics }) => {
+const Topics = () => {
+  const { data: { topics } = {} } = useTopics()
+
   return (
     <Container>
       <div className="py-8">
@@ -25,9 +29,11 @@ const Topics = ({ topics }) => {
           </Form>
         </div>
         <div className="-mx-3 flex flex-wrap items-stretch">
-          {topics.map((topic) => (
-            <TopicCard key={topic._id} {...topic} />
-          ))}
+          {topics
+            ? topics.map((topic) => <TopicCard key={topic._id} {...topic} />)
+            : [...Array(20)].map((_, index) => (
+                <TopicCardSkeleton key={index} />
+              ))}
         </div>
       </div>
     </Container>

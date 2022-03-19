@@ -18,7 +18,7 @@ type TTopic = {
   color: string
 }
 
-type TPostProps = {
+type TPostCardProps = {
   _id: string
   title: string
   cover: string
@@ -40,7 +40,7 @@ type TTrendingPostProps = {
   createdAt: number
 }
 
-export const Post = ({
+export const PostCard = ({
   _id,
   title,
   cover,
@@ -51,7 +51,7 @@ export const Post = ({
   readingTime,
   createdAt,
   hasCover,
-}: TPostProps) => {
+}: TPostCardProps) => {
   return (
     <article className="relative mb-4 overflow-hidden rounded-md border border-gray-200 shadow-sm">
       <Link href={`/${creator.username}/post/${_id}`}>
@@ -137,7 +137,7 @@ export const TrendingPost = ({
 }: TTrendingPostProps) => {
   return (
     <article className="flex items-stretch gap-4">
-      <div className="-mt-2 flex-shrink-0 text-3xl font-bold text-gray-200">
+      <div className="-mt-2 w-9 flex-shrink-0 whitespace-nowrap text-3xl font-bold text-gray-200">
         {numOrder >= 10 ? numOrder : '0' + numOrder}
       </div>
       <div className="flex w-full flex-col">

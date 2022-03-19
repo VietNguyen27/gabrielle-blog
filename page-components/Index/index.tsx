@@ -1,5 +1,5 @@
 import { Container, Sidebar } from '@components/Layout'
-import { Post, TrendingPost } from '@components/Post'
+import { PostCard, TrendingPost } from '@components/Post'
 import { TrendingUpIcon } from '@heroicons/react/outline'
 import { Button } from '@components/Button'
 import { Heading } from '@components/Heading'
@@ -8,6 +8,12 @@ import { usePosts } from '@lib/post'
 import useOnScreen from '@hooks/useOnScreen'
 import { useEffect, useRef } from 'react'
 import { useTopics } from '@lib/topic'
+import {
+  PostCardSkeleton,
+  TopicPopularSkeleton,
+  TrendingPostSkeleton,
+} from '@components/Skeleton'
+import { TopicPopular } from '@components/Topic'
 
 const Home = () => {
   const ref = useRef(null)
@@ -58,11 +64,18 @@ const Home = () => {
             Trending on Gabrielle
           </Heading>
           <div className="grid grid-cols-1 gap-x-4 gap-y-8 pt-2 sm:grid-cols-2 md:grid-cols-3">
-            {posts &&
-              posts
-                .slice(0, 6)
-                .map((post, index) => (
-                  <TrendingPost key={post._id} numOrder={index + 1} {...post} />
+            {posts && posts.length
+              ? posts
+                  .slice(0, 6)
+                  .map((post, index) => (
+                    <TrendingPost
+                      key={post._id}
+                      numOrder={index + 1}
+                      {...post}
+                    />
+                  ))
+              : [...Array(6)].map((_, index) => (
+                  <TrendingPostSkeleton key={index} numOrder={index + 1} />
                 ))}
           </div>
         </Container>
@@ -74,31 +87,30 @@ const Home = () => {
               <Sidebar />
             </div>
             <div className="flex flex-1 flex-col items-stretch">
-              {posts &&
-                posts.map((post, index) => (
-                  <Post key={post._id} {...post} hasCover={index === 0} />
-                ))}
+              {posts && posts.length
+                ? posts.map((post, index) => (
+                    <PostCard key={post._id} {...post} hasCover={index === 0} />
+                  ))
+                : [...Array(6)].map((_, index) => (
+                    <PostCardSkeleton key={index} hasCover={index === 0} />
+                  ))}
               <div className="pt-4 text-center text-xl font-semibold" ref={ref}>
                 {isReachingEnd && 'No more posts'}
               </div>
             </div>
             <div className="sticky top-20 hidden w-1/4 px-2 lg:block">
               <Heading level={2} className="pl-4 text-lg capitalize">
-                Popular tags
+                Popular topics
               </Heading>
               <nav className="mt-2 pr-2">
                 <ul className="flex flex-col gap-y-2 pb-4">
-                  {topics &&
-                    topics.map(({ _id, value, label }) => (
-                      <li key={_id}>
-                        <a
-                          href={`/topics/${value}`}
-                          className="text-md flex whitespace-nowrap rounded px-4 py-2 hover:bg-gray-100 hover:underline"
-                        >
-                          #{label}
-                        </a>
-                      </li>
-                    ))}
+                  {topics
+                    ? topics.map(({ _id, value, label }) => (
+                        <TopicPopular key={_id} value={value} label={label} />
+                      ))
+                    : [...Array(10)].map((_, index) => (
+                        <TopicPopularSkeleton key={index} />
+                      ))}
                 </ul>
               </nav>
             </div>

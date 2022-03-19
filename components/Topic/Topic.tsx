@@ -60,6 +60,18 @@ export const TopicAnchor = ({
   )
 }
 
+export const TopicPopular = ({ value, label }) => {
+  return (
+    <li>
+      <Link href={`/topics/${value}`}>
+        <a className="text-md flex whitespace-nowrap rounded px-4 py-2 hover:bg-gray-100 hover:underline">
+          #{label}
+        </a>
+      </Link>
+    </li>
+  )
+}
+
 export const TopicCard = ({
   value,
   label,
