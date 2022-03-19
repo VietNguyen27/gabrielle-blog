@@ -1,1 +1,1 @@
-export { TopicAnchor, TopicCard } from './Topic'
+export * from './Topic'

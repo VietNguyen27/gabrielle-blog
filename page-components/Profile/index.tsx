@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Button } from '@components/Button'
 import { Container } from '@components/Layout'
 import {
@@ -13,14 +13,17 @@ import { getFormattedDate } from '@utils/utils'
 import { useCurrentUser } from '@lib/user'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import { ImageRatio } from '@components/ImageRatio'
-import { Post } from '@components/Post'
+import { PostCard } from '@components/Post'
+import useOnScreen from '@hooks/useOnScreen'
+import { usePosts } from '@lib/post'
+import { PostCardSkeleton } from '@components/Skeleton'
 
 const Profile = ({
+  _id,
   username,
   email,
   backdrop,
   bio,
-  bookmarks,
   postsCount,
   followersCount,
   followingCount,
@@ -29,9 +32,23 @@ const Profile = ({
   profilePicture,
   skills,
   createdAt,
-  posts,
 }) => {
   const { data: { user } = {} } = useCurrentUser()
+  const ref = useRef(null)
+  const isVisible = useOnScreen(ref)
+  const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
+    usePosts({
+      creatorId: _id,
+    })
+  const posts = data
+    ? data.reduce((acc, val) => [...acc, ...val.posts], [])
+    : []
+
+  useEffect(() => {
+    if (isVisible && !isReachingEnd && !isRefreshing && !isLoadingMore) {
+      setSize(size + 1)
+    }
+  }, [isVisible, isRefreshing])
 
   return (
     <>
@@ -128,9 +145,11 @@ const Profile = ({
                 </div>
               </div>
               <div className="flex w-full flex-col items-stretch md:w-2/3">
-                {posts.map((post) => (
-                  <Post key={post._id} {...post} />
-                ))}
+                {posts && posts.length
+                  ? posts.map((post) => <PostCard key={post._id} {...post} />)
+                  : [...Array(6)].map((_, index) => (
+                      <PostCardSkeleton key={index} />
+                    ))}
               </div>
             </div>
           </div>

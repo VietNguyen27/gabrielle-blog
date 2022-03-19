@@ -6,13 +6,11 @@ import { findUserByUsername } from '@api-lib/db'
 import { extractUser } from '@lib/user'
 import Profile from '@page-components/Profile'
 import { Layout } from '@components/Layout'
-import { findPosts } from '@api-lib/db/post'
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   await middleware.apply(context.req, context.res)
 
   const user = await findUserByUsername(context.req.db, context.params.username)
-  const posts = await findPosts(context.req.db, user._id, null, null)
 
   if (!user) {
     return {
@@ -21,16 +19,16 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   }
 
   user._id = String(user._id)
-  return { props: { user: extractUser(user), posts } }
+  return { props: { user: extractUser(user) } }
 }
 
-const ProfilePage = ({ user, posts }) => {
+const ProfilePage = ({ user }) => {
   return (
     <>
       <Head>
         <title>{user.username} - Gabrielle Community</title>
       </Head>
-      <Profile posts={posts} {...user} />
+      <Profile {...user} />
     </>
   )
 }
