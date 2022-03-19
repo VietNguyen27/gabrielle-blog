@@ -15,6 +15,7 @@ import { ImageRatio } from '@components/ImageRatio'
 import { CardSecondary } from '@components/Card'
 import { useCurrentUser } from '@lib/user'
 import { TopicAnchor } from '@components/Topic'
+import { ALink } from '@components/ALink'
 
 const MoreOptionsDropdown = () => {
   return (
@@ -172,21 +173,14 @@ const PostDetail = ({
                     {morePostsFromThisUser && (
                       <h2 className="text-xl font-bold">
                         More from{' '}
-                        <Link href={`/${creator.username}`}>
-                          <a className="text-tertiary-500">
-                            {creator.username}
-                          </a>
-                        </Link>
+                        <ALink href={`/${creator.username}`}>
+                          {creator.username}
+                        </ALink>
                       </h2>
                     )}
                     {morePostsFromCommunity && (
                       <h2 className="text-xl font-bold">
-                        Trending on{' '}
-                        <Link href="/">
-                          <a className="text-tertiary-500">
-                            Gabrielle Community
-                          </a>
-                        </Link>
+                        Trending on <ALink href="/">Gabrielle Community</ALink>
                       </h2>
                     )}
                   </header>

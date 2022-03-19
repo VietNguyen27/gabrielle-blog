@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@components/Button'
 import { Heading } from '@components/Heading'
 import { List, ListItem } from '@components/List'
-import Link from 'next/link'
+import { ALink } from '@components/ALink'
 
 const DeleteAccount = () => {
   return (
@@ -27,10 +27,7 @@ const DeleteAccount = () => {
         Delete account
       </Button>
       <p className="pt-6">
-        <Link href="/contact">
-          <a className="text-tertiary-500">Contact us</a>
-        </Link>{' '}
-        if you have any questions.
+        <ALink href="/contact">Contact us</ALink> if you have any questions.
       </p>
     </div>
   )

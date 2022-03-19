@@ -1,6 +1,6 @@
+import { ALink } from '@components/ALink'
 import { Container } from '@components/Layout'
 import { useCurrentUser } from '@lib/user'
-import Link from 'next/link'
 import React from 'react'
 import BasicInfo from './BasicInfo'
 import DeleteAccount from './DeleteAccount'
@@ -14,9 +14,7 @@ const Settings = () => {
       <div className="mx-auto flex flex-col items-stretch md:w-2/3 lg:w-1/2">
         <h1 className="pb-4 text-2xl font-bold">
           Settings for{' '}
-          <Link href={`/${user.username}`}>
-            <a className="text-tertiary-500">@{user.username}</a>
-          </Link>
+          <ALink href={`/${user.username}`}>@{user.username}</ALink>
         </h1>
         <div className="flex flex-col items-stretch gap-6">
           <BasicInfo />

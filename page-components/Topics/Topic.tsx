@@ -4,10 +4,10 @@ import { Container } from '@components/Layout'
 import { PostCard } from '@components/Post'
 import { Button } from '@components/Button'
 import NoPosts from '@public/static/images/no-search.png'
-import Link from 'next/link'
 import Image from 'next/image'
 import useOnScreen from '@hooks/useOnScreen'
 import { PostCardSkeleton } from '@components/Skeleton'
+import { ALink } from '@components/ALink'
 
 const Topic = ({ topic }) => {
   const ref = useRef(null)
@@ -53,9 +53,7 @@ const Topic = ({ topic }) => {
               <p>
                 This topic have no posts yet. Do you want to be the first to
                 write about this? Write it{' '}
-                <Link href="/write">
-                  <a className="text-tertiary-500">right now</a>
-                </Link>
+                <ALink href="/write">right now</ALink>
               </p>
             </div>
           )}
