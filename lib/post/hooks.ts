@@ -3,10 +3,7 @@ import { fetcher } from '@lib/fetcher'
 
 const POSTS_PER_PAGE = 8
 
-export const usePostPages = ({
-  creatorId = '',
-  limit = POSTS_PER_PAGE,
-} = {}) => {
+export const usePosts = ({ creatorId = '', limit = POSTS_PER_PAGE } = {}) => {
   const { data, error, size, isValidating, ...props } = useSWRInfinite(
     (pageIndex, previousPageData) => {
       if (previousPageData && !previousPageData.posts.length) return null

@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb'
+import { findTopicAndUpdate, insertTopic } from './topic'
 
 export async function findPostById(db, id) {
   const post = await db
@@ -15,13 +16,26 @@ export async function findPostById(db, id) {
         },
       },
       { $unwind: '$creator' },
-      { $project: dbProjectionCreators('creator.') },
+      {
+        $lookup: {
+          from: 'topics',
+          localField: 'topic',
+          foreignField: '_id',
+          as: 'topics',
+        },
+      },
+      { $project: { topic: 0, ...dbProjectionCreators('creator.') } },
     ])
     .toArray()
 
   if (!post[0]) return null
 
-  return changeDataObjectToString(post[0])
+  const topics = post[0].topics.map(({ _id, ...rest }) => ({
+    _id: String(_id),
+    ...rest,
+  }))
+
+  return { ...changeDataObjectToString(post[0]), topics }
 }
 
 export async function findPosts(db, by, not, limit = 1000, skip = 0) {
@@ -34,9 +48,9 @@ export async function findPosts(db, by, not, limit = 1000, skip = 0) {
           ...(not && { _id: { $ne: new ObjectId(not) } }),
         },
       },
+      { $sort: { createdAt: -1 } },
       { $skip: skip },
       { $limit: limit },
-      { $sort: { _id: -1 } },
       {
         $lookup: {
           from: 'users',
@@ -47,14 +61,26 @@ export async function findPosts(db, by, not, limit = 1000, skip = 0) {
       },
       { $unwind: '$creator' },
       {
-        $project: { content: 0, ...dbProjectionCreators('creator.') },
+        $lookup: {
+          from: 'topics',
+          localField: 'topic',
+          foreignField: '_id',
+          as: 'topics',
+        },
+      },
+      {
+        $project: { content: 0, topic: 0, ...dbProjectionCreators('creator.') },
       },
     ])
     .toArray()
 
   return posts.map((post) => {
+    const topics = post.topics.map(({ _id, ...rest }) => ({
+      _id: String(_id),
+      ...rest,
+    }))
     changeDataObjectToString(post)
-    return post
+    return { ...post, topics }
   })
 }
 
@@ -65,7 +91,6 @@ export async function insertPost(
   const post = {
     creatorId,
     content,
-    topic,
     title,
     cover,
     readingTime,
@@ -80,7 +105,31 @@ export async function insertPost(
     updatedAt: new Date(),
   }
 
-  const { insertedId } = await db.collection('posts').insertOne(post)
+  const topicArr = await Promise.all(
+    topic.map(async (topic) => {
+      const { value, label, color } = topic
+      const topicExisted = await db.collection('topics').findOne({ value })
+
+      if (topicExisted) {
+        await findTopicAndUpdate(db, String(topicExisted._id))
+        return topicExisted._id
+      } else {
+        const insertedId = await insertTopic(db, {
+          label,
+          value,
+          name: value,
+          description: '',
+          color,
+        })
+        await findTopicAndUpdate(db, String(insertedId))
+        return insertedId
+      }
+    })
+  )
+
+  const { insertedId } = await db
+    .collection('posts')
+    .insertOne({ ...post, topic: topicArr })
 
   if (published) {
     await db

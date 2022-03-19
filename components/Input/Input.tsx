@@ -165,6 +165,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
             >
               {label}
             </label>
+            {prefix && prefix}
             <input
               {...(isInputPassword && showPassword
                 ? { type: 'text' }
@@ -183,6 +184,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
               onKeyPress={onKeyPress}
               {...rest}
             />
+            {suffix && suffix}
           </div>
           {type === 'password' && (
             <button
@@ -217,6 +219,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
           <span className="mb-1 inline-block text-base font-semibold">
             {label}
           </span>
+          {prefix && prefix}
           <input
             {...(isInputPassword && showPassword
               ? { type: 'text' }
@@ -238,6 +241,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
             onKeyPress={onKeyPress}
             {...rest}
           />
+          {suffix && suffix}
         </label>
         {type === 'password' && (
           <button

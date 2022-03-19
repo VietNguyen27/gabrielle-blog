@@ -4,70 +4,17 @@ import { TrendingUpIcon } from '@heroicons/react/outline'
 import { Button } from '@components/Button'
 import { Heading } from '@components/Heading'
 import HeroImg from '@public/static/images/hero.png'
-
-import UserImg1 from '@public/static/images/dummy-user-1.jpeg'
-import UserImg2 from '@public/static/images/dummy-user-2.jpeg'
-import { usePostPages } from '@lib/post'
+import { usePosts } from '@lib/post'
 import useOnScreen from '@hooks/useOnScreen'
-import { Fragment, useEffect, useRef, useState } from 'react'
-
-const dummyTrendingPosts = [
-  {
-    title: "Finding the I's in Product Development",
-    author: {
-      displayName: 'Catarina Ricca',
-      photoURL: UserImg1,
-      position: 'Product Owner',
-    },
-    createdAt: 'February 9, 2022',
-  },
-  {
-    title: 'Yarn, npm, or pnpm?',
-    author: {
-      displayName: 'Gil Mendes',
-      photoURL: UserImg2,
-      position: 'Principal Developer',
-    },
-    createdAt: 'January 17, 2022',
-  },
-]
-
-const dummyTags = [
-  {
-    slug: '/#',
-    label: 'Culture',
-  },
-  {
-    slug: '/#',
-    label: 'Self',
-  },
-  {
-    slug: '/#',
-    label: 'Relationships',
-  },
-  {
-    slug: '/#',
-    label: 'Data Science',
-  },
-  {
-    slug: '/#',
-    label: 'Programming',
-  },
-  {
-    slug: '/#',
-    label: 'Health',
-  },
-  {
-    slug: '/#',
-    label: 'Politics',
-  },
-]
+import { useEffect, useRef } from 'react'
+import { useTopics } from '@lib/topic'
 
 const Home = () => {
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
+  const { data: { topics } = {} } = useTopics(10)
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
-    usePostPages()
+    usePosts()
   const posts = data
     ? data.reduce((acc, val) => [...acc, ...val.posts], [])
     : []
@@ -111,10 +58,12 @@ const Home = () => {
             Trending on Gabrielle
           </Heading>
           <div className="grid grid-cols-1 gap-x-4 gap-y-8 pt-2 sm:grid-cols-2 md:grid-cols-3">
-            {[...Array(6).keys()].map((_, index) => {
-              const post = dummyTrendingPosts[(index + 1) % 2]
-              return <TrendingPost key={index} numOrder={index + 1} {...post} />
-            })}
+            {posts &&
+              posts
+                .slice(0, 6)
+                .map((post, index) => (
+                  <TrendingPost key={post._id} numOrder={index + 1} {...post} />
+                ))}
           </div>
         </Container>
       </section>
@@ -139,16 +88,17 @@ const Home = () => {
               </Heading>
               <nav className="mt-2 pr-2">
                 <ul className="flex flex-col gap-y-2 pb-4">
-                  {dummyTags.map(({ slug, label }, index) => (
-                    <li key={index}>
-                      <a
-                        href={slug}
-                        className="text-md flex whitespace-nowrap rounded px-4 py-2 hover:bg-gray-100 hover:underline"
-                      >
-                        #{label}
-                      </a>
-                    </li>
-                  ))}
+                  {topics &&
+                    topics.map(({ _id, value, label }) => (
+                      <li key={_id}>
+                        <a
+                          href={`/topics/${value}`}
+                          className="text-md flex whitespace-nowrap rounded px-4 py-2 hover:bg-gray-100 hover:underline"
+                        >
+                          #{label}
+                        </a>
+                      </li>
+                    ))}
                 </ul>
               </nav>
             </div>
