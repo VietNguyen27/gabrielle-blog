@@ -7,7 +7,7 @@ type TTitleProps = {
 }
 
 const Title = ({ children, className }: TTitleProps) => {
-  const defaultClassName = 'text-4xl font-bold'
+  const defaultClassName = 'text-2xl md:text-3xl font-bold'
   const allClassNames = clsx(defaultClassName, className)
 
   return <h1 className={allClassNames}>{children}</h1>
