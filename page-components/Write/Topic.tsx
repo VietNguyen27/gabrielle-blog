@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { Select } from '@components/Select'
-import { topics } from '@page-components/Auth/data'
+import { useTopics } from '@lib/topic'
 
 const Topic = ({ setValue }) => {
-  const [topic, setTopic] = useState([])
+  const [topicsSelected, setTopicsSelected] = useState([])
+  const { data: { topics } = {} } = useTopics()
 
   useEffect(() => {
-    setValue('topic', topic || '')
-  }, [topic])
+    setValue('topic', topicsSelected || '')
+  }, [topicsSelected])
 
   return (
     <Select
       title="Top topics"
       options={topics}
       placeholder="Select topics..."
-      selectedOptions={topic}
+      selectedOptions={topicsSelected}
       maxHeight={270}
-      onChange={setTopic}
+      onChange={setTopicsSelected}
       maxOptions={4}
       multiple
     />

@@ -12,6 +12,7 @@ async function createIndexes(db) {
     db
       .collection('posts')
       .createIndexes([{ key: { createdAt: -1 } }, { key: { user: -1 } }]),
+    db.collection('topics').createIndexes([{ key: { createdAt: -1 } }]),
     db
       .collection('comments')
       .createIndexes([{ key: { createdAt: -1 } }, { key: { blog: -1 } }]),

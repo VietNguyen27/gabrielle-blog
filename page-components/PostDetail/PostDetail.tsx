@@ -30,7 +30,7 @@ const MoreOptionsDropdown = () => {
 
 const PostDetail = ({
   title,
-  topic,
+  topics,
   content,
   cover,
   creator,
@@ -103,7 +103,7 @@ const PostDetail = ({
                     {title}
                   </h1>
                   <div className="flex gap-1">
-                    {topic.map((topic) => (
+                    {topics.map((topic) => (
                       <TopicAnchor key={topic.value} {...topic} />
                     ))}
                   </div>

@@ -22,7 +22,7 @@ type TPostProps = {
   _id: string
   title: string
   cover: string
-  topic: TTopic[]
+  topics: TTopic[]
   creator: TCreator
   likesCount: number
   commentsCount: number
@@ -31,11 +31,20 @@ type TPostProps = {
   hasCover: boolean
 }
 
+type TTrendingPostProps = {
+  _id: string
+  numOrder: number
+  title: string
+  creator: TCreator
+  readingTime: number
+  createdAt: number
+}
+
 export const Post = ({
   _id,
   title,
   cover,
-  topic,
+  topics,
   creator,
   likesCount,
   commentsCount,
@@ -80,7 +89,7 @@ export const Post = ({
             {title}
           </h2>
           <div className="relative z-elevate -ml-2 flex flex-wrap gap-1 pb-2">
-            {topic.map((topic) => (
+            {topics.map((topic) => (
               <TopicAnchor key={topic.value} {...topic} />
             ))}
           </div>
@@ -118,28 +127,41 @@ export const Post = ({
   )
 }
 
-export const TrendingPost = ({ numOrder, title, author, createdAt }) => {
+export const TrendingPost = ({
+  _id,
+  numOrder,
+  title,
+  creator,
+  readingTime,
+  createdAt,
+}: TTrendingPostProps) => {
   return (
     <article className="flex items-stretch gap-4">
       <div className="-mt-2 flex-shrink-0 text-3xl font-bold text-gray-200">
         {numOrder >= 10 ? numOrder : '0' + numOrder}
       </div>
       <div className="flex w-full flex-col">
-        <div className="mb-1 flex items-center gap-2">
+        <div className="mb-2 flex items-center gap-2">
           <div className="relative h-6 w-6 overflow-hidden rounded-full">
-            <img
-              src={author.photoURL.src}
-              alt={author.displayName}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
+            <Link href={`/${creator.username}`}>
+              <img
+                src={creator.profilePicture}
+                alt={creator.username}
+                className="absolute inset-0 h-full w-full cursor-pointer object-cover"
+              />
+            </Link>
           </div>
-          <span className="text-sm font-semibold">{author.displayName}</span>
+          <Link href={`/${creator.username}`}>
+            <a className="text-sm font-semibold">{creator.username}</a>
+          </Link>
         </div>
-        <h3 className="mb-2 text-lg font-bold">{title}</h3>
+        <Link href={`/${creator.username}/post/${_id}`}>
+          <a className="mb-2 text-lg font-bold line-clamp-2">{title}</a>
+        </Link>
         <div className="flex items-center gap-2 text-sm">
-          <span>{createdAt}</span>
+          <span>{getFormattedDate(createdAt)}</span>
           <span className="inline-block h-1 w-1 rounded-full bg-gray-700"></span>
-          <span>4 min read</span>
+          <span>{readingTime} min read</span>
         </div>
       </div>
     </article>

@@ -19,7 +19,7 @@ type TSelectProps = {
 }
 
 type TOptionProps = {
-  index: number
+  color: string
   label: string
   value: string
   description: string
@@ -32,8 +32,6 @@ type TSelectedOptionProps = {
   color: string
   onChange: any
 }
-
-const randomColors = [...Array(200)].map(() => getRandomColor())
 
 const SelectedOption = ({
   index,
@@ -60,14 +58,12 @@ const SelectedOption = ({
 }
 
 const Option = ({
-  index,
+  color,
   label,
   value,
   description,
   onChange,
 }: TOptionProps) => {
-  const color = randomColors[index]
-
   return (
     <li
       className="group flex cursor-pointer flex-col items-stretch rounded px-2 py-2.5 lowercase hover:bg-gray-100"
@@ -102,14 +98,16 @@ const Select = ({
   selectedOptions,
   onChange,
 }: TSelectProps) => {
-  const validOptions = options.filter(
-    (option: any) =>
-      selectedOptions &&
-      !selectedOptions.find(
-        (selected: any) =>
-          selected.value.toLowerCase() === option.value.toLowerCase()
+  const validOptions = options
+    ? options.filter(
+        (option: any) =>
+          selectedOptions &&
+          !selectedOptions.find(
+            (selected: any) =>
+              selected.value.toLowerCase() === option.value.toLowerCase()
+          )
       )
-  )
+    : []
   const [inputValue, setInputValue] = useState<string>('')
   const [showOptions, setShowOptions] = useState<boolean>(false)
   const [filteredOptions, setFilteredOptions] = useState(validOptions)
@@ -122,7 +120,7 @@ const Select = ({
 
   useEffect(() => {
     setFilteredOptions(validOptions)
-  }, [selectedOptions])
+  }, [selectedOptions, options])
 
   const handleFilter = (e) => {
     const { value } = e.target
@@ -224,12 +222,7 @@ const Select = ({
             style={{ maxHeight }}
           >
             {filteredOptions.map((option: any, index) => (
-              <Option
-                key={index}
-                index={index}
-                onChange={handleSelect}
-                {...option}
-              />
+              <Option key={index} onChange={handleSelect} {...option} />
             ))}
             {!filteredOptions.length && (
               <li className="px-4 py-2">No options found</li>
