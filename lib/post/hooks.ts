@@ -3,7 +3,11 @@ import { fetcher } from '@lib/fetcher'
 
 const POSTS_PER_PAGE = 8
 
-export const usePosts = ({ creatorId = '', limit = POSTS_PER_PAGE } = {}) => {
+export const usePosts = ({
+  creatorId = '',
+  topic = '',
+  limit = POSTS_PER_PAGE,
+} = {}) => {
   const { data, error, size, isValidating, ...props } = useSWRInfinite(
     (pageIndex, previousPageData) => {
       if (previousPageData && !previousPageData.posts.length) return null
@@ -13,6 +17,7 @@ export const usePosts = ({ creatorId = '', limit = POSTS_PER_PAGE } = {}) => {
       searchParams.set('skip', pageIndex * POSTS_PER_PAGE + '')
 
       if (creatorId) searchParams.set('by', creatorId)
+      if (topic) searchParams.set('topic', topic)
 
       return `/api/posts?${searchParams.toString()}`
     },

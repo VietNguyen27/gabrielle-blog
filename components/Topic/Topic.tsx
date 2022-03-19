@@ -68,16 +68,18 @@ export const TopicCard = ({
   postsPublished,
   className,
 }: TTopicCardProps) => {
-  const defaultClassName = 'w-1/3 px-3 py-2.5'
+  const defaultClassName = 'w-1/2 md:w-1/3 px-1 sm:px-3 py-1 sm:py-2.5'
   const allClassNames = clsx(defaultClassName, className)
 
   return (
     <div className={allClassNames}>
       <div className="flex h-full flex-col items-stretch overflow-hidden rounded-md border border-gray-200 shadow">
         <div className="h-5" style={{ backgroundColor: color }}></div>
-        <div className="p-5">
+        <div className="p-3 sm:p-5">
           <TopicAnchor value={value} label={label} color={color} />
-          <p className="mt-3 mb-1 line-clamp-3">{description}</p>
+          <p className="mt-3 mb-1 line-clamp-2 sm:line-clamp-3">
+            {description}
+          </p>
           <p className="mb-4 text-sm text-gray-500">
             {postsPublished} posts published
           </p>

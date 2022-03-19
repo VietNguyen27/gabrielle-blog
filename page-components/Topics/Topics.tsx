@@ -17,7 +17,7 @@ const Topics = ({ topics }) => {
               name="search"
               label="Search for tag"
               rounded="xs"
-              className="w-[200px] pr-4"
+              className="w-[150px] pr-4 sm:w-[200px]"
               suffix={
                 <SearchIcon className="absolute -right-2 top-1/2 h-5 w-5 -translate-y-1/2" />
               }

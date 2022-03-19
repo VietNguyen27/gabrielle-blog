@@ -61,6 +61,7 @@ handler.get(async (req: any, res: any) => {
   const posts = await findPosts(
     req.db,
     req.query.by,
+    req.query.topic,
     null,
     req.query.limit ? parseInt(req.query.limit, 10) : undefined,
     req.query.skip ? parseInt(req.query.skip, 10) : undefined
