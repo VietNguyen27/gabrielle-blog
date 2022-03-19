@@ -11,6 +11,7 @@ import { useCurrentUser } from '@lib/user'
 import { getErrorFromJoiMessage } from '@utils/utils'
 import { useError, useLoading } from '@lib/store'
 import { useRouter } from 'next/router'
+import { ALink } from '@components/ALink'
 
 const FormFields = () => {
   const { register } = useFormContext()
@@ -112,10 +113,7 @@ const Login = () => {
             <FormFields />
           </Form>
           <p>
-            Don't have an account?{' '}
-            <Link href="/register">
-              <a className="text-tertiary-900">Sign up</a>
-            </Link>
+            Don't have an account? <ALink href="/register">Sign up</ALink>
           </p>
         </div>
       </main>
