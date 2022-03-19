@@ -50,7 +50,7 @@ const Navbar = () => {
 
   return (
     <nav className="flex items-center">
-      <ul className="flex items-center gap-4 pl-3">
+      <ul className="flex items-center gap-2 pl-3 sm:gap-4">
         {!user ? (
           <>
             <li>
