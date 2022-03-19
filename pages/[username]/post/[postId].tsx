@@ -12,6 +12,7 @@ export async function getServerSideProps(context) {
   const morePostsFromThisUser = await findPosts(
     context.req.db,
     post.creatorId,
+    null,
     post._id,
     3,
     0
@@ -26,6 +27,7 @@ export async function getServerSideProps(context) {
   if (!morePostsFromThisUser.length) {
     const morePostsFromCommunity = await findPosts(
       context.req.db,
+      null,
       null,
       post._id,
       3,

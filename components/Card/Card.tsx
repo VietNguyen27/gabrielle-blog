@@ -20,7 +20,7 @@ export const CardSecondary = ({
         <p className="line-clamp-3">{title}</p>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           {topics.map((topic) => (
-            <span className="text-sm text-gray-500">
+            <span key={topic._id} className="text-sm text-gray-500">
               #{topic.label.toLowerCase()}
             </span>
           ))}

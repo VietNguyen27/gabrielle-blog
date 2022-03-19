@@ -1,5 +1,15 @@
 import { ObjectId } from 'mongodb'
 
+export async function findTopicByName(db, name) {
+  const topic = await db.collection('topics').findOne({ value: name })
+
+  if (!topic) return null
+
+  topic._id = String(topic._id)
+
+  return topic
+}
+
 export async function findTopics(db, limit = 50) {
   const topics = await db
     .collection('topics')

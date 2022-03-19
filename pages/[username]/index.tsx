@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   await middleware.apply(context.req, context.res)
 
   const user = await findUserByUsername(context.req.db, context.params.username)
-  const posts = await findPosts(context.req.db, user._id, null)
+  const posts = await findPosts(context.req.db, user._id, null, null)
 
   if (!user) {
     return {

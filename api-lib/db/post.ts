@@ -38,13 +38,14 @@ export async function findPostById(db, id) {
   return { ...changeDataObjectToString(post[0]), topics }
 }
 
-export async function findPosts(db, by, not, limit = 1000, skip = 0) {
+export async function findPosts(db, by, topic, not, limit = 1000, skip = 0) {
   const posts = await db
     .collection('posts')
     .aggregate([
       {
         $match: {
           ...(by && { creatorId: new ObjectId(by) }),
+          ...(topic && { topic: new ObjectId(topic) }),
           ...(not && { _id: { $ne: new ObjectId(not) } }),
         },
       },
