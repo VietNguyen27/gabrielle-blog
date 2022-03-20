@@ -8,9 +8,9 @@ import { ALink } from '@components/ALink'
 const Faqs = () => {
   return (
     <Container>
-      <div className="mx-auto py-8 xl:w-4/5">
+      <div className="mx-auto py-8 text-lg xl:w-4/5">
         <Title className="pb-4 text-center">Frequently Asked Questions</Title>
-        <p className="pb-2 text-lg">
+        <p className="pb-2">
           <em>
             Some of these are not actually asked frequently, but they're still
             good to know.

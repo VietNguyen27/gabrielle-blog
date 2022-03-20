@@ -11,7 +11,7 @@ const Title = ({ setValue }) => {
   return (
     <div className="my-4">
       <Textarea
-        className="text-4xl font-bold"
+        className="font-roboto text-4xl font-bold"
         placeholder="New post title here"
         contentRef={title}
       />
