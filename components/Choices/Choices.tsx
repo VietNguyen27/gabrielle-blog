@@ -116,7 +116,7 @@ const Choice = ({
       }
     }
 
-    if (!isCustomize && customizeValue) {
+    if (!isCustomize && customizeValue?.trim()) {
       ref.current.checked = false
     }
 
@@ -171,9 +171,11 @@ const Choice = ({
             role="button"
             className="inline-flex h-7 w-7 items-center justify-center rounded bg-gray-700 text-white"
             onClick={() => {
-              setIsSelected(!!customizeValue)
+              if (customizeValue && customizeValue.trim()) {
+                setIsSelected(!!customizeValue)
+                onChange(customizeValue)
+              }
               setIsCustomize(false)
-              onChange(customizeValue)
             }}
           >
             <CheckIcon className="h-5 w-5" />
@@ -212,7 +214,7 @@ const Choice = ({
           {keyValues?.keyName}
         </span>
         <span className="font-semibold line-clamp-1">
-          {customizeValue || 'Other'}
+          {customizeValue?.trim() ? customizeValue.trim() : 'Other'}
         </span>
         <div
           className={clsx(
