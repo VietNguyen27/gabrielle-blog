@@ -14,6 +14,7 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
 
   useEffect(() => {
     resetError()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath])
 
   return (

@@ -137,5 +137,6 @@ const Toolbar = forwardRef<HTMLDivElement, TToolbarProps>(
     )
   }
 )
+Toolbar.displayName = 'Toolbar'
 
 export default Toolbar

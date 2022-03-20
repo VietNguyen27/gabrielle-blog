@@ -19,5 +19,6 @@ const ContentBox = forwardRef<HTMLDivElement, TContentBoxProps>(
     )
   }
 )
+ContentBox.displayName = 'ContentBox'
 
 export default ContentBox

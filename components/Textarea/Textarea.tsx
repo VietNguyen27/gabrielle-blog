@@ -57,6 +57,7 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
           ;(placeholderRef.current as HTMLSpanElement).textContent = ''
         }
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [textContent])
 
     useEffect(() => {
@@ -70,6 +71,7 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
 
       window.addEventListener('paste', handlePasteText)
       return () => window.removeEventListener('paste', handlePasteText)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const onKeyPress = (e) => {
@@ -142,5 +144,6 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
     )
   }
 )
+Textarea.displayName = 'Textarea'
 
 export default Textarea

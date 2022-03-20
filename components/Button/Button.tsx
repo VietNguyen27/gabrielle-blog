@@ -107,6 +107,7 @@ const Button = ({
     return () => {
       window.removeEventListener('keydown', handleEnter)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (rest.as === 'a') {

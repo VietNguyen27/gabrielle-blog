@@ -142,15 +142,13 @@ export const TrendingPost = ({
       </div>
       <div className="flex w-full flex-col">
         <div className="mb-2 flex items-center gap-2">
-          <div className="relative h-6 w-6 overflow-hidden rounded-full">
-            <Link href={`/${creator.username}`}>
-              <img
-                src={creator.profilePicture}
-                alt={creator.username}
-                className="absolute inset-0 h-full w-full cursor-pointer object-cover"
-              />
-            </Link>
-          </div>
+          <Link href={`/${creator.username}`} passHref>
+            <ImageRatio
+              src={creator.profilePicture}
+              alt={creator.username}
+              className="w-6 flex-shrink-0 rounded-full"
+            />
+          </Link>
           <Link href={`/${creator.username}`}>
             <a className="text-sm font-semibold">{creator.username}</a>
           </Link>
