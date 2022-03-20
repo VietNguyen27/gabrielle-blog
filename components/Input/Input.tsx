@@ -270,5 +270,6 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
     )
   }
 )
+Input.displayName = 'Input'
 
 export default Input

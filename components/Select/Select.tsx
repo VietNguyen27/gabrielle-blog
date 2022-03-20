@@ -120,6 +120,7 @@ const Select = ({
 
   useEffect(() => {
     setFilteredOptions(validOptions)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedOptions, options])
 
   const handleFilter = (e) => {

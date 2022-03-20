@@ -99,7 +99,7 @@ const Sidebar = () => {
         {socials.map(({ slug, img: Image }, index) => (
           <Link href={slug} key={index}>
             <a>
-              <Image />
+              <Image alt="social icon" />
             </a>
           </Link>
         ))}

@@ -69,6 +69,7 @@ export const useCreateStore = (initialState) => {
         ...initialState,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialState])
 
   return () => store

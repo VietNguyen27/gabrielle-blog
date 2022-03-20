@@ -63,7 +63,7 @@ const Footer = () => {
               variant="tertiary"
               className="rounded-3xl px-5 py-2.5"
             >
-              Let's begin
+              Let&apos;s begin
             </Button>
           </div>
         </Container>
@@ -75,7 +75,7 @@ const Footer = () => {
             {socials.map(({ slug, img: Image }, index) => (
               <Link href={slug} key={index}>
                 <a>
-                  <Image />
+                  <Image alt="social icon" />
                 </a>
               </Link>
             ))}

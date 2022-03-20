@@ -130,6 +130,7 @@ const Choice = ({
         window.removeEventListener('keydown', handleKeyPress)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCustomize, customizeValue])
 
   const onMouseDown = () => {
