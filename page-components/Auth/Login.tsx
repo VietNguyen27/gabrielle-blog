@@ -7,7 +7,7 @@ import { Button } from '@components/Button'
 import { Form } from '@components/Form'
 import { useFormContext } from 'react-hook-form'
 import { fetcher } from '@lib/fetcher'
-import { useCurrentUser } from '@lib/user'
+import { saveUserToLocalStorage, useCurrentUser } from '@lib/user'
 import { getErrorFromJoiMessage } from '@utils/utils'
 import { useError, useLoading } from '@lib/store'
 import { useRouter } from 'next/router'
@@ -82,6 +82,7 @@ const Login = () => {
             password,
           }),
         })
+        saveUserToLocalStorage(response.user)
         mutate({ user: response.user }, false)
         resetError()
       } catch (error: any) {

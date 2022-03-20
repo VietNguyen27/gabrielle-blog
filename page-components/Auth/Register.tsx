@@ -10,7 +10,7 @@ import StepThree from './StepThree'
 import StepFour from './StepFour'
 import { Form } from '@components/Form'
 import { fetcher } from 'lib/fetcher'
-import { useCurrentUser } from '@lib/user'
+import { saveUserToLocalStorage, useCurrentUser } from '@lib/user'
 import { useRouter } from 'next/router'
 import { useError, useLoading } from '@lib/store'
 import { getErrorFromJoiMessage, isIntersection } from '@utils/utils'
@@ -157,6 +157,7 @@ const Register = () => {
             username,
           }),
         })
+        saveUserToLocalStorage(response.user)
         mutate({ user: response.user }, false)
         window.close()
         resetError()

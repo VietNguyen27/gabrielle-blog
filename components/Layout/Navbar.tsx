@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { Anchor } from '@components/Anchor'
 import { Button } from '@components/Button'
-import { useCurrentUser } from '@lib/user'
+import { removeUserToLocalStorage, useCurrentUser } from '@lib/user'
 import { fetcher } from '@lib/fetcher'
 import { BellIcon } from '@heroicons/react/outline'
 import { Dropdown, Menu, MenuDivider, MenuItem } from '@components/Dropdown'
@@ -21,8 +21,8 @@ const MenuDropdown = ({ username, email }, onLogOut) => {
       <MenuItem href="/write" as="a">
         Create Post
       </MenuItem>
-      <MenuItem href="/#" as="a">
-        Bookmark
+      <MenuItem href="/bookmarks" as="a">
+        Bookmarks
       </MenuItem>
       <MenuItem href="/settings" as="a">
         Settings
@@ -36,12 +36,14 @@ const MenuDropdown = ({ username, email }, onLogOut) => {
 const Navbar = () => {
   const { pathname } = useRouter()
   const { data: { user } = {}, mutate } = useCurrentUser()
+  const localUser = JSON.parse(localStorage.getItem('user') as any) || null
 
   const onLogOut = useCallback(async () => {
     try {
       await fetcher('/api/auth', {
         method: 'DELETE',
       })
+      removeUserToLocalStorage()
       mutate({ user: null })
     } catch (error) {
       console.log(error)
@@ -51,7 +53,7 @@ const Navbar = () => {
   return (
     <nav className="flex items-center">
       <ul className="flex items-center gap-2 pl-3 sm:gap-4">
-        {!user ? (
+        {!localUser ? (
           <>
             <li>
               <Anchor href="/login" active={pathname === '/login'}>
@@ -87,11 +89,11 @@ const Navbar = () => {
               </Button>
             </li>
             <li>
-              <Dropdown overlay={MenuDropdown(user, onLogOut)}>
+              <Dropdown overlay={MenuDropdown(localUser, onLogOut)}>
                 <Button variant="quaternary" className="rounded-full p-1">
                   <ImageRatio
                     className="w-8 rounded-full outline outline-2 outline-gray-200"
-                    src={user.profilePicture}
+                    src={localUser.profilePicture}
                   />
                 </Button>
               </Dropdown>

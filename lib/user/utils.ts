@@ -9,3 +9,11 @@ export const extractUser = (user) => {
     updatedAt: updatedAt.getTime(),
   }
 }
+
+export const saveUserToLocalStorage = (user) => {
+  localStorage.setItem('user', JSON.stringify(user))
+}
+
+export const removeUserToLocalStorage = () => {
+  localStorage.removeItem('user')
+}

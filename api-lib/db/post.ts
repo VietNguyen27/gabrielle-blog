@@ -38,7 +38,23 @@ export async function findPostById(db, id) {
   return { ...changeDataObjectToString(post[0]), topics }
 }
 
-export async function findPosts(db, by, topic, not, limit = 1000, skip = 0) {
+export async function findPosts(
+  db,
+  by,
+  topic,
+  not,
+  limit = 1000,
+  skip = 0,
+  random = false
+) {
+  const MAX_RANDOM_POSTS = 4
+  const count = await db.collection('posts').countDocuments({})
+  const randomIndex = Math.floor(Math.random() * (count - MAX_RANDOM_POSTS))
+  const randomSkip =
+    randomIndex - MAX_RANDOM_POSTS > 0
+      ? randomIndex - MAX_RANDOM_POSTS
+      : randomIndex
+
   const posts = await db
     .collection('posts')
     .aggregate([
@@ -50,7 +66,7 @@ export async function findPosts(db, by, topic, not, limit = 1000, skip = 0) {
         },
       },
       { $sort: { createdAt: -1 } },
-      { $skip: skip },
+      { $skip: random ? randomSkip : skip },
       { $limit: limit },
       {
         $lookup: {

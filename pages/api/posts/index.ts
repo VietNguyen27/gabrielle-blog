@@ -62,9 +62,10 @@ handler.get(async (req: any, res: any) => {
     req.db,
     req.query.by,
     req.query.topic,
-    null,
+    req.query.not ? req.query.not : null,
     req.query.limit ? parseInt(req.query.limit, 10) : undefined,
-    req.query.skip ? parseInt(req.query.skip, 10) : undefined
+    req.query.skip ? parseInt(req.query.skip, 10) : undefined,
+    req.query.random ? req.query.random : undefined
   )
 
   res.json({ posts })
