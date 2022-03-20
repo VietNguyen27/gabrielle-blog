@@ -11,6 +11,7 @@ type TTabsProps = {
   children: ReactChild | ReactChildren | ReactChild[] | ReactChildren[]
   className?: string
   labelClassName?: string
+  horizontal?: boolean
 }
 
 type TTabProps = {
@@ -25,6 +26,7 @@ type TTabLabelProps = {
   children: ReactChild | ReactChildren
   isActive: boolean
   className?: string
+  horizontal?: boolean
   onClick: () => void
 }
 
@@ -32,13 +34,17 @@ const TabLabel = ({
   children,
   isActive,
   className,
+  horizontal,
   ...rest
 }: TTabLabelProps) => {
   const defaultClassName =
-    'relative font-semibold text-center cursor-pointer py-1 px-3 rounded transition-all duration-200 hover:text-tertiary-900 hover:bg-indigo-100'
+    'relative font-semibold cursor-pointer rounded transition-all duration-200 hover:text-tertiary-900 hover:bg-indigo-100'
   const allClassNames = clsx(
     defaultClassName,
-    isActive ? 'text-zinc-900' : 'text-gray-400'
+    className,
+    isActive ? 'text-zinc-900' : 'text-gray-400',
+    horizontal ? 'text-left p-2' : 'text-center py-1 px-3',
+    isActive && horizontal && 'bg-indigo-50'
   )
 
   return (
@@ -52,11 +58,16 @@ export const Tabs = ({
   children,
   className,
   labelClassName,
+  horizontal = false,
   ...rest
 }: TTabsProps) => {
   const [activeTab, setActiveTab] = useState(children[0].props.label)
-  const defaultTabsClassName = 'flex flex-col items-stretch'
-  const tabsClassNames = clsx(defaultTabsClassName, className)
+  const defaultTabsClassName = 'flex items-stretch'
+  const tabsClassNames = clsx(
+    defaultTabsClassName,
+    className,
+    horizontal ? 'flex-col md:flex-row' : 'flex-col'
+  )
 
   const changeTab = (tab) => {
     setActiveTab(tab)
@@ -64,12 +75,20 @@ export const Tabs = ({
 
   return (
     <div className={tabsClassNames} {...rest}>
-      <ul className="px-layout mb-3 flex items-center justify-center gap-3">
+      <ul
+        className={clsx(
+          'px-layout mb-3 flex gap-3',
+          horizontal
+            ? 'flex-col items-stretch justify-start'
+            : 'flex-row items-center justify-center'
+        )}
+      >
         {children instanceof Array &&
           children.map((child, index) => (
             <TabLabel
               key={index}
               isActive={child.props.label === activeTab}
+              horizontal={horizontal}
               className={labelClassName}
               onClick={() => {
                 if (child.props.onChange) {

@@ -1,7 +1,9 @@
+import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import { fetcher } from '@lib/fetcher'
 
 const POSTS_PER_PAGE = 8
+const MAX_RANDOM_POSTS = 4
 
 export const usePosts = ({
   creatorId = '',
@@ -43,4 +45,11 @@ export const usePosts = ({
     isRefreshing,
     ...props,
   }
+}
+
+export const useRandomPosts = ({ not = '', limit = MAX_RANDOM_POSTS } = {}) => {
+  return useSWR(`/api/posts?not=${not}&limit=${limit}&random=true`, fetcher, {
+    revalidateOnFocus: false,
+    revalidateIfStale: false,
+  })
 }

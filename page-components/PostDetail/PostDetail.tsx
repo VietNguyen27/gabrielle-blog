@@ -16,10 +16,17 @@ import { CardSecondary } from '@components/Card'
 import { useCurrentUser } from '@lib/user'
 import { TopicAnchor } from '@components/Topic'
 import { ALink } from '@components/ALink'
+import Comment from './Comment'
+import { useRandomPosts } from '@lib/post'
+import { CardPrimary } from '@components/Card/Card'
+import {
+  CardPrimarySkeleton,
+  CardSecondarySkeleton,
+} from '@components/Skeleton'
 
 const MoreOptionsDropdown = () => {
   return (
-    <Menu className="w-[250px]" position="left-0 top-full">
+    <Menu className="w-[250px]" position="right-1/4 sm:left-0 top-full">
       <MenuItem>
         <span className="font-bold">Copy Link</span>
         <DuplicateIcon className="h-6 w-6" />
@@ -30,6 +37,7 @@ const MoreOptionsDropdown = () => {
 }
 
 const PostDetail = ({
+  _id,
   title,
   topics,
   content,
@@ -43,6 +51,7 @@ const PostDetail = ({
   morePostsFromCommunity,
 }) => {
   const { data: { user } = {} } = useCurrentUser()
+  const { data: { posts } = {} } = useRandomPosts({ not: _id })
 
   return (
     <div className="bg-gray-300/10 py-4">
@@ -73,7 +82,7 @@ const PostDetail = ({
             </div>
           </div>
           <div className="flex w-full flex-col items-stretch gap-y-4 lg:flex-row">
-            <div className="w-full lg:w-2/3">
+            <div className="flex w-full flex-col items-stretch gap-4 lg:w-2/3">
               <div className="rounded-md border border-gray-300 bg-white shadow">
                 {cover && (
                   <ImageRatio
@@ -115,6 +124,21 @@ const PostDetail = ({
                         __html: DOMPurify.sanitize(parseMarkdown(content)),
                       }}
                     ></div>
+                  </div>
+                </div>
+                <Comment />
+              </div>
+              <div className="rounded-md border border-gray-300 bg-white shadow">
+                <div className="px-6 py-6 sm:px-12">
+                  <h2 className="pb-4 text-2xl font-bold">Read next</h2>
+                  <div className="flex flex-col items-stretch gap-6">
+                    {posts
+                      ? posts.map((post) => (
+                          <CardPrimary key={post._id} {...post} />
+                        ))
+                      : [...Array(4)].map((_, index) => (
+                          <CardPrimarySkeleton key={index} />
+                        ))}
                   </div>
                 </div>
               </div>
@@ -185,14 +209,24 @@ const PostDetail = ({
                     )}
                   </header>
                   <div className="flex flex-col items-stretch">
-                    {morePostsFromThisUser &&
-                      morePostsFromThisUser.map((post) => (
-                        <CardSecondary key={post._id} {...post} />
-                      ))}
-                    {morePostsFromCommunity &&
-                      morePostsFromCommunity.map((post) => (
-                        <CardSecondary key={post._id} {...post} />
-                      ))}
+                    {morePostsFromThisUser
+                      ? morePostsFromThisUser.map((post) => (
+                          <CardSecondary key={post._id} {...post} />
+                        ))
+                      : [
+                          ...Array(3).map((_, index) => (
+                            <CardSecondarySkeleton key={index} />
+                          )),
+                        ]}
+                    {morePostsFromCommunity
+                      ? morePostsFromCommunity.map((post) => (
+                          <CardSecondary key={post._id} {...post} />
+                        ))
+                      : [
+                          ...Array(3).map((_, index) => (
+                            <CardSecondarySkeleton key={index} />
+                          )),
+                        ]}
                   </div>
                 </div>
               </div>

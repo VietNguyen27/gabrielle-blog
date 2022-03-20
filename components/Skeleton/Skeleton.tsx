@@ -21,6 +21,34 @@ export const TopicPopularSkeleton = () => {
   return <li className="mb-1 h-9 animate-pulse rounded bg-gray-200"></li>
 }
 
+export const CardPrimarySkeleton = () => {
+  return (
+    <div className="flex items-center gap-4">
+      <div className="h-12 w-12 flex-shrink-0 animate-pulse rounded-full bg-gray-200"></div>
+      <div className="flex flex-1 flex-col gap-3">
+        <div className="h-5 w-4/5 animate-pulse rounded bg-gray-200"></div>
+        <div className="flex items-center gap-3">
+          <div className="h-4 w-16 animate-pulse rounded bg-gray-200"></div>
+          <div className="h-4 w-24 animate-pulse rounded bg-gray-200"></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export const CardSecondarySkeleton = () => {
+  return (
+    <div className="flex flex-col gap-1 p-4">
+      <div className="h-4 animate-pulse rounded bg-gray-200"></div>
+      <div className="mb-2 h-4 w-2/3 animate-pulse rounded bg-gray-200"></div>
+      <div className="flex items-center gap-x-2 gap-y-1">
+        <div className="h-4 w-24 animate-pulse rounded bg-gray-200"></div>
+        <div className="h-4 w-16 animate-pulse rounded bg-gray-200"></div>
+      </div>
+    </div>
+  )
+}
+
 export const PostCardSkeleton = ({ hasCover = false }) => {
   return (
     <div className="mb-4 overflow-hidden rounded-md border border-gray-200 shadow-sm">
