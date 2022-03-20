@@ -15,7 +15,7 @@ import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import { ImageRatio } from '@components/ImageRatio'
 import { PostCard } from '@components/Post'
 import useOnScreen from '@hooks/useOnScreen'
-import { usePosts } from '@lib/post'
+import { useInfinitePosts } from '@lib/post'
 import { PostCardSkeleton } from '@components/Skeleton'
 
 const Profile = ({
@@ -37,7 +37,7 @@ const Profile = ({
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
-    usePosts({
+    useInfinitePosts({
       creatorId: _id,
     })
   const posts = data
