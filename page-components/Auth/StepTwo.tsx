@@ -16,6 +16,8 @@ const StepTwo = (props: TStepProps) => {
   const [positionSelected, setPositionSelected] = useState<string>('')
   const { setValue } = useFormContext()
 
+  console.log(positionSelected)
+
   useEffect(() => {
     setValue('position', positionSelected)
   }, [positionSelected])

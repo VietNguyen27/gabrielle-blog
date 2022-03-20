@@ -35,7 +35,7 @@ const MenuDropdown = ({ username, email }, onLogOut) => {
 
 const Navbar = () => {
   const { pathname } = useRouter()
-  const { data: { user } = {}, mutate } = useCurrentUser()
+  const { mutate } = useCurrentUser()
   const localUser = JSON.parse(localStorage.getItem('user') as any) || null
 
   const onLogOut = useCallback(async () => {
@@ -51,7 +51,7 @@ const Navbar = () => {
   }, [mutate])
 
   return (
-    <nav className="flex items-center">
+    <nav className="hidden items-center xs:flex">
       <ul className="flex items-center gap-2 pl-3 sm:gap-4">
         {!localUser ? (
           <>
@@ -65,9 +65,9 @@ const Navbar = () => {
                 href="/register"
                 as="a"
                 target="_blank"
-                className="rounded-3xl px-4 py-2"
+                className="rounded-3xl px-2 py-2 xs:px-4"
               >
-                Get in touch
+                Create account
               </Button>
             </li>
           </>
