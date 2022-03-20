@@ -22,6 +22,10 @@ module.exports = {
         '2xl': '1280px',
       },
     },
+    fontFamily: {
+      quicksand: 'var(--ff-quicksand)',
+      roboto: 'var(--ff-roboto)',
+    },
     fontSize: {
       xs: 'var(--fs-xs)',
       sm: 'var(--fs-sm)',

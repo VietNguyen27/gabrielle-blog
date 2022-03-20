@@ -42,6 +42,46 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Roboto';
+  src: url('../public/static/fonts/Roboto-Light.ttf');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../public/static/fonts/Roboto-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../public/static/fonts/Roboto-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../public/static/fonts/Roboto-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../public/static/fonts/Roboto-Black.ttf');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --primary-500: #353637;
   --primary-900: #111314;
@@ -80,8 +120,10 @@
   --fw-medium: 500;
   --fw-semibold: 600;
   --fw-bold: 700;
+  --fw-black: 900;
 
   --ff-quicksand: 'Quicksand', sans-serif;
+  --ff-roboto: 'Roboto', sans-serif;
 
   --z-negative: -1;
   --z-elevate: 1;
@@ -124,6 +166,7 @@ h4,
 h5,
 h6 {
   color: var(--heading-color);
+  font-family: var(--ff-roboto);
 }
 
 main {

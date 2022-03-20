@@ -41,7 +41,7 @@ export const CardPrimary = ({
       <div className="flex flex-1 flex-col gap-2">
         <Link href={`/${creator.username}/post/${_id}`}>
           <a className="group">
-            <h2 className="pb-2 text-xl font-bold group-hover:text-tertiary-500">
+            <h2 className="pb-1 text-xl font-bold group-hover:text-tertiary-500">
               {title}
             </h2>
             <p className="text-sm text-gray-600 group-hover:text-tertiary-500">

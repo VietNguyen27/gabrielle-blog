@@ -156,7 +156,9 @@ export const TrendingPost = ({
           </Link>
         </div>
         <Link href={`/${creator.username}/post/${_id}`}>
-          <a className="mb-2 text-lg font-bold line-clamp-2">{title}</a>
+          <a className="mb-2 font-roboto text-lg font-bold line-clamp-2">
+            {title}
+          </a>
         </Link>
         <div className="flex items-center gap-2 text-sm">
           <span>{getFormattedDate(createdAt)}</span>
