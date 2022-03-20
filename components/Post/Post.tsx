@@ -143,11 +143,13 @@ export const TrendingPost = ({
       <div className="flex w-full flex-col">
         <div className="mb-2 flex items-center gap-2">
           <Link href={`/${creator.username}`} passHref>
-            <ImageRatio
-              src={creator.profilePicture}
-              alt={creator.username}
-              className="w-6 flex-shrink-0 rounded-full"
-            />
+            <a>
+              <ImageRatio
+                src={creator.profilePicture}
+                alt={creator.username}
+                className="w-6 flex-shrink-0 rounded-full"
+              />
+            </a>
           </Link>
           <Link href={`/${creator.username}`}>
             <a className="text-sm font-semibold">{creator.username}</a>
