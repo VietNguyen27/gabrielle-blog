@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { usePosts } from '@lib/post'
+import { useInfinitePosts } from '@lib/post'
 import { Container } from '@components/Layout'
 import { PostCard } from '@components/Post'
 import { Button } from '@components/Button'
@@ -13,7 +13,7 @@ const Topic = ({ topic }) => {
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
-    usePosts({
+    useInfinitePosts({
       topic: topic._id,
     })
   const posts = data

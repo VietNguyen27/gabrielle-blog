@@ -4,7 +4,7 @@ import { TrendingUpIcon } from '@heroicons/react/outline'
 import { Button } from '@components/Button'
 import { Heading } from '@components/Heading'
 import HeroImg from '@public/static/images/hero.png'
-import { usePosts } from '@lib/post'
+import { useInfinitePosts } from '@lib/post'
 import useOnScreen from '@hooks/useOnScreen'
 import { useEffect, useRef } from 'react'
 import { useTopics } from '@lib/topic'
@@ -20,7 +20,7 @@ const Home = () => {
   const isVisible = useOnScreen(ref)
   const { data: { topics } = {} } = useTopics(10)
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
-    usePosts()
+    useInfinitePosts()
   const posts = data
     ? data.reduce((acc, val) => [...acc, ...val.posts], [])
     : []

@@ -17,7 +17,7 @@ import { useCurrentUser } from '@lib/user'
 import { TopicAnchor } from '@components/Topic'
 import { ALink } from '@components/ALink'
 import Comment from './Comment'
-import { useRandomPosts } from '@lib/post'
+import { usePosts, useRandomPosts } from '@lib/post'
 import { CardPrimary } from '@components/Card/Card'
 import {
   CardPrimarySkeleton,
@@ -43,15 +43,23 @@ const PostDetail = ({
   content,
   cover,
   creator,
+  creatorId,
   readingTime,
   likesCount,
   bookmarksCount,
   createdAt,
-  morePostsFromThisUser,
-  morePostsFromCommunity,
 }) => {
   const { data: { user } = {} } = useCurrentUser()
   const { data: { posts } = {} } = useRandomPosts({ not: _id })
+  const { data: { posts: morePostsFromThisUser } = {} } = usePosts({
+    creatorId,
+    not: _id,
+    limit: 3,
+  })
+  const { data: { posts: morePostsFromCommunity } = {} } = usePosts({
+    not: _id,
+    limit: 3,
+  })
 
   return (
     <div className="bg-gray-300/10 py-4">
@@ -194,39 +202,39 @@ const PostDetail = ({
                 </div>
                 <div className="overflow-hidden rounded-md border border-gray-300 bg-white shadow">
                   <header className="p-4">
-                    {morePostsFromThisUser && (
-                      <h2 className="text-xl font-bold">
-                        More from{' '}
-                        <ALink href={`/${creator.username}`}>
-                          {creator.username}
-                        </ALink>
-                      </h2>
-                    )}
-                    {morePostsFromCommunity && (
-                      <h2 className="text-xl font-bold">
-                        Trending on <ALink href="/">Gabrielle Community</ALink>
-                      </h2>
-                    )}
+                    <h2 className="text-xl font-bold">
+                      {morePostsFromThisUser ? (
+                        morePostsFromThisUser.length ? (
+                          <>
+                            More from{' '}
+                            <ALink href={`/${creator.username}`}>
+                              {creator.username}
+                            </ALink>
+                          </>
+                        ) : (
+                          <>
+                            Trending on{' '}
+                            <ALink href="/">Gabrielle Community</ALink>
+                          </>
+                        )
+                      ) : (
+                        <div className="h-6 w-4/5 animate-pulse rounded bg-gray-200"></div>
+                      )}
+                    </h2>
                   </header>
                   <div className="flex flex-col items-stretch">
                     {morePostsFromThisUser
-                      ? morePostsFromThisUser.map((post) => (
-                          <CardSecondary key={post._id} {...post} />
-                        ))
-                      : [
-                          ...Array(3).map((_, index) => (
-                            <CardSecondarySkeleton key={index} />
-                          )),
-                        ]}
-                    {morePostsFromCommunity
-                      ? morePostsFromCommunity.map((post) => (
-                          <CardSecondary key={post._id} {...post} />
-                        ))
-                      : [
-                          ...Array(3).map((_, index) => (
-                            <CardSecondarySkeleton key={index} />
-                          )),
-                        ]}
+                      ? morePostsFromThisUser.length
+                        ? morePostsFromThisUser.map((post) => (
+                            <CardSecondary key={post._id} {...post} />
+                          ))
+                        : morePostsFromCommunity &&
+                          morePostsFromCommunity.map((post) => (
+                            <CardSecondary key={post._id} {...post} />
+                          ))
+                      : [...Array(3)].map((_, index) => (
+                          <CardSecondarySkeleton key={index} />
+                        ))}
                   </div>
                 </div>
               </div>
