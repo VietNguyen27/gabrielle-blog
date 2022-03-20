@@ -21,7 +21,9 @@ export const usePosts = ({
       if (creatorId) searchParams.set('by', creatorId)
       if (topic) searchParams.set('topic', topic)
 
-      return `/api/posts?${searchParams.toString()}`
+      return `${
+        process.env.NEXT_PUBLIC_API_URL
+      }/api/posts?${searchParams.toString()}`
     },
     fetcher
   )
@@ -48,8 +50,12 @@ export const usePosts = ({
 }
 
 export const useRandomPosts = ({ not = '', limit = MAX_RANDOM_POSTS } = {}) => {
-  return useSWR(`/api/posts?not=${not}&limit=${limit}&random=true`, fetcher, {
-    revalidateOnFocus: false,
-    revalidateIfStale: false,
-  })
+  return useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/posts?not=${not}&limit=${limit}&random=true`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
+    }
+  )
 }
