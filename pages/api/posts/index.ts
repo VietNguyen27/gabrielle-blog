@@ -5,7 +5,7 @@ import { postSchema } from '@api-lib/schemas'
 import { v2 as cloudinary } from 'cloudinary'
 import multer from 'multer'
 
-const upload = multer({ dest: '/uploads' })
+const upload = multer({ dest: '/tmp' })
 const handler = nextConnect()
 
 handler.use(middleware)
