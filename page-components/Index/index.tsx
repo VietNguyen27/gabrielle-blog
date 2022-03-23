@@ -3,10 +3,10 @@ import { PostCard, TrendingPost } from '@components/Post'
 import { TrendingUpIcon } from '@heroicons/react/outline'
 import { Button } from '@components/Button'
 import { Heading } from '@components/Heading'
-import HeroImg from '@public/static/images/hero.png'
 import { useInfinitePosts } from '@lib/post'
+import { useCurrentUser } from '@lib/user'
 import useOnScreen from '@hooks/useOnScreen'
-import { useEffect, useRef } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { useTopics } from '@lib/topic'
 import {
   PostCardSkeleton,
@@ -14,10 +14,14 @@ import {
   TrendingPostSkeleton,
 } from '@components/Skeleton'
 import { TopicPopular } from '@components/Topic'
+import HeroImg from '@public/static/images/hero.png'
+import { Logo } from '@components/Logo'
+import { ALink } from '@components/ALink'
 
 const Home = () => {
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
+  const { data: { user } = {} } = useCurrentUser()
   const { data: { topics } = {} } = useTopics(10)
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
     useInfinitePosts()
@@ -88,9 +92,55 @@ const Home = () => {
             </div>
             <div className="flex flex-1 flex-col items-stretch">
               {posts && posts.length
-                ? posts.map((post, index) => (
-                    <PostCard key={post._id} {...post} hasCover={index === 0} />
-                  ))
+                ? posts.map((post, index) => {
+                    if (index === 4 && !user) {
+                      return (
+                        <Fragment key={post._id}>
+                          <div className="flex flex-col items-center px-6 pt-4 pb-8 xs:px-12 xs:pt-8 xs:pb-12">
+                            <div className="flex flex-col">
+                              <Logo />
+                              <h2 className="pt-4 text-3xl font-bold">
+                                <ALink href="/">Gabrielle Community</ALink> is a
+                                community for everyone interested in technology.
+                              </h2>
+                              <p>
+                                We're a place where coders share, stay
+                                up-to-date and grow their careers.
+                              </p>
+                            </div>
+                            <div className="flex w-1/2 flex-col gap-2 pt-6 xs:w-2/5 xl:w-1/4">
+                              <Button
+                                href="/register"
+                                as="a"
+                                className="rounded-md px-2 py-2 xs:px-4"
+                                fluid
+                              >
+                                Create account
+                              </Button>
+                              <Button
+                                href="/login"
+                                as="a"
+                                variant="secondary"
+                                className="rounded-md px-2 py-2 xs:px-4"
+                                fluid
+                              >
+                                Sign in
+                              </Button>
+                            </div>
+                          </div>
+                          <PostCard {...post} hasCover={index === 0} />
+                        </Fragment>
+                      )
+                    }
+
+                    return (
+                      <PostCard
+                        key={post._id}
+                        {...post}
+                        hasCover={index === 0}
+                      />
+                    )
+                  })
                 : [...Array(6)].map((_, index) => (
                     <PostCardSkeleton key={index} hasCover={index === 0} />
                   ))}

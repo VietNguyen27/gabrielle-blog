@@ -12,9 +12,13 @@ const Settings = () => {
   return (
     <Container className="pt-4 pb-8">
       <div className="mx-auto flex flex-col items-stretch md:w-2/3 lg:w-1/2">
-        <h1 className="pb-4 text-2xl font-bold">
-          Settings for{' '}
-          <ALink href={`/${user.username}`}>@{user.username}</ALink>
+        <h1 className="flex items-center gap-1 pb-4 text-2xl font-bold">
+          Settings for
+          {user ? (
+            <ALink href={`/${user.username}`}>@{user.username}</ALink>
+          ) : (
+            <div className="h-6 w-1/3 animate-pulse rounded bg-gray-200"></div>
+          )}
         </h1>
         <div className="flex flex-col items-stretch gap-6">
           <BasicInfo />

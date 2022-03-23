@@ -114,7 +114,7 @@ export const PostCard = ({
                 {commentsCount > 0 ? commentsCount : 'Add'} comment
               </Button>
             </div>
-            <div className="relative z-elevate flex items-center gap-2 self-end">
+            <div className="relative z-elevate flex items-center gap-2 self-end xs:self-center">
               <span className="text-xs">{readingTime} min read</span>
               <button>
                 <BookmarkIcon className="h-6 w-6" />

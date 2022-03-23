@@ -165,6 +165,7 @@ const Choice = ({
             type="text"
             value={customizeValue}
             onChange={(e) => setCustomizeValue(e.target.value)}
+            onBlur={() => setCustomizeValue((prevState) => prevState.trim())}
             className="w-full bg-transparent outline-none"
           />
           <span

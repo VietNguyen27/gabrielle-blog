@@ -4,7 +4,7 @@ import { Button } from '@components/Button'
 import { Switch } from '@components/Switch'
 import { Tab, Tabs } from '@components/Tabs'
 import HintWrapper from './HintWrapper'
-import { useForm } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import { Form } from '@components/Form'
 import { encodeHtml, getErrorFromJoiMessage, parseMarkdown } from '@utils/utils'
 import DOMPurify from 'dompurify'
@@ -30,8 +30,8 @@ const Write = () => {
   const coverRef = useRef(null)
   const editorRef = useRef(null)
   const [cover, setCover] = useState('')
-  const { setValue, handleSubmit } = useForm()
-  const { loading, toggleLoading } = useLoading()
+  const { setValue, handleSubmit } = useFormContext()
+  const { loading, setLoading } = useLoading()
   const { error, setError, resetError } = useError()
   const { data: { user } = {} } = useCurrentUser()
   const router = useRouter()
@@ -98,7 +98,7 @@ const Write = () => {
     })
 
     try {
-      toggleLoading(true)
+      setLoading('newPost', true)
 
       const formData = new FormData()
 
@@ -130,7 +130,7 @@ const Write = () => {
         ;(editorRef.current as any).scrollTop = 0
       }
     } finally {
-      toggleLoading(false)
+      setLoading('newPost', false)
     }
   }, [])
 
@@ -198,10 +198,10 @@ const Write = () => {
               </div>
               <div className="mt-6 flex items-center justify-between gap-4">
                 <Button
-                  type={loading ? 'button' : 'submit'}
+                  type={loading['newPost'] ? 'button' : 'submit'}
                   variant="tertiary"
                   className="rounded-md px-3.5 py-2"
-                  loading={loading}
+                  loading={loading['newPost']}
                   loadingBackground="bg-tertiary-900"
                 >
                   Create

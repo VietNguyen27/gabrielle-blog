@@ -28,7 +28,7 @@ const Register = () => {
   const scrollDirection = useRef<string>(SCROLL_DOWN)
   const { data: { user } = {}, mutate } = useCurrentUser()
   const route = useRouter()
-  const { toggleLoading } = useLoading()
+  const { setLoading } = useLoading()
   const { error, setError, resetError } = useError()
   const router = useRouter()
 
@@ -143,7 +143,7 @@ const Register = () => {
       } = data
 
       try {
-        toggleLoading(true)
+        setLoading('register', true)
         setIsSubmitted(true)
         const response = await fetcher('/api/users', {
           method: 'POST',
@@ -164,7 +164,7 @@ const Register = () => {
       } catch (error: any) {
         setError(getErrorFromJoiMessage(error))
       } finally {
-        toggleLoading(false)
+        setLoading('register', false)
       }
     },
     [mutate, route]
