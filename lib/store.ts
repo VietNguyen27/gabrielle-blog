@@ -9,17 +9,11 @@ type TMessageParams = {
   type: TMessageTypes
 }
 
-type TStoreState = {
-  error: any
-  loading: boolean
-  message: any
-}
-
 let store
 
-const initialState: TStoreState = {
+const initialState = {
   error: {},
-  loading: false,
+  loading: {},
   message: {},
 }
 const zustandContext = createContext()
@@ -37,9 +31,11 @@ export const initializeStore = (preloadedState = {}) => {
     resetError: () => {
       set({ error: {} })
     },
-    toggleLoading: (loading: boolean) => {
+    setLoading: (key, value) => {
       set({
-        loading: !!loading,
+        loading: {
+          [key]: value,
+        },
       })
     },
     setMessage: ({ message, type = 'success' }: TMessageParams) => {
@@ -79,7 +75,7 @@ export const useLoading = () => {
   return useStore(
     (store: any) => ({
       loading: store.loading,
-      toggleLoading: store.toggleLoading,
+      setLoading: store.setLoading,
     }),
     shallow
   )

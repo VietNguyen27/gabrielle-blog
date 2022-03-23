@@ -7,7 +7,7 @@ import {
 import clsx from 'clsx'
 import { useError } from '@lib/store'
 import { Error } from '@components/Error'
-import { ChangeHandler } from 'react-hook-form'
+import { ChangeHandler, useFormContext } from 'react-hook-form'
 import { removeErrorFromObject } from '@utils/utils'
 import { Tooltip } from '@components/Tooltip'
 import { ChromePicker } from 'react-color'
@@ -83,6 +83,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
     const [displayColorPicker, setDisplayColorPicker] = useState(false)
     const inputContainerRef = useRef(null)
     const { error: allError, setError } = useError()
+    const { setValue } = useFormContext()
     const isInputPassword = type === 'password'
     const iconClassNames = 'w-5 h-5'
 
@@ -98,6 +99,8 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
       if (onBlur) {
         onBlur(e)
       }
+
+      setValue(name, value.trim())
     }
 
     const onKeyPress = () => {
@@ -118,10 +121,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
               ></div>
               <span>{color}</span>
               {displayColorPicker && (
-                <div
-                  className="absolute top-full z-elevate"
-                  ref={inputContainerRef}
-                >
+                <div className="absolute top-full z-10" ref={inputContainerRef}>
                   <ChromePicker color={color} onChange={onChangeColor} />
                 </div>
               )}

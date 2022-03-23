@@ -6,6 +6,7 @@ import {
   DocumentTextIcon,
   DotsHorizontalIcon,
   HashtagIcon,
+  LocationMarkerIcon,
   MailIcon,
   UserIcon,
 } from '@heroicons/react/outline'
@@ -30,6 +31,7 @@ const Profile = ({
   interests,
   position,
   profilePicture,
+  location,
   skills,
   createdAt,
 }) => {
@@ -103,7 +105,7 @@ const Profile = ({
                     {bio ? bio : '404 bio not found'}
                   </p>
                 </div>
-                <div className="flex flex-wrap items-center justify-center gap-2 pb-2 text-gray-600 md:gap-5">
+                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 pb-2 text-gray-600 md:gap-x-5">
                   <span className="inline-flex items-center gap-1.5">
                     <CakeIcon className="h-6 w-6" />
                     Join on {getFormattedDate(createdAt)}
@@ -112,6 +114,12 @@ const Profile = ({
                     <MailIcon className="h-6 w-6" />
                     {email}
                   </span>
+                  {location && (
+                    <span className="inline-flex items-center gap-1.5">
+                      <LocationMarkerIcon className="h-6 w-6" />
+                      {location}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="border-t border-gray-100">
@@ -122,7 +130,13 @@ const Profile = ({
               </div>
             </div>
             <div className="flex flex-col items-stretch gap-4 md:flex-row">
-              <div className="flex w-full flex-col items-stretch md:w-1/3">
+              <div className="flex w-full flex-col items-stretch gap-4 md:w-1/3">
+                {skills && (
+                  <div className="rounded border border-gray-200 p-4">
+                    <h2 className="pb-6 text-lg font-bold">Skills/language</h2>
+                    <p>{skills}</p>
+                  </div>
+                )}
                 <div className="rounded border border-gray-200 p-4">
                   <ul>
                     <li className="flex items-center gap-2 pb-3 last:pb-0">

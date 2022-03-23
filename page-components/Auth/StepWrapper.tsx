@@ -24,8 +24,8 @@ const StepWrapper = ({
       <div className="w-full pb-4">{children}</div>
       {lastStep ? (
         <Button
-          type={loading ? 'button' : 'submit'}
-          loading={loading}
+          type={loading['register'] ? 'button' : 'submit'}
+          loading={loading['register']}
           className="rounded-md px-4 py-2"
         >
           Submit

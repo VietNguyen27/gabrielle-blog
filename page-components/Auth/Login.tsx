@@ -40,8 +40,8 @@ const FormFields = () => {
         </Link>
       </div>
       <Button
-        type={loading ? 'button' : 'submit'}
-        loading={loading}
+        type={loading['login'] ? 'button' : 'submit'}
+        loading={loading['login']}
         className="rounded-md py-2"
       >
         Login
@@ -52,7 +52,7 @@ const FormFields = () => {
 
 const Login = () => {
   const { data: { user } = {}, mutate } = useCurrentUser()
-  const { toggleLoading } = useLoading()
+  const { setLoading } = useLoading()
   const { setError, resetError } = useError()
   const router = useRouter()
 
@@ -72,8 +72,9 @@ const Login = () => {
     async (data) => {
       const { email, password } = data
 
-      toggleLoading(true)
       try {
+        setLoading('login', true)
+
         const response = await fetcher('/api/auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -92,7 +93,7 @@ const Login = () => {
           setError({ password: 'Invalid email or password' })
         }
       } finally {
-        toggleLoading(false)
+        setLoading('login', false)
       }
     },
     [mutate]

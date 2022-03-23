@@ -34,6 +34,30 @@ export async function findUserByEmail(db, email) {
     .then((user) => user || null)
 }
 
+export async function updateUserById(db, id, body) {
+  return db
+    .collection('users')
+    .findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: body },
+      { returnDocument: 'after', projection: { password: 0 } }
+    )
+    .then((user) => user || null)
+}
+
+export async function updateUserPassword(db, id, oldPassword, newPassword) {
+  const user = await db.collection('users').findOne({ _id: new ObjectId(id) })
+  if (!user) return false
+  const matched = await bcrypt.compare(oldPassword, user.password)
+  if (!matched) return false
+  const password = await bcrypt.hash(newPassword, 10)
+  await db
+    .collection('users')
+    .updateOne({ _id: new ObjectId(id) }, { $set: { password } })
+
+  return true
+}
+
 export async function insertUser(
   db,
   { email, password, username, position, interests }
