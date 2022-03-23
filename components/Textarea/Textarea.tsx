@@ -1,5 +1,8 @@
 import React, { forwardRef, useEffect, useRef } from 'react'
 import clsx from 'clsx'
+import { Error } from '@components/Error'
+import { useError } from '@lib/store'
+import { removeErrorFromObject } from '@utils/utils'
 
 const MAX_LENGTH = 256
 
@@ -9,6 +12,9 @@ type TTextareaProps = {
   variant?: TTextareaVariants
   placeholder?: string
   className?: string
+  name?: string
+  error?: string
+  reset?: boolean
   maxLength?: number
   readOnly?: boolean
   contentRef?: any
@@ -28,6 +34,9 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
       variant = 'primary',
       placeholder = 'Type something here',
       className,
+      name,
+      error,
+      reset,
       maxLength = MAX_LENGTH,
       contentRef,
       onFocus,
@@ -45,8 +54,13 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
     const placeholderRef = useRef(null)
     const textContent =
       ref && 'current' in ref && ref.current && ref.current.textContent
+    const { error: allError, setError } = useError()
 
     useEffect(() => {
+      if (reset && ref && 'current' in ref && ref.current) {
+        ref.current.textContent = ''
+      }
+
       if (
         ref &&
         'current' in ref &&
@@ -58,7 +72,7 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
         }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [textContent])
+    }, [textContent, reset])
 
     useEffect(() => {
       const handlePasteText = (e) => {
@@ -75,12 +89,14 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
     }, [])
 
     const onKeyPress = (e) => {
-      const value = e.target.textContent + e.key
       const placeholderEl = placeholderRef.current
 
-      if (placeholderEl && value.trim().length) {
+      if (placeholderEl) {
         ;(placeholderEl as HTMLSpanElement).textContent = ''
       }
+
+      const newError = removeErrorFromObject(allError, name)
+      setError(newError)
     }
 
     const onKeyUp = (e) => {
@@ -96,7 +112,7 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
       }
 
       if (placeholderEl && (e.key === 'Backspace' || e.key === 'Delete')) {
-        const isEmpty = !e.target.textContent.trim()
+        const isEmpty = !e.target.textContent
 
         ;(placeholderEl as HTMLSpanElement).textContent = isEmpty
           ? placeholder
@@ -117,29 +133,32 @@ const Textarea = forwardRef<HTMLDivElement, TTextareaProps>(
     }
 
     return (
-      <div
-        className={allClassNames}
-        tabIndex={-1}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      >
-        <div className="relative h-full w-full">
-          <div
-            ref={ref}
-            className={clsx('w-full break-all outline-none', className)}
-            contentEditable="true"
-            onKeyPress={onKeyPress}
-            onKeyUp={onKeyUp}
-            onKeyDown={onKeyDown}
-            {...rest}
-          ></div>
-          <span
-            ref={placeholderRef}
-            className="pointer-events-none absolute top-0 left-0 select-none text-gray-400"
-          >
-            {placeholder}
-          </span>
+      <div className="flex w-full flex-col items-stretch">
+        <div
+          className={allClassNames}
+          tabIndex={-1}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        >
+          <div className="relative h-full w-full">
+            <div
+              ref={ref}
+              className={clsx('w-full break-all outline-none', className)}
+              contentEditable="true"
+              onKeyPress={onKeyPress}
+              onKeyUp={onKeyUp}
+              onKeyDown={onKeyDown}
+              {...rest}
+            ></div>
+            <span
+              ref={placeholderRef}
+              className="pointer-events-none absolute top-0 left-0 select-none text-gray-400"
+            >
+              {placeholder}
+            </span>
+          </div>
         </div>
+        {error && <Error className="mt-1">{error}</Error>}
       </div>
     )
   }

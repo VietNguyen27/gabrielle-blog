@@ -37,7 +37,7 @@ const Header = () => {
     <>
       <header
         className={clsx(
-          'z-50 flex items-center bg-white',
+          'z-popover flex items-center bg-white',
           isSticky
             ? 'fixed bottom-[calc(100%+1px)] left-0 right-0 animate-slide-down py-4 shadow-md'
             : 'relative py-7'

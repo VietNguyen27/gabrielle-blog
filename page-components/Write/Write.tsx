@@ -4,7 +4,7 @@ import { Button } from '@components/Button'
 import { Switch } from '@components/Switch'
 import { Tab, Tabs } from '@components/Tabs'
 import HintWrapper from './HintWrapper'
-import { useFormContext } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { Form } from '@components/Form'
 import { encodeHtml, getErrorFromJoiMessage, parseMarkdown } from '@utils/utils'
 import DOMPurify from 'dompurify'
@@ -30,7 +30,7 @@ const Write = () => {
   const coverRef = useRef(null)
   const editorRef = useRef(null)
   const [cover, setCover] = useState('')
-  const { setValue, handleSubmit } = useFormContext()
+  const { setValue, handleSubmit } = useForm()
   const { loading, setLoading } = useLoading()
   const { error, setError, resetError } = useError()
   const { data: { user } = {} } = useCurrentUser()
@@ -92,7 +92,7 @@ const Write = () => {
     const content = encodeHtml(contentUnsafe)
 
     setPost({
-      title,
+      title: title.trim(),
       topic,
       content,
     })
@@ -102,7 +102,7 @@ const Write = () => {
 
       const formData = new FormData()
 
-      formData.append('title', title)
+      formData.append('title', title.trim())
       formData.append('topic', JSON.stringify(topic))
       formData.append('content', content)
       formData.append('contentUnsafe', contentUnsafe)

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { useCurrentUser } from '@lib/user'
 import { Textarea } from '@components/Textarea'
 import { ImageRatio } from '@components/ImageRatio'
@@ -6,11 +6,21 @@ import clsx from 'clsx'
 import { Button } from '@components/Button'
 import { Form } from '@components/Form'
 import { useRouter } from 'next/router'
+import { useComments } from '@lib/comment'
+import { useError, useLoading } from '@lib/store'
+import { fetcher } from '@lib/fetcher'
+import { getErrorFromJoiMessage } from '@utils/utils'
+import { Comment } from '@components/Comment'
 
-const Comment = () => {
+const CommentList = ({ postId }) => {
   const [focus, setFocus] = useState(false)
+  const [success, setSuccess] = useState(false)
   const ref = useRef(null)
+  const contentRef = useRef(null)
   const { data: { user } = {} } = useCurrentUser()
+  const { data: { comments } = {}, mutate } = useComments(postId)
+  const { loading, setLoading } = useLoading()
+  const { error, setError, resetError } = useError()
   const router = useRouter()
 
   const onFocus = () => {
@@ -24,9 +34,28 @@ const Comment = () => {
     setFocus(true)
   }
 
-  const onSubmit = () => {
-    const comment = ref.current
-  }
+  const onSubmit = useCallback(async () => {
+    try {
+      setLoading('comment', true)
+
+      // await fetcher(`/api/posts/${postId}/comments`, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     comment: contentRef.current || '',
+      //   }),
+      // })
+      // mutate()
+      // resetError()
+      setSuccess(true)
+    } catch (error: any) {
+      console.log(error)
+      setError(getErrorFromJoiMessage(error))
+    } finally {
+      setLoading('comment', false)
+      setSuccess(false)
+    }
+  }, [])
 
   return (
     <div className="border-t border-gray-200 px-6 py-8 sm:px-12">
@@ -46,8 +75,12 @@ const Comment = () => {
                 'flex-grow',
                 focus ? 'min-h-[120px]' : 'min-h-[50px]'
               )}
-              contentRef={ref}
+              ref={ref}
+              contentRef={contentRef}
               onFocus={onFocus}
+              name="comment"
+              error={error['comment']}
+              reset={success}
             />
           </div>
           {focus && (
@@ -55,9 +88,11 @@ const Comment = () => {
               className={clsx('flex items-center gap-2 pt-3', user && 'pl-11')}
             >
               <Button
-                type="submit"
+                type={loading['comment'] ? 'button' : 'submit'}
                 variant="tertiary"
                 className="rounded-md px-4 py-2"
+                loading={loading['comment']}
+                loadingBackground="bg-tertiary-900"
               >
                 Submit
               </Button>
@@ -71,9 +106,16 @@ const Comment = () => {
             </div>
           )}
         </Form>
+        <div className="flex flex-col items-stretch pt-6">
+          {comments
+            ? comments.map((comment) => (
+                <Comment key={comment._id} {...comment} />
+              ))
+            : null}
+        </div>
       </div>
     </div>
   )
 }
 
-export default Comment
+export default CommentList
