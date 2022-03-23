@@ -16,7 +16,7 @@ import { CardSecondary } from '@components/Card'
 import { useCurrentUser } from '@lib/user'
 import { TopicAnchor } from '@components/Topic'
 import { ALink } from '@components/ALink'
-import Comment from './Comment'
+import CommentList from './CommentList'
 import { usePosts, useRandomPosts } from '@lib/post'
 import { CardPrimary } from '@components/Card/Card'
 import {
@@ -112,7 +112,7 @@ const PostDetail = ({
                       </div>
                       <div className="flex items-center gap-1.5 text-sm">
                         <span>Posted on {getFormattedDate(createdAt)}</span>
-                        <span className="h-1 w-1 rounded-full bg-gray-800"></span>
+                        <span className="h-1 w-1 rounded-full bg-gray-700"></span>
                         <span>{readingTime} min read</span>
                       </div>
                     </div>
@@ -134,7 +134,7 @@ const PostDetail = ({
                     ></div>
                   </div>
                 </div>
-                <Comment />
+                <CommentList postId={_id} />
               </div>
               <div className="rounded-md border border-gray-300 bg-white shadow">
                 <div className="px-6 py-6 sm:px-12">

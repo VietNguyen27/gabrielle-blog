@@ -147,7 +147,7 @@ export const decodeHtml = (string: string): string => {
 
 export const parseMarkdown = (markdownText: string): string => {
   const htmlText = markdownText
-    .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
+    .replace(/[\*\_]{2}([^\*\_]+)[\*\_]{2}/g, '<b>$1</b>')
     .replace(
       /\[(.*?)\]\((.*?)\)/gim,
       "<a class='markdown-link' href='$2'>$1</a>"
@@ -176,7 +176,7 @@ export const parseMarkdown = (markdownText: string): string => {
     .replace(/\_\_(.*)\_\_/gim, '<u>$1</u>')
     .replace(/\~\~(.*)\~\~/gim, '<del>$1</del>')
     .replace(/\-\-\-/gim, "<hr class='markdown-divider'>")
-    .replace(/\_(.*)\_/gim, '<i>$1</i>')
+    .replace(/[\*\_]{1}([^\*\_]+)[\*\_]{1}/g, '<i>$1</i>')
     .replace(/^\s*(\n)?(.+)/gm, function (markdown) {
       return /\<(\/)?(h\d|ul|ol|li|blockquote|pre|img)/.test(markdown)
         ? markdown

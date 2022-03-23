@@ -65,11 +65,17 @@ export const Dropdown = ({ children, overlay, className }: TDropdownProps) => {
         position={overlay.props.position}
         open={open}
       >
-        {overlay.props.children.map((menuItem, index) => (
-          <Fragment key={index}>
-            {React.cloneElement(menuItem, { onClose })}
+        {overlay.props.children.length ? (
+          overlay.props.children.map((menuItem, index) => (
+            <Fragment key={index}>
+              {React.cloneElement(menuItem, { onClose })}
+            </Fragment>
+          ))
+        ) : (
+          <Fragment>
+            {React.cloneElement(overlay.props.children, { onClose })}
           </Fragment>
-        ))}
+        )}
       </Menu>
     </div>
   )

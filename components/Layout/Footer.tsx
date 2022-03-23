@@ -91,7 +91,7 @@ const Footer = () => {
                 className="text-sm"
                 suffix={
                   index < links.length - 1 && (
-                    <span className="bg-text mx-2.5 h-1 w-1 rounded-full"></span>
+                    <span className="mx-2.5 h-1 w-1 rounded-full bg-gray-700"></span>
                   )
                 }
               >
