@@ -62,7 +62,7 @@ const PostDetail = ({
   })
 
   return (
-    <div className="bg-gray-300/10 py-4">
+    <div className="post-details bg-gray-300/10 py-4">
       <Container>
         <div className="flex flex-col items-stretch pb-8 sm:flex-row">
           <div className="relative pb-4 sm:z-elevate sm:w-16 sm:pr-4 ">
