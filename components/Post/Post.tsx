@@ -102,7 +102,7 @@ export const PostCard = ({
                 className="rounded-md px-2 py-1.5"
               >
                 <HeartIcon className="mr-1 h-5 w-5" />
-                {likesCount} reactions
+                {likesCount} {likesCount > 1 ? 'reactions' : 'reaction'}
               </Button>
               <Button
                 as="a"
@@ -111,7 +111,8 @@ export const PostCard = ({
                 className="rounded-md px-2 py-1.5"
               >
                 <ChatAlt2Icon className="mr-1 h-5 w-5" />
-                {commentsCount > 0 ? commentsCount : 'Add'} comment
+                {commentsCount > 0 ? commentsCount : 'Add'}{' '}
+                {commentsCount > 1 ? 'comments' : 'comment'}
               </Button>
             </div>
             <div className="relative z-elevate flex items-center gap-2 self-end xs:self-center">

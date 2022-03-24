@@ -19,10 +19,14 @@ handler.post(
       return res.status(401).end()
     }
 
+    const { comment: rawComment, parentId, depth } = req.body
+
     const comment = await insertComment(req.db, {
       creatorId: req.user._id,
       postId: req.query.postId,
-      content: req.body.comment,
+      content: rawComment,
+      ...(parentId && { parentId }),
+      ...(depth && { depth }),
     })
 
     return res.json({ comment })

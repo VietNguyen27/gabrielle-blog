@@ -251,6 +251,14 @@ code {
   margin: 1.5rem auto;
 }
 
+.post-details details > summary {
+  list-style: none;
+}
+
+.post-details details summary::-webkit-details-marker {
+  display: none;
+}
+
 [style*='--aspect-ratio'] > :first-child {
   width: 100%;
 }
