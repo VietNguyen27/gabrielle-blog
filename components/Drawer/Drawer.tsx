@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import clsx from 'clsx'
 import { MenuAlt2Icon } from '@heroicons/react/outline'
 import useOnClickOutside from '@hooks/useOnClickOutside'
-import Link from 'next/link'
 import { Logo } from '@components/Logo'
 
 type TDrawerProps = {
@@ -31,7 +30,7 @@ const Drawer = ({ open, onClose, className, children }: TDrawerProps) => {
           transition={{
             duration: 0.15,
           }}
-          className="fixed top-0 left-0 z-drawer h-screen w-screen"
+          className="fixed top-0 left-0 z-popover h-screen w-screen"
         >
           <div className="absolute top-0 left-0 h-full w-full bg-slate-800/10"></div>
           <motion.aside

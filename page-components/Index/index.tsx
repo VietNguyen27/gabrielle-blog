@@ -144,6 +144,7 @@ const Home = () => {
                 : [...Array(6)].map((_, index) => (
                     <PostCardSkeleton key={index} hasCover={index === 0} />
                   ))}
+              {isLoadingMore && <PostCardSkeleton />}
               <div className="pt-4 text-center text-xl font-semibold" ref={ref}>
                 {isReachingEnd && 'No more posts'}
               </div>

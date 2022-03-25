@@ -1,7 +1,7 @@
+import { Avatar } from '@components/Avatar'
 import { Button } from '@components/Button'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import { Form } from '@components/Form'
-import { ImageRatio } from '@components/ImageRatio'
 import { Textarea } from '@components/Textarea'
 import {
   ChatAlt2Icon,
@@ -141,12 +141,10 @@ const Comment = ({
         {collapse && <span className="ml-2">{creator.username}</span>}
       </summary>
       <div className="mb-4 flex items-start">
-        <ImageRatio
+        <Avatar
           src={creator.profilePicture}
-          className={clsx(
-            'mt-3 mr-2 flex-shrink-0 rounded-full border border-gray-200',
-            depth ? 'w-6' : ' w-8'
-          )}
+          alt={creator.username}
+          className={clsx('mt-3 mr-2 flex-shrink-0', depth ? 'w-6' : ' w-8')}
         />
         <div className="flex flex-1 flex-col items-stretch">
           <div className="mb-3 rounded-md border border-gray-200 p-4">
@@ -216,7 +214,7 @@ const Comment = ({
             </div>
           ) : (
             <div className="flex items-center">
-              <Button variant="quinary" className="rounded-md px-2 py-1.5">
+              <Button variant="quinary" className="mr-2 rounded-md px-2 py-1.5">
                 <HeartIcon className="mr-1 h-5 w-5" />
                 {likesCount} likes
               </Button>

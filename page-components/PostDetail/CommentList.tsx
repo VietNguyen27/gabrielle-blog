@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useCurrentUser } from '@lib/user'
 import { Textarea } from '@components/Textarea'
-import { ImageRatio } from '@components/ImageRatio'
 import clsx from 'clsx'
 import { Button } from '@components/Button'
 import { Form } from '@components/Form'
@@ -12,8 +11,10 @@ import { fetcher } from '@lib/fetcher'
 import { getErrorFromJoiMessage } from '@utils/utils'
 import { Comment } from '@components/Comment'
 import useOnClickOutside from '@hooks/useOnClickOutside'
+import { CommentSkeleton } from '@components/Skeleton'
+import { Avatar } from '@components/Avatar'
 
-const CommentList = ({ postId }) => {
+const CommentList = ({ postId, commentsCount }) => {
   const [focus, setFocus] = useState(false)
   const [success, setSuccess] = useState(false)
   const ref = useRef(null)
@@ -87,14 +88,17 @@ const CommentList = ({ postId }) => {
   return (
     <div className="border-t border-gray-200 px-6 py-8 sm:px-12">
       <div className="flex flex-col items-stretch">
-        <h2 className="pb-4 text-2xl font-bold">Discussion (0)</h2>
+        <h2 className="pb-4 text-2xl font-bold">
+          Discussion ({commentsCount})
+        </h2>
         <div ref={formRef}>
           <Form onSubmit={onSubmit}>
             <div className="flex items-start">
               {user && (
-                <ImageRatio
+                <Avatar
                   src={user.profilePicture}
-                  className="mr-2 w-8 flex-shrink-0 rounded-full border border-gray-200"
+                  alt={user.username}
+                  className="mr-2 w-8 flex-shrink-0"
                 />
               )}
               {focus ? (
@@ -146,11 +150,13 @@ const CommentList = ({ postId }) => {
           </Form>
         </div>
         <div className="flex flex-col items-stretch pt-6">
-          {comments
+          {comments && commentsCount
             ? nestedComments(comments, postId).map((comment) => (
                 <Comment key={comment._id} {...comment} />
               ))
-            : null}
+            : [...Array(commentsCount ? 4 : 0)].map((_, index) => (
+                <CommentSkeleton key={index} />
+              ))}
         </div>
       </div>
     </div>

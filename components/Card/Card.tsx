@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import { ImageRatio } from '@components/ImageRatio'
 import { getFormattedDate } from '@utils/utils'
+import { Avatar } from '@components/Avatar'
 
 type TCreator = {
   username: string
@@ -32,9 +32,10 @@ export const CardPrimary = ({
     <article className="flex items-center gap-4">
       <Link href={`/${creator.username}`}>
         <a className="flex-shrink-0">
-          <ImageRatio
+          <Avatar
             src={creator.profilePicture}
-            className="w-12 rounded-full border border-gray-200"
+            alt={creator.username}
+            className="w-12"
           />
         </a>
       </Link>

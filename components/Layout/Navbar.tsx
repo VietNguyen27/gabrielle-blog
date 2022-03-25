@@ -6,7 +6,7 @@ import { removeUserToLocalStorage, useCurrentUser } from '@lib/user'
 import { fetcher } from '@lib/fetcher'
 import { BellIcon } from '@heroicons/react/outline'
 import { Dropdown, Menu, MenuDivider, MenuItem } from '@components/Dropdown'
-import { ImageRatio } from '@components/ImageRatio'
+import { Avatar } from '@components/Avatar'
 
 const MenuDropdown = ({ username, email }, onLogOut) => {
   return (
@@ -91,9 +91,10 @@ const Navbar = () => {
             <li>
               <Dropdown overlay={MenuDropdown(localUser, onLogOut)}>
                 <Button variant="quaternary" className="rounded-full p-1">
-                  <ImageRatio
-                    className="w-8 rounded-full outline outline-2 outline-gray-200"
+                  <Avatar
                     src={localUser.profilePicture}
+                    alt={localUser.username}
+                    className="w-8"
                   />
                 </Button>
               </Dropdown>

@@ -23,6 +23,7 @@ import {
   CardPrimarySkeleton,
   CardSecondarySkeleton,
 } from '@components/Skeleton'
+import { Avatar } from '@components/Avatar'
 
 const MoreOptionsDropdown = () => {
   return (
@@ -47,6 +48,7 @@ const PostDetail = ({
   readingTime,
   likesCount,
   bookmarksCount,
+  commentsCount,
   createdAt,
 }) => {
   const { data: { user } = {} } = useCurrentUser()
@@ -102,9 +104,10 @@ const PostDetail = ({
                 )}
                 <div className="px-6 py-6 sm:px-12">
                   <div className="flex items-center gap-4 pb-6">
-                    <ImageRatio
-                      className="w-10 rounded-full"
+                    <Avatar
                       src={creator.profilePicture}
+                      alt={creator.username}
+                      className="w-10"
                     />
                     <div className="flex flex-col">
                       <div className="text-lg font-bold">
@@ -134,7 +137,7 @@ const PostDetail = ({
                     ></div>
                   </div>
                 </div>
-                <CommentList postId={_id} />
+                <CommentList postId={_id} commentsCount={commentsCount} />
               </div>
               <div className="rounded-md border border-gray-300 bg-white shadow">
                 <div className="px-6 py-6 sm:px-12">
@@ -162,10 +165,10 @@ const PostDetail = ({
                     <div className="relative flex items-end gap-2 pb-6">
                       <Link href={`/${creator.username}`}>
                         <a>
-                          <ImageRatio
+                          <Avatar
                             src={creator.profilePicture}
-                            className="w-12 rounded-full bg-white"
-                            alt="Post thumbnail"
+                            alt={creator.username}
+                            className="w-12 bg-white"
                           />
                         </a>
                       </Link>
