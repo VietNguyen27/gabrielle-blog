@@ -5,10 +5,10 @@ import { Input } from '@components/Input'
 import { useFormContext } from 'react-hook-form'
 import { Button } from '@components/Button'
 import { saveUserToLocalStorage, useCurrentUser } from '@lib/user'
-import { ImageRatio } from '@components/ImageRatio'
 import { useError, useLoading, useMessage } from '@lib/store'
 import { fetcher } from '@lib/fetcher'
 import { getErrorFromJoiMessage } from '@utils/utils'
+import { Avatar } from '@components/Avatar'
 
 const FormFields = () => {
   const { data: { user } = {} } = useCurrentUser()
@@ -174,9 +174,10 @@ const BasicInfo = () => {
       <Form onSubmit={onSubmit}>
         <div className="mb-6 inline-flex items-center gap-4">
           {user ? (
-            <ImageRatio
+            <Avatar
               src={cover || user.profilePicture}
-              className="w-14 rounded-full border border-gray-200 shadow"
+              alt={user.username}
+              className="w-14"
             />
           ) : (
             <div className="h-14 w-14 animate-pulse rounded-full bg-gray-200"></div>

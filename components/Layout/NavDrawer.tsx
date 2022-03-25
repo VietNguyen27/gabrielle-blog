@@ -3,9 +3,9 @@ import { Drawer } from '@components/Drawer'
 import Sidebar from './Sidebar'
 import Link from 'next/link'
 import { removeUserToLocalStorage, useCurrentUser } from '@lib/user'
-import { ImageRatio } from '@components/ImageRatio'
 import { fetcher } from '@lib/fetcher'
 import { Button } from '@components/Button'
+import { Avatar } from '@components/Avatar'
 
 type TNavDrawerProps = {
   open: boolean
@@ -36,9 +36,10 @@ const NavDrawer = ({ open, onClose }: TNavDrawerProps) => {
               <li>
                 <Link href={`/${user.username}`}>
                   <a className="flex items-center gap-3 rounded-sm px-3 py-2 font-medium hover:bg-indigo-50 hover:text-tertiary-900 active:bg-indigo-100">
-                    <ImageRatio
+                    <Avatar
                       src={user.profilePicture}
-                      className="w-[20px] rounded-full border border-gray-200"
+                      alt={user.username}
+                      className="w-[20px]"
                     />
                     <div className="flex flex-col">
                       <p className="font-semibold line-clamp-1">

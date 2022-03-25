@@ -108,3 +108,30 @@ export const TrendingPostSkeleton = ({ numOrder }) => {
     </div>
   )
 }
+
+export const CommentSkeleton = () => {
+  return (
+    <div className="mb-4 flex items-start">
+      <div className="mt-3 mr-2 h-8 w-8 flex-shrink-0 animate-pulse rounded-full bg-gray-200"></div>
+      <div className="flex flex-1 flex-col items-stretch">
+        <div className="mb-3 rounded-md border border-gray-200 p-4">
+          <div className="relative flex items-center justify-between pb-4">
+            <div className="flex flex-col xs:flex-row xs:items-center">
+              <div className="h-4 w-32 animate-pulse rounded bg-gray-200"></div>
+              <div className="mx-2 hidden h-1 w-1 animate-pulse rounded-full bg-gray-700 xs:inline-block"></div>
+              <div className="h-3 w-24 animate-pulse rounded bg-gray-200"></div>
+            </div>
+            <div className="absolute -top-2 -right-2 h-5 w-5 animate-pulse rounded bg-gray-200"></div>
+          </div>
+          <div className="mb-2 h-4 animate-pulse rounded bg-gray-200"></div>
+          <div className="mb-2 h-4 animate-pulse rounded bg-gray-200"></div>
+          <div className="h-4 w-1/3 animate-pulse rounded bg-gray-200"></div>
+        </div>
+        <div className="flex items-center">
+          <div className="mr-2 h-8 w-24 animate-pulse rounded-md bg-gray-200 px-2 py-1.5"></div>
+          <div className="h-8 w-20 animate-pulse rounded-md bg-gray-200 px-2 py-1.5"></div>
+        </div>
+      </div>
+    </div>
+  )
+}

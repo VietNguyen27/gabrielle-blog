@@ -6,6 +6,7 @@ import { getFormattedDate } from '@utils/utils'
 import { TopicAnchor } from '@components/Topic'
 import { Button } from '@components/Button'
 import clsx from 'clsx'
+import { Avatar } from '@components/Avatar'
 
 type TCreator = {
   username: string
@@ -64,9 +65,10 @@ export const PostCard = ({
         <div className="flex items-center pb-2">
           <Link href={`/${creator.username}`}>
             <a className="relative z-elevate">
-              <ImageRatio
+              <Avatar
                 src={creator.profilePicture}
-                className="w-8 rounded-full"
+                alt={creator.username}
+                className="w-8"
               />
             </a>
           </Link>
@@ -145,10 +147,10 @@ export const TrendingPost = ({
         <div className="mb-2 flex items-center gap-2">
           <Link href={`/${creator.username}`} passHref>
             <a>
-              <ImageRatio
+              <Avatar
                 src={creator.profilePicture}
                 alt={creator.username}
-                className="w-6 flex-shrink-0 rounded-full"
+                className="w-6 flex-shrink-0"
               />
             </a>
           </Link>
