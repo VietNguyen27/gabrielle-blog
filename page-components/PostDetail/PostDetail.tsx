@@ -183,7 +183,7 @@ const PostDetail = ({
                         variant="secondary"
                         as="a"
                         href="/settings"
-                        className="rounded-md py-2"
+                        className="mb-4 rounded-md py-2"
                         fluid
                       >
                         Edit profile
@@ -191,14 +191,25 @@ const PostDetail = ({
                     ) : (
                       <Button
                         variant="tertiary"
-                        className="rounded-md py-2"
+                        className="mb-4 rounded-md py-2"
                         fluid
                       >
                         Follow
                       </Button>
                     )}
-
-                    <div className="py-4">{creator.position}</div>
+                    {creator.bio && <div className="mb-4">{creator.bio}</div>}
+                    <div className="text-sm font-bold uppercase">Email</div>
+                    <div className="mb-2">{creator.email}</div>
+                    <div className="text-sm font-bold uppercase">Work</div>
+                    <div className="mb-2">{creator.position}</div>
+                    {creator.location && (
+                      <>
+                        <div className="text-sm font-bold uppercase">
+                          Location
+                        </div>
+                        <div className="mb-2">{creator.location}</div>
+                      </>
+                    )}
                     <div className="text-sm font-bold uppercase">Joined</div>
                     <div>{getFormattedDate(creator.createdAt)}</div>
                   </div>
