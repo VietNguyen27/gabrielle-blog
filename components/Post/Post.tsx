@@ -7,6 +7,7 @@ import { TopicAnchor } from '@components/Topic'
 import { Button } from '@components/Button'
 import clsx from 'clsx'
 import { Avatar } from '@components/Avatar'
+import { UserPreview } from '@components/Preview'
 
 type TCreator = {
   username: string
@@ -54,7 +55,7 @@ export const PostCard = ({
   hasCover,
 }: TPostCardProps) => {
   return (
-    <article className="relative mb-4 overflow-hidden rounded-md border border-gray-200 shadow-sm">
+    <article className="relative mb-4 rounded-md border border-gray-200 shadow-sm">
       <Link href={`/${creator.username}/post/${_id}`}>
         <a className="absolute top-0 left-0 h-full w-full"></a>
       </Link>
@@ -63,15 +64,17 @@ export const PostCard = ({
       )}
       <div className="p-4">
         <div className="flex items-center pb-2">
-          <Link href={`/${creator.username}`}>
-            <a className="relative z-elevate">
-              <Avatar
-                src={creator.profilePicture}
-                alt={creator.username}
-                className="w-8"
-              />
-            </a>
-          </Link>
+          <UserPreview user={creator}>
+            <Link href={`/${creator.username}`}>
+              <a className="relative z-elevate">
+                <Avatar
+                  src={creator.profilePicture}
+                  alt={creator.username}
+                  className="w-8"
+                />
+              </a>
+            </Link>
+          </UserPreview>
           <div className="relative z-elevate flex flex-col pl-2">
             <Link href={`/${creator.username}`}>
               <a className="text-sm font-bold">{creator.username}</a>
@@ -145,15 +148,17 @@ export const TrendingPost = ({
       </div>
       <div className="flex w-full flex-col">
         <div className="mb-2 flex items-center gap-2">
-          <Link href={`/${creator.username}`} passHref>
-            <a>
-              <Avatar
-                src={creator.profilePicture}
-                alt={creator.username}
-                className="w-6 flex-shrink-0"
-              />
-            </a>
-          </Link>
+          <UserPreview user={creator}>
+            <Link href={`/${creator.username}`} passHref>
+              <a>
+                <Avatar
+                  src={creator.profilePicture}
+                  alt={creator.username}
+                  className="w-6 flex-shrink-0"
+                />
+              </a>
+            </Link>
+          </UserPreview>
           <Link href={`/${creator.username}`}>
             <a className="text-sm font-semibold">{creator.username}</a>
           </Link>

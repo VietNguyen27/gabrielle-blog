@@ -2,6 +2,7 @@ import { Avatar } from '@components/Avatar'
 import { Button } from '@components/Button'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import { Form } from '@components/Form'
+import { UserPreview } from '@components/Preview'
 import { Textarea } from '@components/Textarea'
 import {
   ChatAlt2Icon,
@@ -141,11 +142,17 @@ const Comment = ({
         {collapse && <span className="ml-2">{creator.username}</span>}
       </summary>
       <div className="mb-4 flex items-start">
-        <Avatar
-          src={creator.profilePicture}
-          alt={creator.username}
-          className={clsx('mt-3 mr-2 flex-shrink-0', depth ? 'w-6' : ' w-8')}
-        />
+        <UserPreview user={creator}>
+          <Link href={`/${creator.username}`}>
+            <a className="mt-3 mr-2 inline-block flex-shrink-0">
+              <Avatar
+                src={creator.profilePicture}
+                alt={creator.username}
+                className={depth ? 'w-6' : ' w-8'}
+              />
+            </a>
+          </Link>
+        </UserPreview>
         <div className="flex flex-1 flex-col items-stretch">
           <div className="mb-3 rounded-md border border-gray-200 p-4">
             <div className="flex items-center justify-between pb-3">
