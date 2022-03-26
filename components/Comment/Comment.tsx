@@ -9,6 +9,7 @@ import {
   DotsHorizontalIcon,
   HeartIcon,
 } from '@heroicons/react/outline'
+import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
 import useOnClickOutside from '@hooks/useOnClickOutside'
 import { useComments } from '@lib/comment'
@@ -37,6 +38,7 @@ type TCommentProps = {
   content: string
   depth: number
   creator: TCreator
+  isLiked: boolean
   likesCount: number
   createdAt: Date
   children: TCommentProps[]
@@ -48,6 +50,7 @@ const Comment = ({
   content,
   depth,
   creator,
+  isLiked,
   likesCount,
   createdAt,
   children,
@@ -65,6 +68,7 @@ const Comment = ({
   const { loading, setLoading } = useLoading()
   const { error, setError, resetError } = useError()
   const router = useRouter()
+  const userLiked = user && isLiked
 
   useOnClickOutside(formRef, () => {
     if (reply) {
@@ -115,6 +119,50 @@ const Comment = ({
       setSuccess(false)
     }
   }, [])
+
+  const checkLoggedIn = () => {
+    if (!user) {
+      router.push({
+        pathname: '/login',
+        query: { returnUrl: router.asPath },
+      })
+      mutate()
+      return false
+    }
+    return true
+  }
+
+  const handleLikeComment = async () => {
+    if (checkLoggedIn()) {
+      try {
+        await fetcher(`/api/posts/${postId}/comments/${_id}/likes`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            commentId: _id,
+          }),
+        })
+        mutate()
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  const handleUnlikeComment = async () => {
+    try {
+      await fetcher(`/api/posts/${postId}/comments/${_id}/likes`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          commentId: _id,
+        }),
+      })
+      mutate()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <details
@@ -221,9 +269,17 @@ const Comment = ({
             </div>
           ) : (
             <div className="flex items-center">
-              <Button variant="quinary" className="mr-2 rounded-md px-2 py-1.5">
-                <HeartIcon className="mr-1 h-5 w-5" />
-                {likesCount} likes
+              <Button
+                variant="quinary"
+                className="mr-2 rounded-md px-2 py-1.5"
+                onClick={userLiked ? handleUnlikeComment : handleLikeComment}
+              >
+                {userLiked ? (
+                  <HeartIconFilled className="mr-1 h-5 w-5 text-red-700" />
+                ) : (
+                  <HeartIcon className="mr-1 h-5 w-5" />
+                )}
+                {likesCount} {likesCount > 1 ? 'likes' : 'like'}
               </Button>
               <Button
                 variant="quinary"

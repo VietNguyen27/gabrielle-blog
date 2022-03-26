@@ -51,3 +51,27 @@ export async function insertComment(
   comment._id = insertedId
   return comment
 }
+
+export async function likeComment(db, commentId, userId) {
+  const post = await db
+    .collection('comments')
+    .findOneAndUpdate(
+      { _id: new ObjectId(commentId) },
+      { $push: { likes: new ObjectId(userId) }, $inc: { likesCount: 1 } },
+      { returnDocument: 'after' }
+    )
+
+  return post.value
+}
+
+export async function unlikeComment(db, commentId, userId) {
+  const post = await db
+    .collection('comments')
+    .findOneAndUpdate(
+      { _id: new ObjectId(commentId) },
+      { $pull: { likes: new ObjectId(userId) }, $inc: { likesCount: -1 } },
+      { returnDocument: 'after' }
+    )
+
+  return post.value
+}
