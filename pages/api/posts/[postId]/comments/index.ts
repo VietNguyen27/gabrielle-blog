@@ -8,7 +8,14 @@ const handler = nextConnect()
 handler.use(middleware)
 
 handler.get(async (req: any, res: any) => {
-  const comments = await findComments(req.db, req.query.postId)
+  const rawComments = await findComments(req.db, req.query.postId)
+  const comments = rawComments.map((comment) => {
+    const likes = comment.likes.map((like) => String(like))
+    return {
+      ...comment,
+      isLiked: req.user ? likes.includes(String(req.user._id)) : false,
+    }
+  })
 
   return res.json({ comments })
 })
