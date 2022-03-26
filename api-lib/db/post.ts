@@ -34,8 +34,9 @@ export async function findPostById(db, id) {
     _id: String(_id),
     ...rest,
   }))
+  const likes = post[0].likes.map((like) => String(like))
 
-  return { ...changeDataObjectToString(post[0]), topics }
+  return { ...changeDataObjectToString(post[0]), topics, likes }
 }
 
 export async function findPosts(
@@ -158,6 +159,30 @@ export async function insertPost(
   }
 
   return insertedId
+}
+
+export async function likePost(db, postId, userId) {
+  const post = await db
+    .collection('posts')
+    .findOneAndUpdate(
+      { _id: new ObjectId(postId) },
+      { $push: { likes: new ObjectId(userId) }, $inc: { likesCount: 1 } },
+      { returnDocument: 'after' }
+    )
+
+  return post.value
+}
+
+export async function unlikePost(db, postId, userId) {
+  const post = await db
+    .collection('posts')
+    .findOneAndUpdate(
+      { _id: new ObjectId(postId) },
+      { $pull: { likes: new ObjectId(userId) }, $inc: { likesCount: -1 } },
+      { returnDocument: 'after' }
+    )
+
+  return post.value
 }
 
 export const changeDataObjectToString = (data) => {

@@ -150,20 +150,45 @@ const Home = () => {
               </div>
             </div>
             <div className="sticky top-20 hidden w-1/4 px-2 lg:block">
-              <Heading level={2} className="pl-4 text-lg capitalize">
-                Popular topics
-              </Heading>
-              <nav className="mt-2 pr-2">
-                <ul className="flex flex-col gap-y-2 pb-4">
-                  {topics
-                    ? topics.map(({ _id, value, label }) => (
-                        <TopicPopular key={_id} value={value} label={label} />
-                      ))
-                    : [...Array(10)].map((_, index) => (
-                        <TopicPopularSkeleton key={index} />
+              {user ? (
+                <>
+                  <Heading level={2} className="pl-4 text-lg capitalize">
+                    My topics
+                  </Heading>
+                  <nav className="mt-2 pr-2">
+                    <ul className="flex flex-col gap-y-2 pb-4">
+                      {user.interests.map((topic) => (
+                        <TopicPopular
+                          key={topic}
+                          value={topic.toLowerCase()}
+                          label={topic}
+                        />
                       ))}
-                </ul>
-              </nav>
+                    </ul>
+                  </nav>
+                </>
+              ) : (
+                <>
+                  <Heading level={2} className="pl-4 text-lg capitalize">
+                    Popular topics
+                  </Heading>
+                  <nav className="mt-2 pr-2">
+                    <ul className="flex flex-col gap-y-2 pb-4">
+                      {topics
+                        ? topics.map(({ _id, value, label }) => (
+                            <TopicPopular
+                              key={_id}
+                              value={value}
+                              label={label}
+                            />
+                          ))
+                        : [...Array(10)].map((_, index) => (
+                            <TopicPopularSkeleton key={index} />
+                          ))}
+                    </ul>
+                  </nav>
+                </>
+              )}
             </div>
           </div>
         </Container>

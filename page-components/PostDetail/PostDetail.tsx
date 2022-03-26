@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   BookmarkIcon,
   DotsHorizontalIcon,
   DuplicateIcon,
   HeartIcon,
 } from '@heroicons/react/outline'
+import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid'
 import { Container } from '@components/Layout'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import Link from 'next/link'
@@ -17,13 +18,16 @@ import { useCurrentUser } from '@lib/user'
 import { TopicAnchor } from '@components/Topic'
 import { ALink } from '@components/ALink'
 import CommentList from './CommentList'
-import { usePosts, useRandomPosts } from '@lib/post'
+import { usePostById, usePosts, useRandomPosts } from '@lib/post'
 import { CardPrimary } from '@components/Card/Card'
 import {
   CardPrimarySkeleton,
   CardSecondarySkeleton,
 } from '@components/Skeleton'
 import { Avatar } from '@components/Avatar'
+import { fetcher } from '@lib/fetcher'
+import { useRouter } from 'next/router'
+import clsx from 'clsx'
 
 const MoreOptionsDropdown = () => {
   return (
@@ -62,6 +66,57 @@ const PostDetail = ({
     not: _id,
     limit: 3,
   })
+  const { data: { post } = {}, mutate } = usePostById(_id)
+  const router = useRouter()
+  const userLiked = user && post && post.isLiked
+
+  useEffect(() => {
+    mutate()
+  }, [router.asPath])
+
+  const checkLoggedIn = () => {
+    if (!user) {
+      router.push({
+        pathname: '/login',
+        query: { returnUrl: router.asPath },
+      })
+      mutate()
+      return false
+    }
+    return true
+  }
+
+  const handleLikePost = async () => {
+    if (checkLoggedIn()) {
+      try {
+        await fetcher(`/api/posts/${_id}/likes`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            postId: _id,
+          }),
+        })
+        mutate()
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  const handleUnlikePost = async () => {
+    try {
+      await fetcher(`/api/posts/${_id}/likes`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          postId: _id,
+        }),
+      })
+      mutate()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="post-details bg-gray-300/10 py-4">
@@ -69,17 +124,29 @@ const PostDetail = ({
         <div className="flex flex-col items-stretch pb-8 sm:flex-row">
           <div className="relative pb-4 sm:z-elevate sm:w-16 sm:pr-4 ">
             <div className="static top-24 mt-8 flex flex-row items-center justify-center gap-4 rounded-md border border-gray-300 bg-white py-2 sm:sticky sm:flex-col sm:border-transparent sm:bg-transparent sm:py-0">
-              <button className="group inline-flex flex-1 flex-row items-center justify-center sm:flex-auto sm:flex-col">
-                <span className="inline-block rounded-full p-2 transition-colors group-hover:bg-red-100 group-hover:text-red-700">
-                  <HeartIcon className="h-6 w-6" />
+              <button
+                className="group inline-flex flex-1 flex-row items-center justify-center sm:flex-auto sm:flex-col"
+                onClick={userLiked ? handleUnlikePost : handleLikePost}
+              >
+                <span
+                  className={clsx(
+                    'inline-block rounded-full p-2 transition-colors group-hover:bg-red-100 group-hover:text-red-700',
+                    userLiked && 'bg-red-50 text-red-700'
+                  )}
+                >
+                  {userLiked ? (
+                    <HeartIconFilled className="h-6 w-6" />
+                  ) : (
+                    <HeartIcon className="h-6 w-6" />
+                  )}
                 </span>
-                <span>{likesCount}</span>
+                <span>{post ? post.likesCount : likesCount}</span>
               </button>
               <button className="group inline-flex flex-1 flex-row items-center justify-center sm:flex-auto sm:flex-col">
                 <span className="inline-block rounded-full p-2 transition-colors group-hover:bg-indigo-100 group-hover:text-indigo-700">
                   <BookmarkIcon className="h-6 w-6" />
                 </span>
-                <span>{bookmarksCount}</span>
+                <span>{post ? post.bookmarksCount : bookmarksCount}</span>
               </button>
               <Dropdown
                 className="inline-flex flex-1 justify-center sm:flex-auto"
