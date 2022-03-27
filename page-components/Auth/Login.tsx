@@ -115,7 +115,10 @@ const Login = () => {
             <FormFields />
           </Form>
           <p>
-            Don't have an account? <ALink href="/register">Sign up</ALink>
+            Don't have an account?{' '}
+            <ALink href="/register" target="_blank">
+              Sign up
+            </ALink>
           </p>
         </div>
       </main>

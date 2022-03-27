@@ -60,6 +60,7 @@ const Footer = () => {
             <Button
               as="a"
               href="/register"
+              target="_blank"
               variant="tertiary"
               className="rounded-3xl px-5 py-2.5"
             >

@@ -110,8 +110,9 @@ const Home = () => {
                             </div>
                             <div className="flex w-1/2 flex-col gap-2 pt-6 xs:w-2/5 xl:w-1/4">
                               <Button
-                                href="/register"
                                 as="a"
+                                href="/register"
+                                target="_blank"
                                 className="rounded-md px-2 py-2 xs:px-4"
                                 fluid
                               >
