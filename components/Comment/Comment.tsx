@@ -1,3 +1,4 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Avatar } from '@components/Avatar'
 import { Button } from '@components/Button'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
@@ -21,11 +22,10 @@ import {
   getErrorFromJoiMessage,
   getFormattedDate,
 } from '@utils/utils'
-import clsx from 'clsx'
+import { useRouter } from 'next/router'
 import DOMPurify from 'dompurify'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import clsx from 'clsx'
 
 type TCreator = {
   username: string
@@ -81,6 +81,7 @@ const Comment = ({
     if (reply && ref.current) {
       ;(ref.current as any).focus()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reply])
 
   const onClick = () => {
