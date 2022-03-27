@@ -3,7 +3,7 @@ import { Container } from '@components/Layout'
 import { Button } from '@components/Button'
 import { ArrowSmLeftIcon } from '@heroicons/react/outline'
 
-const Custom404 = () => {
+const Custom500 = () => {
   return (
     <main>
       <div className="flex flex-1 flex-col items-center justify-center">
@@ -13,13 +13,13 @@ const Custom404 = () => {
           <div className="mx-auto xs:w-3/5 md:w-1/2 lg:w-2/5">
             <div className="relative z-elevate flex flex-col items-center justify-center rounded-md bg-white px-8 py-8 text-center shadow-lg lg:px-16 lg:py-12 xl:py-20">
               <h1 className="text-[70px] font-bold text-slate-500 lg:text-[100px]">
-                404
+                500
               </h1>
-              <p className="-mt-3 mb-12 text-2xl font-bold">Page not found</p>
-              <p className="mb-8">
-                The link you clicked may be broken or the page may have been
-                removed or not available.
+              <p className="-mt-3 mb-12 text-2xl font-bold">
+                Internal server error
               </p>
+              <p className="mb-0">The server has been deserted for a while.</p>
+              <p className="mb-8">Please be patient or try again later.</p>
               <Button
                 as="a"
                 href="/"
@@ -37,4 +37,4 @@ const Custom404 = () => {
   )
 }
 
-export default Custom404
+export default Custom500

@@ -4,7 +4,7 @@ import { middleware } from '@api-lib/middlewares'
 import { GetServerSideProps } from 'next'
 import { findUserByUsername } from '@api-lib/db'
 import { extractUser } from '@lib/user'
-import Profile from '@page-components/Profile'
+import { Profile } from '@page-components/Profile'
 import { Layout } from '@components/Layout'
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {

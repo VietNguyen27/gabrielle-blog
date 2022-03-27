@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Home from '@page-components/Index'
+import { Home } from '@page-components/Home'
 import { Header } from '@components/Layout'
 
 const HomePage = () => {
