@@ -47,11 +47,11 @@ export const links = [
 
 const Footer = () => {
   const { pathname } = useRouter()
-  const { data: { user } = {} } = useCurrentUser()
+  const localUser = JSON.parse(localStorage.getItem('user') as any) || null
 
   return (
     <footer className="overflow-hidden bg-gray-100">
-      {!user && (
+      {!localUser && (
         <Container>
           <div className="border-divider flex flex-col items-center justify-center border-b py-6 text-center lg:flex-row lg:py-10">
             <h2 className="mr-0 mb-2 text-4xl font-bold lg:mb-0 lg:mr-6">

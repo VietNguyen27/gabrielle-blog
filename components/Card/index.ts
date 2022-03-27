@@ -1,1 +1,1 @@
-export { CardSecondary } from './Card'
+export { CardTertiary } from './Card'

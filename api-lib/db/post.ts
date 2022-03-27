@@ -34,9 +34,8 @@ export async function findPostById(db, id) {
     _id: String(_id),
     ...rest,
   }))
-  const likes = post[0].likes.map((like) => String(like))
 
-  return { ...changeDataObjectToString(post[0]), topics, likes }
+  return { ...changeDataObjectToString(post[0]), topics }
 }
 
 export async function findPosts(
@@ -80,6 +79,22 @@ export async function findPosts(
       { $unwind: '$creator' },
       {
         $lookup: {
+          from: 'likes',
+          localField: '_id',
+          foreignField: 'postId',
+          as: 'likes',
+        },
+      },
+      {
+        $lookup: {
+          from: 'bookmarks',
+          localField: '_id',
+          foreignField: 'postId',
+          as: 'bookmarks',
+        },
+      },
+      {
+        $lookup: {
           from: 'topics',
           localField: 'topic',
           foreignField: '_id',
@@ -97,8 +112,10 @@ export async function findPosts(
       _id: String(_id),
       ...rest,
     }))
+    const likes = post.likes.map((like) => String(like.userId))
+    const bookmarks = post.bookmarks.map((bookmark) => String(bookmark.userId))
     changeDataObjectToString(post)
-    return { ...post, topics }
+    return { ...post, topics, likes, bookmarks }
   })
 }
 
@@ -112,11 +129,8 @@ export async function insertPost(
     title,
     cover,
     readingTime,
-    likes: [],
     likesCount: 0,
-    comments: [],
     commentsCount: 0,
-    bookmarks: [],
     bookmarksCount: 0,
     published,
     createdAt: new Date(),
@@ -159,30 +173,6 @@ export async function insertPost(
   }
 
   return insertedId
-}
-
-export async function likePost(db, postId, userId) {
-  const post = await db
-    .collection('posts')
-    .findOneAndUpdate(
-      { _id: new ObjectId(postId) },
-      { $push: { likes: new ObjectId(userId) }, $inc: { likesCount: 1 } },
-      { returnDocument: 'after' }
-    )
-
-  return post.value
-}
-
-export async function unlikePost(db, postId, userId) {
-  const post = await db
-    .collection('posts')
-    .findOneAndUpdate(
-      { _id: new ObjectId(postId) },
-      { $pull: { likes: new ObjectId(userId) }, $inc: { likesCount: -1 } },
-      { returnDocument: 'after' }
-    )
-
-  return post.value
 }
 
 export const changeDataObjectToString = (data) => {
