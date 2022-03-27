@@ -11,11 +11,15 @@ async function createIndexes(db) {
     ]),
     db
       .collection('posts')
-      .createIndexes([{ key: { createdAt: -1 } }, { key: { user: -1 } }]),
+      .createIndexes([{ key: { createdAt: -1 } }, { key: { creatorId: -1 } }]),
+    db.collection('likes').createIndexes([{ key: { postId: -1 } }]),
+    db
+      .collection('bookmarks')
+      .createIndexes([{ key: { userId: -1 } }, { key: { postId: -1 } }]),
     db.collection('topics').createIndexes([{ key: { createdAt: -1 } }]),
     db
       .collection('comments')
-      .createIndexes([{ key: { createdAt: -1 } }, { key: { blog: -1 } }]),
+      .createIndexes([{ key: { createdAt: -1 } }, { key: { postId: -1 } }]),
     db
       .collection('notifications')
       .createIndexes([{ key: { createdAt: -1 } }, { key: { receiver: -1 } }]),

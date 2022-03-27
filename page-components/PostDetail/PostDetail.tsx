@@ -5,7 +5,6 @@ import {
   DuplicateIcon,
   HeartIcon,
 } from '@heroicons/react/outline'
-import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid'
 import { Container } from '@components/Layout'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import Link from 'next/link'
@@ -13,21 +12,20 @@ import DOMPurify from 'dompurify'
 import { getFormattedDate, parseMarkdown } from '@utils/utils'
 import { Button } from '@components/Button'
 import { ImageRatio } from '@components/ImageRatio'
-import { CardSecondary } from '@components/Card'
+import { CardTertiary } from '@components/Card'
 import { useCurrentUser } from '@lib/user'
 import { TopicAnchor } from '@components/Topic'
 import { ALink } from '@components/ALink'
 import CommentList from './CommentList'
-import { usePostById, usePosts, useRandomPosts } from '@lib/post'
+import { usePost, usePosts, useRandomPosts } from '@lib/post'
+import { useLikes } from '@lib/like'
 import { CardPrimary } from '@components/Card/Card'
-import {
-  CardPrimarySkeleton,
-  CardSecondarySkeleton,
-} from '@components/Skeleton'
+import { CardPrimarySkeleton, CardTertiarySkeleton } from '@components/Skeleton'
 import { Avatar } from '@components/Avatar'
 import { fetcher } from '@lib/fetcher'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
+import { useBookmarks } from '@lib/bookmark'
 
 const MoreOptionsDropdown = () => {
   return (
@@ -66,9 +64,13 @@ const PostDetail = ({
     not: _id,
     limit: 3,
   })
-  const { data: { post } = {}, mutate } = usePostById(_id)
+  const { data: { post } = {}, mutate } = usePost(_id)
+  const { data: { likes } = {}, mutate: likesMutate } = useLikes(_id)
+  const { data: { bookmarks } = {}, mutate: bookmarksMutate } =
+    useBookmarks(_id)
   const router = useRouter()
-  const userLiked = user && post && post.isLiked
+  const isLiked = user && likes && likes.includes(user._id)
+  const isBookmarked = user && bookmarks && bookmarks.includes(user._id)
 
   useEffect(() => {
     mutate()
@@ -97,6 +99,7 @@ const PostDetail = ({
           }),
         })
         mutate()
+        likesMutate()
       } catch (error) {
         console.log(error)
       }
@@ -113,6 +116,41 @@ const PostDetail = ({
         }),
       })
       mutate()
+      likesMutate()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleSavePost = async () => {
+    if (checkLoggedIn()) {
+      try {
+        await fetcher(`/api/posts/${_id}/bookmarks`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            postId: _id,
+          }),
+        })
+        mutate()
+        bookmarksMutate()
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  const handleUnsavePost = async () => {
+    try {
+      await fetcher(`/api/posts/${_id}/bookmarks`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          postId: _id,
+        }),
+      })
+      mutate()
+      bookmarksMutate()
     } catch (error) {
       console.log(error)
     }
@@ -126,25 +164,37 @@ const PostDetail = ({
             <div className="static top-24 mt-8 flex flex-row items-center justify-center gap-4 rounded-md border border-gray-300 bg-white py-2 sm:sticky sm:flex-col sm:border-transparent sm:bg-transparent sm:py-0">
               <button
                 className="group inline-flex flex-1 flex-row items-center justify-center sm:flex-auto sm:flex-col"
-                onClick={userLiked ? handleUnlikePost : handleLikePost}
+                onClick={isLiked ? handleUnlikePost : handleLikePost}
               >
                 <span
                   className={clsx(
-                    'inline-block rounded-full p-2 transition-colors group-hover:bg-red-100 group-hover:text-red-700',
-                    userLiked && 'bg-red-50 text-red-700'
+                    'inline-block rounded-full p-2 transition-all group-hover:bg-red-100 group-hover:text-red-700',
+                    isLiked && 'bg-red-50 text-red-700'
                   )}
                 >
-                  {userLiked ? (
-                    <HeartIconFilled className="h-6 w-6" />
+                  {isLiked ? (
+                    <HeartIcon className="h-6 w-6 fill-red-700" />
                   ) : (
                     <HeartIcon className="h-6 w-6" />
                   )}
                 </span>
                 <span>{post ? post.likesCount : likesCount}</span>
               </button>
-              <button className="group inline-flex flex-1 flex-row items-center justify-center sm:flex-auto sm:flex-col">
-                <span className="inline-block rounded-full p-2 transition-colors group-hover:bg-indigo-100 group-hover:text-indigo-700">
-                  <BookmarkIcon className="h-6 w-6" />
+              <button
+                className="group inline-flex flex-1 flex-row items-center justify-center sm:flex-auto sm:flex-col"
+                onClick={isBookmarked ? handleUnsavePost : handleSavePost}
+              >
+                <span
+                  className={clsx(
+                    'inline-block rounded-full p-2 transition-all group-hover:bg-indigo-100 group-hover:text-indigo-700',
+                    isBookmarked && 'bg-indigo-50 text-indigo-700'
+                  )}
+                >
+                  {isBookmarked ? (
+                    <BookmarkIcon className="h-6 w-6 fill-indigo-700" />
+                  ) : (
+                    <BookmarkIcon className="h-6 w-6" />
+                  )}
                 </span>
                 <span>{post ? post.bookmarksCount : bookmarksCount}</span>
               </button>
@@ -307,14 +357,14 @@ const PostDetail = ({
                     {morePostsFromThisUser
                       ? morePostsFromThisUser.length
                         ? morePostsFromThisUser.map((post) => (
-                            <CardSecondary key={post._id} {...post} />
+                            <CardTertiary key={post._id} {...post} />
                           ))
                         : morePostsFromCommunity &&
                           morePostsFromCommunity.map((post) => (
-                            <CardSecondary key={post._id} {...post} />
+                            <CardTertiary key={post._id} {...post} />
                           ))
                       : [...Array(3)].map((_, index) => (
-                          <CardSecondarySkeleton key={index} />
+                          <CardTertiarySkeleton key={index} />
                         ))}
                   </div>
                 </div>

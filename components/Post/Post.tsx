@@ -8,6 +8,7 @@ import { Button } from '@components/Button'
 import clsx from 'clsx'
 import { Avatar } from '@components/Avatar'
 import { UserPreview } from '@components/Preview'
+import { useCurrentUser } from '@lib/user'
 
 type TCreator = {
   username: string
@@ -26,8 +27,10 @@ type TPostCardProps = {
   cover: string
   topics: TTopic[]
   creator: TCreator
+  likes: string[]
   likesCount: number
   commentsCount: number
+  bookmarks: string[]
   readingTime: number
   createdAt: number
   hasCover: boolean
@@ -48,12 +51,18 @@ export const PostCard = ({
   cover,
   topics,
   creator,
+  likes,
   likesCount,
   commentsCount,
+  bookmarks,
   readingTime,
   createdAt,
   hasCover,
 }: TPostCardProps) => {
+  const { data: { user } = {} } = useCurrentUser()
+  const isLiked = user && likes && likes.includes(user._id)
+  const isBookmarked = user && bookmarks && bookmarks.includes(user._id)
+
   return (
     <article className="relative mb-4 rounded-md border border-gray-200 shadow-sm">
       <Link href={`/${creator.username}/post/${_id}`}>
@@ -106,7 +115,11 @@ export const PostCard = ({
                 variant="quinary"
                 className="rounded-md px-2 py-1.5"
               >
-                <HeartIcon className="mr-1 h-5 w-5" />
+                {isLiked ? (
+                  <HeartIcon className="mr-1 h-5 w-5 fill-red-700 text-red-700" />
+                ) : (
+                  <HeartIcon className="mr-1 h-5 w-5" />
+                )}
                 {likesCount} {likesCount > 1 ? 'reactions' : 'reaction'}
               </Button>
               <Button
@@ -122,9 +135,15 @@ export const PostCard = ({
             </div>
             <div className="relative z-elevate flex items-center gap-2 self-end xs:self-center">
               <span className="text-xs">{readingTime} min read</span>
-              <button>
-                <BookmarkIcon className="h-6 w-6" />
-              </button>
+              <Link href={`/${creator.username}/post/${_id}`}>
+                <a className="cursor-pointer">
+                  {isBookmarked ? (
+                    <BookmarkIcon className="h-6 w-6 fill-indigo-700 text-indigo-700" />
+                  ) : (
+                    <BookmarkIcon className="h-6 w-6" />
+                  )}
+                </a>
+              </Link>
             </div>
           </div>
         </div>
