@@ -62,8 +62,8 @@ const Navbar = () => {
             </li>
             <li>
               <Button
-                href="/register"
                 as="a"
+                href="/register"
                 target="_blank"
                 className="rounded-3xl px-2 py-2 xs:px-4"
               >

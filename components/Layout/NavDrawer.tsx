@@ -95,8 +95,9 @@ const NavDrawer = ({ open, onClose }: TNavDrawerProps) => {
               </li>
               <li className="px-3 pb-2">
                 <Button
-                  href="/register"
                   as="a"
+                  href="/register"
+                  target="_blank"
                   className="rounded-md px-2 py-2 xs:px-4"
                   fluid
                 >
