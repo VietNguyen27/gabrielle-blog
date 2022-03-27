@@ -27,6 +27,7 @@ type TInputProps = {
   rounded?: TInputRounded
   name: string
   label?: string
+  value?: string
   placeholder?: string
   className?: string
   error?: string
@@ -37,6 +38,7 @@ type TInputProps = {
   prefix?: ReactNode
   suffix?: ReactNode
   onBlur?: ChangeHandler
+  onChange?: any
   onChangeColor?: any
 }
 

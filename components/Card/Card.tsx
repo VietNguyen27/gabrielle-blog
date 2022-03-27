@@ -71,7 +71,7 @@ export const CardSecondary = ({
   topics,
 }: TCardSecondaryProps) => {
   return (
-    <article className="flex gap-4">
+    <article className="flex gap-2 xs:gap-4">
       <Link href={`/${creator.username}`}>
         <a className="flex-shrink-0">
           <Avatar
