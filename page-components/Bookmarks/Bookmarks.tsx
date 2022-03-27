@@ -10,9 +10,8 @@ import { CardSecondarySkeleton } from '@components/Skeleton'
 import { saveUserToLocalStorage, useCurrentUser } from '@lib/user'
 import { useDebounce } from '@hooks/useDebounce'
 import { Select } from '@components/Select'
-import NoSearch from '@public/static/images/no-search.png'
+import { NoResults } from '@components/NoResults'
 import clsx from 'clsx'
-import Image from 'next/image'
 
 const Bookmarks = () => {
   const [filteredBookmarks, setFilteredBookmarks] = useState([])
@@ -160,11 +159,7 @@ const Bookmarks = () => {
               </div>
             )}
             {bookmarks && !filteredBookmarks.length && (
-              <div className="-mt-8 flex h-full w-full flex-1 flex-col items-center justify-center text-center">
-                <Image src={NoSearch} width={90} height={70} />
-                <p className="pb-2 text-lg font-bold">No results found</p>
-                <p>We couldn't find what you're looking for</p>
-              </div>
+              <NoResults className="-mt-8" />
             )}
           </div>
         </div>
