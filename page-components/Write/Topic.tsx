@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Select } from '@components/Select'
+import { Select2 } from '@components/Select2'
 import { useTopics } from '@lib/topic'
 
 const Topic = ({ setValue }) => {
@@ -11,7 +11,7 @@ const Topic = ({ setValue }) => {
   }, [topicsSelected])
 
   return (
-    <Select
+    <Select2
       title="Top topics"
       options={topics}
       placeholder="Select topics..."
