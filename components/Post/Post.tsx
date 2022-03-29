@@ -9,24 +9,14 @@ import clsx from 'clsx'
 import { Avatar } from '@components/Avatar'
 import { UserPreview } from '@components/Preview'
 import { useCurrentUser } from '@lib/user'
-
-type TCreator = {
-  username: string
-  profilePicture: string
-}
-
-type TTopic = {
-  value: string
-  label: string
-  color: string
-}
+import { TTopic, TUser } from '@global/types'
 
 type TPostCardProps = {
   _id: string
   title: string
   cover: string
   topics: TTopic[]
-  creator: TCreator
+  creator: TUser
   likes: string[]
   likesCount: number
   commentsCount: number
@@ -40,7 +30,7 @@ type TTrendingPostProps = {
   _id: string
   numOrder: number
   title: string
-  creator: TCreator
+  creator: TUser
   readingTime: number
   createdAt: number
 }
@@ -138,7 +128,7 @@ export const PostCard = ({
               <Link href={`/${creator.username}/post/${_id}`}>
                 <a className="cursor-pointer">
                   {isBookmarked ? (
-                    <BookmarkIcon className="h-6 w-6 fill-indigo-700 text-indigo-700" />
+                    <BookmarkIcon className="h-6 w-6 fill-indigo-500 text-indigo-500" />
                   ) : (
                     <BookmarkIcon className="h-6 w-6" />
                   )}

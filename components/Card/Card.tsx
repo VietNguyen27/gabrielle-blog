@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getFormattedDate } from '@utils/utils'
 import { Avatar } from '@components/Avatar'
 import { TopicAnchor } from '@components/Topic'
+import { TTopic } from '@global/types'
 
 type TCreator = {
   username: string
@@ -22,11 +23,11 @@ type TCardPrimaryProps = TCardProps & {
 type TCardSecondaryProps = TCardProps & {
   createdAt: number
   readingTime: number
-  topics: any
+  topics: TTopic[]
 }
 
 type TCardTertiaryProps = TCardProps & {
-  topics: any
+  topics: TTopic[]
 }
 
 export const CardPrimary = ({

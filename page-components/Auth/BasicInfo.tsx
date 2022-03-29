@@ -159,7 +159,7 @@ const BasicInfo = () => {
       })
       saveUserToLocalStorage(userUpdated)
       resetError()
-    } catch (error: any) {
+    } catch (error) {
       setError(getErrorFromJoiMessage(error))
     } finally {
       setLoading('updateUser', false)

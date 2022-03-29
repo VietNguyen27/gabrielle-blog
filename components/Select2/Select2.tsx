@@ -5,6 +5,12 @@ import { XIcon } from '@heroicons/react/solid'
 import { capitalizeFirstLetter, getRandomColor } from '@utils/utils'
 import { NoSSR } from '@components/NoSSR'
 
+type TOption = {
+  value: string
+  label: string
+  color: string
+}
+
 type TSelectProps = {
   title?: string
   options: object[]
@@ -23,14 +29,14 @@ type TOptionProps = {
   label: string
   value: string
   description: string
-  onChange: any
+  onChange: (value: TOption) => void
 }
 
 type TSelectedOptionProps = {
   index: number
   label: string
   color: string
-  onChange: any
+  onChange: (value: number) => void
 }
 
 const SelectedOption = ({

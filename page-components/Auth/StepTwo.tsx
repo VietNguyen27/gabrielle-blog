@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import StepWrapper from './StepWrapper'
+import StepWrapper, { TStepProps } from './StepWrapper'
 import { TitleQuestion } from '@components/Title'
 import { Choices } from '@components/Choices'
 import { positions } from './data'
 import { useFormContext } from 'react-hook-form'
-
-type TStepProps = {
-  step: number
-  currentStep: number
-  error: any
-  setCurrentStep: (index: number) => void
-}
 
 const StepTwo = (props: TStepProps) => {
   const [positionSelected, setPositionSelected] = useState<string>('')
@@ -34,7 +27,7 @@ const StepTwo = (props: TStepProps) => {
       />
       <Choices
         options={positions}
-        onChange={setPositionSelected}
+        onChange={setPositionSelected as any}
         error={props.error['position']}
         errorName="position"
         customizable

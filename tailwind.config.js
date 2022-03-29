@@ -91,6 +91,7 @@ module.exports = {
         dropdown: 'var(--z-dropdown)',
         modal: 'var(--z-modal)',
         popover: 'var(--z-popover)',
+        maximum: 'var(--z-maximum)',
       },
       animation: {
         'slide-up': 'slide-up 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards',

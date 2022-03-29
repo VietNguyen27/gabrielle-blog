@@ -161,7 +161,7 @@ const Register = () => {
         mutate({ user: response.user }, false)
         window.close()
         resetError()
-      } catch (error: any) {
+      } catch (error) {
         setError(getErrorFromJoiMessage(error))
       } finally {
         setLoading('register', false)

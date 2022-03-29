@@ -3,11 +3,16 @@ import useOnClickOutside from '@hooks/useOnClickOutside'
 import clsx from 'clsx'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
 
+type TOption = {
+  label: string
+  value: string
+}
+
 type TSelectProps = {
-  options: object[]
-  defaultValue?: any
+  options: TOption[]
+  defaultValue?: TOption | {}
   maxHeight?: number
-  onChange: any
+  onChange: (value: string) => void
   className?: string
 }
 
@@ -44,7 +49,7 @@ const Select = ({
         tabIndex={0}
         onFocus={() => setShowOptions(true)}
       >
-        {optionSelected.label}
+        {(optionSelected as TOption).label}
         {showOptions ? (
           <ChevronUpIcon className="h-4 w-4" />
         ) : (
@@ -58,7 +63,7 @@ const Select = ({
         )}
       >
         <ul className="overflow-auto" style={{ maxHeight: `${maxHeight}px` }}>
-          {options.map(({ value, label }: any) => (
+          {options.map(({ value, label }) => (
             <li
               key={value}
               className="cursor-pointer px-3.5 py-2 transition-colors duration-200 hover:bg-gray-100"

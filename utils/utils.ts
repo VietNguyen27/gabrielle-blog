@@ -70,7 +70,7 @@ export const insertHtmlAtCaret = (text, insertBetween = false) => {
   }
 }
 
-export const getErrorFromJoiMessage = (error: object[]): object => {
+export const getErrorFromJoiMessage = (error): object => {
   interface Error {
     context?: object | any
     message?: string

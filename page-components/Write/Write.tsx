@@ -124,7 +124,7 @@ const Write = () => {
         pathname: `/${user.username}/post/${insertedId}`,
       })
       resetError()
-    } catch (error: any) {
+    } catch (error) {
       setError(getErrorFromJoiMessage(error))
       if (editorRef.current) {
         ;(editorRef.current as any).scrollTop = 0
@@ -152,8 +152,8 @@ const Write = () => {
                     </p>
                     <ul className="markdown-ul">
                       {Object.entries(error).map((err, index) => {
-                        const [_, content]: any = err
-                        return <li key={index}>{content}</li>
+                        const [_, content] = err
+                        return <li key={index}>{content as string}</li>
                       })}
                     </ul>
                   </div>

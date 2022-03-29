@@ -6,9 +6,10 @@ import { v2 as cloudinary } from 'cloudinary'
 import multer from 'multer'
 import { updateUserById } from '@api-lib/db'
 import { updateUserSchema } from '@api-lib/schemas'
+import { TNextApiRequest } from '@global/types'
 
 const upload = multer({ dest: '/tmp' })
-const handler = nextConnect()
+const handler = nextConnect<TNextApiRequest, NextApiResponse>()
 
 handler.use(middleware)
 handler.get(async (req: NextApiRequest, res: NextApiResponse) =>

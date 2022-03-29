@@ -1,15 +1,8 @@
+import React from 'react'
 import { Input } from '@components/Input'
 import { TitleQuestion } from '@components/Title'
-import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import StepWrapper from './StepWrapper'
-
-type TStepProps = {
-  step: number
-  currentStep: number
-  error: any
-  setCurrentStep: (index: number) => void
-}
+import StepWrapper, { TStepProps } from './StepWrapper'
 
 const StepFour = (props: TStepProps) => {
   const { register } = useFormContext()

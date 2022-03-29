@@ -2,41 +2,46 @@ import nextConnect from 'next-connect'
 import { middleware, validate } from '@api-lib/middlewares'
 import { updateUserPassword } from '@api-lib/db'
 import { updatePasswordSchema } from '@api-lib/schemas'
+import { NextApiResponse } from 'next'
+import { TNextApiRequest } from '@global/types'
 
-const handler = nextConnect()
+const handler = nextConnect<TNextApiRequest, NextApiResponse>()
 handler.use(middleware)
 
 handler.patch(
-  validate(updatePasswordSchema, async (req: any, res: any) => {
-    if (!req.user) {
-      res.json(401).end()
-      return
-    }
-    const { oldPassword, newPassword } = req.body
+  validate(
+    updatePasswordSchema,
+    async (req: TNextApiRequest, res: NextApiResponse) => {
+      if (!req.user) {
+        res.status(401).end()
+        return
+      }
+      const { oldPassword, newPassword } = req.body
 
-    const success = await updateUserPassword(
-      req.db,
-      req.user._id,
-      oldPassword,
-      newPassword
-    )
+      const success = await updateUserPassword(
+        req.db,
+        req.user._id,
+        oldPassword,
+        newPassword
+      )
 
-    if (!success) {
-      res.status(401).json([
-        {
-          context: {
-            label: 'oldPassword',
-            value: '',
-            key: 'oldPassword',
+      if (!success) {
+        res.status(401).json([
+          {
+            context: {
+              label: 'oldPassword',
+              value: '',
+              key: 'oldPassword',
+            },
+            message: 'The old password you entered is incorrect.',
           },
-          message: 'The old password you entered is incorrect.',
-        },
-      ])
-      return
-    }
+        ])
+        return
+      }
 
-    res.status(204).end()
-  })
+      res.status(204).end()
+    }
+  )
 )
 
 export default handler

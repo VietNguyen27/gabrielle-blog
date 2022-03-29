@@ -90,26 +90,8 @@ const PostDetail = ({
 
   const handleLikePost = async () => {
     if (checkLoggedIn()) {
-      try {
-        await fetcher(`/api/posts/${_id}/likes`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            postId: _id,
-          }),
-        })
-        mutate()
-        likesMutate()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
-
-  const handleUnlikePost = async () => {
-    try {
       await fetcher(`/api/posts/${_id}/likes`, {
-        method: 'DELETE',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           postId: _id,
@@ -117,33 +99,25 @@ const PostDetail = ({
       })
       mutate()
       likesMutate()
-    } catch (error) {
-      console.log(error)
     }
+  }
+
+  const handleUnlikePost = async () => {
+    await fetcher(`/api/posts/${_id}/likes`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        postId: _id,
+      }),
+    })
+    mutate()
+    likesMutate()
   }
 
   const handleSavePost = async () => {
     if (checkLoggedIn()) {
-      try {
-        await fetcher(`/api/posts/${_id}/bookmarks`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            postId: _id,
-          }),
-        })
-        mutate()
-        bookmarksMutate()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
-
-  const handleUnsavePost = async () => {
-    try {
       await fetcher(`/api/posts/${_id}/bookmarks`, {
-        method: 'DELETE',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           postId: _id,
@@ -151,9 +125,19 @@ const PostDetail = ({
       })
       mutate()
       bookmarksMutate()
-    } catch (error) {
-      console.log(error)
     }
+  }
+
+  const handleUnsavePost = async () => {
+    await fetcher(`/api/posts/${_id}/bookmarks`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        postId: _id,
+      }),
+    })
+    mutate()
+    bookmarksMutate()
   }
 
   return (
@@ -186,12 +170,12 @@ const PostDetail = ({
               >
                 <span
                   className={clsx(
-                    'inline-block rounded-full p-2 transition-all group-hover:bg-indigo-100 group-hover:text-indigo-700',
-                    isBookmarked && 'bg-indigo-50 text-indigo-700'
+                    'inline-block rounded-full p-2 transition-all group-hover:bg-indigo-100 group-hover:text-indigo-500',
+                    isBookmarked && 'bg-indigo-50 text-indigo-500'
                   )}
                 >
                   {isBookmarked ? (
-                    <BookmarkIcon className="h-6 w-6 fill-indigo-700" />
+                    <BookmarkIcon className="h-6 w-6 fill-indigo-500" />
                   ) : (
                     <BookmarkIcon className="h-6 w-6" />
                   )}
