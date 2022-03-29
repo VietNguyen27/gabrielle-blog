@@ -63,7 +63,7 @@ const CommentList = ({ postId, commentsCount }) => {
       resetError()
       setSuccess(true)
       setFocus(false)
-    } catch (error: any) {
+    } catch (error) {
       setError(getErrorFromJoiMessage(error))
     } finally {
       setLoading('comment', false)

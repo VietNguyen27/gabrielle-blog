@@ -133,7 +133,7 @@ const Profile = ({
               <div className="flex w-full flex-col items-stretch gap-4 md:w-1/3">
                 {skills && (
                   <div className="rounded border border-gray-200 p-4">
-                    <h2 className="pb-6 text-lg font-bold">Skills/language</h2>
+                    <h2 className="pb-6 text-lg font-bold">Skills/languages</h2>
                     <p>{skills}</p>
                   </div>
                 )}

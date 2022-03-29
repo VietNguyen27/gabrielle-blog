@@ -26,18 +26,14 @@ import { useRouter } from 'next/router'
 import DOMPurify from 'dompurify'
 import Link from 'next/link'
 import clsx from 'clsx'
-
-type TCreator = {
-  username: string
-  profilePicture: string
-}
+import { TUser } from '@global/types'
 
 type TCommentProps = {
   _id: string
   postId: string
   content: string
   depth: number
-  creator: TCreator
+  creator: TUser
   isLiked: boolean
   likesCount: number
   createdAt: Date
@@ -113,7 +109,7 @@ const Comment = ({
       resetError()
       setSuccess(true)
       setReply(false)
-    } catch (error: any) {
+    } catch (error) {
       setError(getErrorFromJoiMessage(error))
     } finally {
       setLoading('comment', false)

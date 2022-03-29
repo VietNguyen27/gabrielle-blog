@@ -4,7 +4,7 @@ import createContext from 'zustand/context'
 import shallow from 'zustand/shallow'
 
 type TMessageTypes = 'success' | 'error'
-type TMessageParams = {
+type TMessage = {
   message: string
   type: TMessageTypes
 }
@@ -22,10 +22,10 @@ export const Provider = zustandContext.Provider
 export const useStore = zustandContext.useStore
 
 export const initializeStore = (preloadedState = {}) => {
-  return create((set: any, get: any) => ({
+  return create((set: any) => ({
     ...initialState,
     ...preloadedState,
-    setError: (error: any) => {
+    setError: (error) => {
       set({ error })
     },
     resetError: () => {
@@ -38,7 +38,7 @@ export const initializeStore = (preloadedState = {}) => {
         },
       })
     },
-    setMessage: ({ message, type = 'success' }: TMessageParams) => {
+    setMessage: ({ message, type = 'success' }: TMessage) => {
       set({
         message: { message, type },
       })

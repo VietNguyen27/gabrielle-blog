@@ -86,8 +86,8 @@ const Login = () => {
         saveUserToLocalStorage(response.user)
         mutate({ user: response.user }, false)
         resetError()
-      } catch (error: any) {
-        if (error.length) {
+      } catch (error) {
+        if (typeof error === 'object' && error && (error as any[]).length) {
           setError(getErrorFromJoiMessage(error))
         } else {
           setError({ password: 'Invalid email or password' })

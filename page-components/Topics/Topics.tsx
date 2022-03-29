@@ -9,6 +9,7 @@ import { TopicCardSkeleton } from '@components/Skeleton'
 import { useTopics } from '@lib/topic'
 import { useDebounce } from '@hooks/useDebounce'
 import { NoResults } from '@components/NoResults'
+import { TTopic } from '@global/types'
 
 const Topics = () => {
   const [filteredTopics, setFilteredTopics] = useState([])
@@ -42,7 +43,7 @@ const Topics = () => {
           <Form onSubmit={() => null}>
             <Input
               name="search"
-              label="Search for tag"
+              label="Search"
               rounded="xs"
               className="mb-0 w-[150px] pr-4 sm:w-[200px]"
               suffix={
@@ -55,7 +56,7 @@ const Topics = () => {
         <div className="-mx-1 flex flex-wrap items-stretch sm:-mx-3">
           {topics
             ? filteredTopics &&
-              filteredTopics.map((topic: any) => (
+              filteredTopics.map((topic: TTopic) => (
                 <TopicCard key={topic._id} {...topic} />
               ))
             : [...Array(20)].map((_, index) => (

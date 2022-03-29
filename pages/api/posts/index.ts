@@ -4,9 +4,11 @@ import { middleware, validate } from '@api-lib/middlewares'
 import { postSchema } from '@api-lib/schemas'
 import { v2 as cloudinary } from 'cloudinary'
 import multer from 'multer'
+import { TNextApiRequest } from '@global/types'
+import { NextApiResponse } from 'next'
 
 const upload = multer({ dest: '/tmp' })
-const handler = nextConnect()
+const handler = nextConnect<TNextApiRequest, NextApiResponse>()
 
 handler.use(middleware)
 
@@ -26,7 +28,7 @@ if (process.env.CLOUDINARY_URL) {
 
 handler.post(
   upload.single('cover'),
-  validate(postSchema, async (req: any, res: any) => {
+  validate(postSchema, async (req: TNextApiRequest, res: NextApiResponse) => {
     if (!req.user) {
       return res.status(401).end()
     }
@@ -57,15 +59,15 @@ handler.post(
   })
 )
 
-handler.get(async (req: any, res: any) => {
+handler.get(async (req: TNextApiRequest, res: NextApiResponse) => {
   const posts = await findPosts(
     req.db,
     req.query.by,
     req.query.topic,
     req.query.not ? req.query.not : null,
-    req.query.limit ? parseInt(req.query.limit, 10) : undefined,
-    req.query.skip ? parseInt(req.query.skip, 10) : undefined,
-    req.query.random ? req.query.random : undefined
+    req.query.limit ? +req.query.limit : undefined,
+    req.query.skip ? +req.query.skip : undefined,
+    req.query.random ? !!req.query.random : undefined
   )
 
   res.json({ posts })

@@ -1,12 +1,16 @@
 import clsx from 'clsx'
 import React from 'react'
 
+type TStyles = {
+  [key: string]: React.CSSProperties
+}
+
 type TImageProps = {
   src: string
   ratio?: number
   alt?: string
   className?: string
-  style?: any
+  style?: TStyles
 }
 
 const ImageRatio = ({

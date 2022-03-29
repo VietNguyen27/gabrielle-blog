@@ -3,11 +3,22 @@ import { CheckIcon } from '@heroicons/react/solid'
 import { Button } from '@components/Button'
 import { useLoading } from '@lib/store'
 
+type TError = {
+  [key: string]: string
+}
+
 type TStepWrapperProps = {
   step: number
   lastStep?: boolean
   children: ReactNode
   currentStep: number
+  setCurrentStep: (index: number) => void
+}
+
+export type TStepProps = {
+  step: number
+  currentStep: number
+  error: TError
   setCurrentStep: (index: number) => void
 }
 

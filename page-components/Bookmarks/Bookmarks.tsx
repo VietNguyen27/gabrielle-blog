@@ -11,6 +11,7 @@ import { saveUserToLocalStorage, useCurrentUser } from '@lib/user'
 import { useDebounce } from '@hooks/useDebounce'
 import { Select } from '@components/Select'
 import { NoResults } from '@components/NoResults'
+import { TTopic } from '@global/types'
 import clsx from 'clsx'
 
 const Bookmarks = () => {
@@ -116,7 +117,7 @@ const Bookmarks = () => {
               >
                 All topics
               </li>
-              {allTopics.map(({ value, label }: any) => (
+              {allTopics.map(({ value, label }: TTopic) => (
                 <li
                   key={value}
                   className={clsx(

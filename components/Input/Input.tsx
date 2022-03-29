@@ -39,7 +39,7 @@ type TInputProps = {
   suffix?: ReactNode
   onBlur?: ChangeHandler
   onChange?: any
-  onChangeColor?: any
+  onChangeColor?: (value: string) => void
 }
 
 const inputSizes = {

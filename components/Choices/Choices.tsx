@@ -16,10 +16,24 @@ type TKeyValues = {
   keyCode: number
 }
 
+type TOption = {
+  label: string
+  name: string
+  value: string
+}
+
+type TChangeHandler = (
+  value:
+    | string
+    | string[]
+    | ((prevState: string) => string)
+    | ((prevState: string[]) => string[])
+) => void
+
 type TChoicesProps = {
   className?: string
-  options: any
-  onChange?: any
+  options: TOption[]
+  onChange?: TChangeHandler
   error?: string
   errorName?: string
   multiple?: boolean
@@ -32,19 +46,24 @@ type TChoiceProps = {
   name?: string
   value?: string
   type?: string
-  onChange?: any
+  onChange?: TChangeHandler
   errorName?: string
   isCustomize?: boolean
-  setIsCustomize?: any
+  setIsCustomize?: (value: boolean | ((prevState: boolean) => boolean)) => void
   isSelected?: boolean
-  setIsSelected?: any
+  setIsSelected?: (value: boolean | ((prevState: boolean) => boolean)) => void
   customizeValue?: string
-  setCustomizeValue?: any
+  setCustomizeValue?: (value: string | ((prevState: string) => string)) => void
+}
+
+type TKeyValue = {
+  keyName: string
+  keyCode: number
 }
 
 const ALPHABET_LIST = [...'abcdefghijklmnopqrstuvwxyz']
 const ALPHABET_KEYCODE_VALUES = ALPHABET_LIST.reduce(
-  (prev: any, curr, index) => {
+  (prev: TKeyValue[], curr, index) => {
     const ALPHABET_KEYCODE_START = 65
     const keyValues = {
       keyName: curr.toUpperCase(),
@@ -100,7 +119,7 @@ const Choice = ({
           ref.current.type === EChoiceTypes.CUSTOMIZE &&
           isInViewport(ref.current.parentNode)
         ) {
-          setIsCustomize((prevState) => !prevState)
+          setIsCustomize && setIsCustomize((prevState) => !prevState)
           return
         }
 
@@ -141,16 +160,17 @@ const Choice = ({
   const handleChange = (element) => {
     const { value } = element
     if (type === EChoiceTypes.RADIO) {
-      onChange(value)
+      onChange && onChange(value)
     } else {
-      onChange((prevState) => {
-        const valueExisted = prevState.some((state) => state === value)
+      onChange &&
+        onChange((prevState) => {
+          const valueExisted = prevState.some((state) => state === value)
 
-        if (valueExisted) return prevState.filter((state) => state !== value)
-        return [...prevState, value]
-      })
+          if (valueExisted) return prevState.filter((state) => state !== value)
+          return [...prevState, value]
+        })
     }
-    setIsSelected(false)
+    setIsSelected && setIsSelected(false)
   }
 
   if (type === EChoiceTypes.CUSTOMIZE) {
@@ -164,8 +184,13 @@ const Choice = ({
             ref={ref}
             type="text"
             value={customizeValue}
-            onChange={(e) => setCustomizeValue(e.target.value)}
-            onBlur={() => setCustomizeValue((prevState) => prevState.trim())}
+            onChange={(e) =>
+              setCustomizeValue && setCustomizeValue(e.target.value)
+            }
+            onBlur={() =>
+              setCustomizeValue &&
+              setCustomizeValue((prevState) => prevState.trim())
+            }
             className="w-full bg-transparent outline-none"
           />
           <span
@@ -173,10 +198,10 @@ const Choice = ({
             className="inline-flex h-7 w-7 items-center justify-center rounded bg-gray-700 text-white"
             onClick={() => {
               if (customizeValue && customizeValue.trim()) {
-                setIsSelected(!!customizeValue)
-                onChange(customizeValue)
+                onChange && onChange(customizeValue)
+                setIsSelected && setIsSelected(!!customizeValue)
               }
-              setIsCustomize(false)
+              setIsCustomize && setIsCustomize(false)
             }}
           >
             <CheckIcon className="h-5 w-5" />
@@ -188,7 +213,7 @@ const Choice = ({
     return (
       <div
         className="group relative flex h-9 cursor-pointer items-center p-1.5 pr-8 text-lg"
-        onClick={() => setIsCustomize(true)}
+        onClick={() => setIsCustomize && setIsCustomize(true)}
         onMouseDown={onMouseDown}
       >
         <input

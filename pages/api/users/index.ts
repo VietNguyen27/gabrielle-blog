@@ -1,71 +1,75 @@
 import nextConnect from 'next-connect'
 import { NextApiResponse } from 'next'
+import { TNextApiRequest } from '@global/types'
 import normalizeEmail from 'validator/lib/normalizeEmail'
 import { middleware, validate } from '@api-lib/middlewares'
 import { registerSchema } from '@api-lib/schemas'
 import { insertUser } from '@api-lib/db'
 
-const handler = nextConnect()
+const handler = nextConnect<TNextApiRequest, NextApiResponse>()
 
 handler.use(middleware)
 
 handler.post(
-  validate(registerSchema, async (req: any, res: NextApiResponse) => {
-    const { username, password, position, interests } = req.body
-    const email = normalizeEmail(req.body.email)
+  validate(
+    registerSchema,
+    async (req: TNextApiRequest, res: NextApiResponse) => {
+      const { username, password, position, interests } = req.body
+      const email = normalizeEmail(req.body.email)
 
-    const existedEmail = await req.db
-      .collection('users')
-      .countDocuments({ email })
+      const existedEmail = await req.db
+        .collection('users')
+        .countDocuments({ email })
 
-    if (existedEmail) {
-      res.status(403).json([
-        {
-          context: {
-            label: 'email',
-            value: '',
-            key: 'email',
+      if (existedEmail) {
+        res.status(403).json([
+          {
+            context: {
+              label: 'email',
+              value: '',
+              key: 'email',
+            },
+            message: 'The email has already been used.',
           },
-          message: 'The email has already been used.',
-        },
-      ])
-      return
-    }
+        ])
+        return
+      }
 
-    const regex = new RegExp(['^', username, '$'].join(''), 'i')
-    const existedUsername = await req.db
-      .collection('users')
-      .countDocuments({ username: regex })
+      const regex = new RegExp(['^', username, '$'].join(''), 'i')
+      const existedUsername = await req.db
+        .collection('users')
+        .countDocuments({ username: regex })
 
-    if (existedUsername) {
-      res.status(403).json([
-        {
-          context: {
-            label: 'username',
-            value: '',
-            key: 'username',
+      if (existedUsername) {
+        res.status(403).json([
+          {
+            context: {
+              label: 'username',
+              value: '',
+              key: 'username',
+            },
+            message: 'The username has already been used.',
           },
-          message: 'The username has already been used.',
-        },
-      ])
-      return
-    }
+        ])
+        return
+      }
 
-    const user = await insertUser(req.db, {
-      email,
-      password,
-      username,
-      position,
-      interests,
-    })
-
-    req.logIn(user, (err) => {
-      if (err) throw err
-      res.status(201).json({
-        user,
+      const user = await insertUser(req.db, {
+        email,
+        password,
+        username,
+        position,
+        interests,
       })
-    })
-  })
+
+      req.logIn(user, (err) => {
+        if (err) throw err
+        res.status(201).json({
+          user,
+        })
+      })
+    }
+  )
 )
 
 export default handler

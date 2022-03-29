@@ -79,7 +79,7 @@ const NewPassword = () => {
       })
       resetError()
       onLogOut()
-    } catch (error: any) {
+    } catch (error) {
       setError(getErrorFromJoiMessage(error))
     } finally {
       setLoading('newPassword', false)

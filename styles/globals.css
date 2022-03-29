@@ -132,6 +132,7 @@
   --z-dropdown: 400;
   --z-modal: 500;
   --z-popover: 500;
+  --z-maximum: 9999;
 
   --header-height: 96px;
 }

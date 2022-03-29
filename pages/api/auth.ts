@@ -2,10 +2,11 @@ import nextConnect from 'next-connect'
 import middleware from '@api-lib/middlewares/middleware'
 import { passport } from '@api-lib/auth'
 import { extractUser } from '@lib/user'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
 import { loginSchema } from '@api-lib/schemas'
+import { TNextApiRequest } from '@global/types'
 
-const handler = nextConnect<NextApiRequest, NextApiResponse>()
+const handler = nextConnect<TNextApiRequest, NextApiResponse>()
 
 handler.use(middleware)
 
@@ -21,12 +22,12 @@ handler.post(
     return next()
   },
   passport.authenticate('local'),
-  (req: any, res) => {
+  (req: TNextApiRequest, res: NextApiResponse) => {
     res.json({ user: extractUser(req.user) })
   }
 )
 
-handler.delete(async (req: any, res) => {
+handler.delete(async (req: TNextApiRequest, res: NextApiResponse) => {
   await req.session.destroy()
   res.status(204).end()
 })

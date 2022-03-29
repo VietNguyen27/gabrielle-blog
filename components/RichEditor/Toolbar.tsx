@@ -95,7 +95,9 @@ const Toolbar = forwardRef<HTMLDivElement, TToolbarProps>(
 
           insertHtmlAtCaret(syntax, insertBetween)
         }
-        content.current = ref.current.innerText
+        if (content) {
+          content.current = ref.current.innerText
+        }
       }
     }
 
