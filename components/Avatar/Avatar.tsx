@@ -9,7 +9,7 @@ type TAvatarProps = {
 }
 
 const Avatar = ({ src, alt, className = 'w-10' }: TAvatarProps) => {
-  const defaultClassName = 'rounded-full border border-gray-200'
+  const defaultClassName = 'rounded-full outline outline-1 outline-gray-200'
   const allClassNames = clsx(defaultClassName, className)
 
   return <ImageRatio className={allClassNames} src={src} alt={alt} />

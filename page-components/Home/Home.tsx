@@ -36,7 +36,7 @@ const Home = () => {
   }, [isVisible, isRefreshing])
 
   return (
-    <>
+    <main>
       <section className="border-divider mb-6 overflow-x-hidden border-t border-b">
         <Container>
           <div className="min-h-auto relative my-12 flex items-center md:min-h-[50vh]">
@@ -104,7 +104,7 @@ const Home = () => {
                                 community for everyone interested in technology.
                               </h2>
                               <p>
-                                We're a place where coders share, stay
+                                We&apos;re a place where coders share, stay
                                 up-to-date and grow their careers.
                               </p>
                             </div>
@@ -194,7 +194,7 @@ const Home = () => {
           </div>
         </Container>
       </section>
-    </>
+    </main>
   )
 }
 

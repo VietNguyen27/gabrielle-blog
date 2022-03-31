@@ -87,15 +87,11 @@ const NewPassword = () => {
   }, [])
 
   const onLogOut = useCallback(async () => {
-    try {
-      await fetcher('/api/auth', {
-        method: 'DELETE',
-      })
-      removeUserToLocalStorage()
-      mutate({ user: null })
-    } catch (error) {
-      console.log(error)
-    }
+    await fetcher('/api/auth', {
+      method: 'DELETE',
+    })
+    removeUserToLocalStorage()
+    mutate({ user: null })
   }, [mutate])
 
   return (

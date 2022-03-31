@@ -4,7 +4,6 @@ import { Textarea } from '@components/Textarea'
 import clsx from 'clsx'
 import { Button } from '@components/Button'
 import { Form } from '@components/Form'
-import { useRouter } from 'next/router'
 import { useComments } from '@lib/comment'
 import { useError, useLoading } from '@lib/store'
 import { fetcher } from '@lib/fetcher'
@@ -13,6 +12,10 @@ import { Comment } from '@components/Comment'
 import useOnClickOutside from '@hooks/useOnClickOutside'
 import { CommentSkeleton } from '@components/Skeleton'
 import { Avatar } from '@components/Avatar'
+import { usePost } from '@lib/post'
+import { LoginRequired } from '@components/LoginRequired'
+import { useModal } from '@hooks/useModal'
+import { useAuth } from '@hooks/useAuth'
 
 const CommentList = ({ postId, commentsCount }) => {
   const [focus, setFocus] = useState(false)
@@ -22,9 +25,11 @@ const CommentList = ({ postId, commentsCount }) => {
   const contentRef = useRef(null)
   const { data: { user } = {} } = useCurrentUser()
   const { data: { comments } = {}, mutate } = useComments(postId)
+  const { data: { post } = {}, mutate: postMutate } = usePost(postId)
   const { loading, setLoading } = useLoading()
   const { error, setError, resetError } = useError()
-  const router = useRouter()
+  const { open, toggle } = useModal()
+  const isAuth = useAuth()
 
   useOnClickOutside(formRef, () => {
     setFocus(false)
@@ -38,11 +43,9 @@ const CommentList = ({ postId, commentsCount }) => {
   }, [focus])
 
   const onFocus = () => {
-    if (!user) {
-      router.push({
-        pathname: '/login',
-        query: { returnUrl: router.asPath },
-      })
+    if (!isAuth) {
+      toggle()
+      return
     }
 
     setFocus(true)
@@ -60,6 +63,7 @@ const CommentList = ({ postId, commentsCount }) => {
         }),
       })
       mutate()
+      postMutate()
       resetError()
       setSuccess(true)
       setFocus(false)
@@ -86,12 +90,12 @@ const CommentList = ({ postId, commentsCount }) => {
   }
 
   return (
-    <div className="border-t border-gray-200 px-6 py-8 sm:px-12">
-      <div className="flex flex-col items-stretch">
-        <h2 className="pb-4 text-2xl font-bold">
-          Discussion ({commentsCount})
-        </h2>
-        <div ref={formRef}>
+    <LoginRequired open={open} toggle={toggle}>
+      <div className="border-t border-gray-200 px-6 py-8 sm:px-12">
+        <div className="flex flex-col items-stretch">
+          <h2 className="pb-4 text-2xl font-bold">
+            Discussion ({(post && post.commentsCount) || commentsCount})
+          </h2>
           <Form onSubmit={onSubmit}>
             <div className="flex items-start">
               {user && (
@@ -126,7 +130,7 @@ const CommentList = ({ postId, commentsCount }) => {
               <div
                 className={clsx(
                   'flex items-center gap-2 pt-3',
-                  user && 'pl-11'
+                  user && 'pl-10'
                 )}
               >
                 <Button
@@ -148,18 +152,20 @@ const CommentList = ({ postId, commentsCount }) => {
               </div>
             )}
           </Form>
-        </div>
-        <div className="flex flex-col items-stretch pt-6">
-          {comments && commentsCount
-            ? nestedComments(comments, postId).map((comment) => (
-                <Comment key={comment._id} {...comment} />
-              ))
-            : [...Array(commentsCount ? 4 : 0)].map((_, index) => (
-                <CommentSkeleton key={index} />
-              ))}
+          <div className="flex flex-col items-stretch pt-6">
+            {comments && post && post.commentsCount
+              ? nestedComments(comments, postId).map((comment) => (
+                  <Comment key={comment._id} {...comment} />
+                ))
+              : [
+                  ...Array(
+                    (post && post.commentsCount) || commentsCount ? 4 : 0
+                  ),
+                ].map((_, index) => <CommentSkeleton key={index} />)}
+          </div>
         </div>
       </div>
-    </div>
+    </LoginRequired>
   )
 }
 

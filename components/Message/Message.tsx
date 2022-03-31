@@ -22,7 +22,7 @@ const Message = () => {
           transition={{
             duration: 0.25,
           }}
-          className="fixed z-popover flex h-screen w-screen items-center justify-center bg-neutral-900/20"
+          className="fixed z-popover flex h-screen w-screen items-center justify-center bg-neutral-900/30"
         >
           <motion.div
             initial={{ scale: 0 }}
