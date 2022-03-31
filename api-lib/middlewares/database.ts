@@ -24,6 +24,8 @@ async function createIndexes(db) {
       .collection('notifications')
       .createIndexes([{ key: { createdAt: -1 } }, { key: { receiver: -1 } }]),
     db.collection('feedbacks').createIndexes([{ key: { createdAt: -1 } }]),
+    db.collection('followers').createIndexes([{ key: { userId: -1 } }]),
+    db.collection('following').createIndexes([{ key: { userId: -1 } }]),
   ])
   indexesCreated = true
 }

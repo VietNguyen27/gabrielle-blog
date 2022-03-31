@@ -85,7 +85,7 @@ const Comment = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reply])
 
-  const onClick = () => {
+  const handleReplyComment = () => {
     if (!isAuth) {
       toggle()
       return
@@ -272,7 +272,7 @@ const Comment = ({
                 <Button
                   variant="quinary"
                   className="rounded-md px-2 py-1.5"
-                  onClick={onClick}
+                  onClick={handleReplyComment}
                 >
                   <ChatAlt2Icon className="mr-1 h-5 w-5" />
                   Reply

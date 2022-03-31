@@ -83,7 +83,7 @@ type TToolbarProps = {
 
 const Toolbar = forwardRef<HTMLDivElement, TToolbarProps>(
   ({ content }, ref) => {
-    const onClick = (e) => {
+    const handleInsertHtml = (e) => {
       const { value } = e.target
       const options = toolbarItemOptions[value]
 
@@ -127,7 +127,7 @@ const Toolbar = forwardRef<HTMLDivElement, TToolbarProps>(
                   tabIndex={0}
                   value={value}
                   aria-label={label}
-                  onClick={onClick}
+                  onClick={handleInsertHtml}
                 >
                   <Icon className="pointer-events-none" />
                 </Button>

@@ -4,7 +4,17 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import Modal from './Modal'
 
-const LoginRequiredModal = ({ open, toggle }) => {
+type TLoginRequiredModal = {
+  open: boolean
+  toggle: () => void
+  path?: string
+}
+
+const LoginRequiredModal = ({
+  open,
+  toggle,
+  path = '',
+}: TLoginRequiredModal) => {
   const router = useRouter()
 
   return (
@@ -19,7 +29,7 @@ const LoginRequiredModal = ({ open, toggle }) => {
           as="a"
           href={{
             pathname: '/login',
-            query: { returnUrl: router.asPath },
+            query: { returnUrl: router.asPath + path },
           }}
           className="rounded-md px-2 py-2 xs:px-4"
           fluid

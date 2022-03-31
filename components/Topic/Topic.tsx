@@ -5,6 +5,8 @@ import { Button } from '@components/Button'
 import { LoginRequired } from '@components/LoginRequired'
 import { useAuth } from '@hooks/useAuth'
 import { useModal } from '@hooks/useModal'
+import { useCurrentUser } from '@lib/user'
+import { fetcher } from '@lib/fetcher'
 
 type TTopicAnchorProps = {
   value: string
@@ -86,6 +88,7 @@ export const TopicCard = ({
   const defaultClassName = 'w-1/2 md:w-1/3 px-1 sm:px-3 py-1 sm:py-2.5'
   const allClassNames = clsx(defaultClassName, className)
   const { open, toggle } = useModal()
+  const { data: { user } = {}, mutate } = useCurrentUser()
   const isAuth = useAuth()
 
   const handleFollow = async () => {
@@ -93,6 +96,26 @@ export const TopicCard = ({
       toggle()
       return
     }
+
+    await fetcher(`/api/topics/${label}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        topic: label,
+      }),
+    })
+    mutate()
+  }
+
+  const handleUnfollow = async () => {
+    await fetcher(`/api/topics/${label}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        topic: label,
+      }),
+    })
+    mutate()
   }
 
   return (
@@ -108,13 +131,23 @@ export const TopicCard = ({
             <p className="mb-4 text-sm text-gray-500">
               {postsPublished} posts published
             </p>
-            <Button
-              variant="primary"
-              className="rounded-md px-4 py-2"
-              onClick={handleFollow}
-            >
-              Follow
-            </Button>
+            {user && user.interests && user.interests.includes(label) ? (
+              <Button
+                variant="secondary"
+                className="rounded-md px-4 py-2"
+                onClick={handleUnfollow}
+              >
+                Following
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                className="rounded-md px-4 py-2"
+                onClick={handleFollow}
+              >
+                Follow
+              </Button>
+            )}
           </div>
         </div>
       </div>

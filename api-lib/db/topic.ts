@@ -52,3 +52,27 @@ export async function insertTopic(
 
   return insertedId
 }
+
+export async function followTopic(db, userId, topic) {
+  const user = await db
+    .collection('users')
+    .findOneAndUpdate(
+      { _id: new ObjectId(userId) },
+      { $push: { interests: topic } },
+      { returnDocument: 'after' }
+    )
+
+  return user.value.interests
+}
+
+export async function unfollowTopic(db, userId, topic) {
+  const user = await db
+    .collection('users')
+    .findOneAndUpdate(
+      { _id: new ObjectId(userId) },
+      { $pull: { interests: topic } },
+      { returnDocument: 'after' }
+    )
+
+  return user.value.interests
+}

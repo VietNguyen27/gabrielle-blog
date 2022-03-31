@@ -11,11 +11,16 @@ import { ALink } from '@components/ALink'
 import { useModal } from '@hooks/useModal'
 import { useAuth } from '@hooks/useAuth'
 import { LoginRequired } from '@components/LoginRequired'
+import { useCurrentUser } from '@lib/user'
+import { fetcher } from '@lib/fetcher'
+import { useRouter } from 'next/router'
 
 const Topic = ({ topic }) => {
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
   const { open, toggle } = useModal()
+  const { data: { user } = {}, mutate } = useCurrentUser()
+  const router = useRouter()
   const isAuth = useAuth()
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
     useInfinitePosts({
@@ -31,11 +36,39 @@ const Topic = ({ topic }) => {
     }
   }, [isVisible, isRefreshing])
 
+  const handleNavigate = () => {
+    if (!isAuth) {
+      toggle()
+      return
+    }
+    router.push('/write')
+  }
+
   const handleFollow = async () => {
     if (!isAuth) {
       toggle()
       return
     }
+
+    await fetcher(`/api/topics/${topic.label}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        topic: topic.label,
+      }),
+    })
+    mutate()
+  }
+
+  const handleUnfollow = async () => {
+    await fetcher(`/api/topics/${topic.label}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        topic: topic.label,
+      }),
+    })
+    mutate()
   }
 
   return (
@@ -51,31 +84,57 @@ const Topic = ({ topic }) => {
               <div className="p-4">
                 <h1 className="pb-2 text-2xl font-bold">{topic.label}</h1>
                 <p className="pb-4">{topic.description}</p>
-                <Button className="rounded-md px-4 py-2" onClick={handleFollow}>
-                  Follow
-                </Button>
+                {user &&
+                user.interests &&
+                user.interests.includes(topic.label) ? (
+                  <Button
+                    variant="secondary"
+                    className="rounded-md px-4 py-2"
+                    onClick={handleUnfollow}
+                  >
+                    Following
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    className="rounded-md px-4 py-2"
+                    onClick={handleFollow}
+                  >
+                    Follow
+                  </Button>
+                )}
               </div>
             </div>
           </div>
           <div className="flex flex-1 flex-col items-stretch">
-            {posts && posts.length
-              ? posts.map((post) => <PostCard key={post._id} {...post} />)
-              : [...Array(6)].map((_, index) => (
-                  <PostCardSkeleton key={index} />
-                ))}
-            {posts && posts.length ? (
-              <div className="pt-4 text-center text-xl font-semibold" ref={ref}>
-                {isReachingEnd && 'No more posts'}
-              </div>
-            ) : (
+            {!topic.postsPublished ? (
               <div className="mx-auto w-1/2 pt-4 text-center text-lg">
                 <Image src={NoPosts} width={90} height={70} />
                 <p>
                   This topic have no posts yet. Do you want to be the first to
                   write about this? Write it{' '}
-                  <ALink href="/write">right now</ALink>
+                  <button
+                    className="text-tertiary-500 hover:text-tertiary-900"
+                    onClick={handleNavigate}
+                  >
+                    right now
+                  </button>
                 </p>
               </div>
+            ) : posts && posts.length && topic.postsPublished ? (
+              <>
+                {posts.map((post) => (
+                  <PostCard key={post._id} {...post} />
+                ))}
+                <div
+                  className="pt-4 text-center text-xl font-semibold"
+                  ref={ref}
+                >
+                  {isReachingEnd && 'No more posts'}
+                </div>
+              </>
+            ) : (
+              [...Array(6)].map((_, index) => <PostCardSkeleton key={index} />)
             )}
           </div>
         </div>
