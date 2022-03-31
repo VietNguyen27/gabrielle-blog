@@ -114,7 +114,7 @@ export const PostCard = ({
               </Button>
               <Button
                 as="a"
-                href={`/${creator.username}/post/${_id}`}
+                href={`/${creator.username}/post/${_id}#comments`}
                 variant="quinary"
                 className="rounded-md px-2 py-1.5"
               >

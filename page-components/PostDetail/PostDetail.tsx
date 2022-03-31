@@ -81,6 +81,25 @@ const PostDetail = ({
     mutate()
   }, [router.asPath])
 
+  useEffect(() => {
+    const hash = window.location.hash
+
+    if (hash && hash.includes('#')) {
+      const pathname = router.asPath.replace(hash, '')
+      const id = hash.replace('#', '')
+      const el = window.document.getElementById(id)
+      const rect = (el as any).getBoundingClientRect()
+      const PADDING_TOP = 60
+
+      router.replace(pathname)
+      if (rect) {
+        ;(window as any).top.scroll({
+          top: pageYOffset + rect.top - PADDING_TOP,
+        })
+      }
+    }
+  }, [])
+
   const checkLoggedIn = () => {
     if (!isAuth) {
       toggle()

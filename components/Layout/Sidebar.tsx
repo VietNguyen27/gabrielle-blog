@@ -80,7 +80,7 @@ const Sidebar = () => {
   const isAuth = useAuth()
   const router = useRouter()
 
-  const onClick = (pathname) => {
+  const handleNavigate = (pathname) => {
     if (!isAuth) {
       toggle()
       return
@@ -107,7 +107,7 @@ const Sidebar = () => {
                         <button
                           type="button"
                           className="flex w-full items-center gap-3 rounded-sm px-3 py-2 hover:bg-indigo-50 hover:text-tertiary-900 focus:bg-indigo-100 focus-visible:outline-tertiary-500"
-                          onClick={() => onClick(slug)}
+                          onClick={() => handleNavigate(slug)}
                         >
                           <ImageRatio src={icon.src} className="w-5" />
                           {label}

@@ -21,7 +21,6 @@ const CommentList = ({ postId, commentsCount }) => {
   const [focus, setFocus] = useState(false)
   const [success, setSuccess] = useState(false)
   const ref = useRef(null)
-  const formRef = useRef(null)
   const contentRef = useRef(null)
   const { data: { user } = {} } = useCurrentUser()
   const { data: { comments } = {}, mutate } = useComments(postId)
@@ -31,18 +30,13 @@ const CommentList = ({ postId, commentsCount }) => {
   const { open, toggle } = useModal()
   const isAuth = useAuth()
 
-  useOnClickOutside(formRef, () => {
-    setFocus(false)
-    resetError()
-  })
-
   useEffect(() => {
     if (focus && ref.current) {
       ;(ref.current as any).focus()
     }
   }, [focus])
 
-  const onFocus = () => {
+  const handleComment = () => {
     if (!isAuth) {
       toggle()
       return
@@ -90,8 +84,11 @@ const CommentList = ({ postId, commentsCount }) => {
   }
 
   return (
-    <LoginRequired open={open} toggle={toggle}>
-      <div className="border-t border-gray-200 px-6 py-8 sm:px-12">
+    <LoginRequired open={open} toggle={toggle} path="#comments">
+      <div
+        className="border-t border-gray-200 px-6 py-8 sm:px-12"
+        id="comments"
+      >
         <div className="flex flex-col items-stretch">
           <h2 className="pb-4 text-2xl font-bold">
             Discussion ({(post && post.commentsCount) || commentsCount})
@@ -120,7 +117,7 @@ const CommentList = ({ postId, commentsCount }) => {
                 <div
                   className="min-h-[70px] w-full cursor-text rounded-md border border-gray-200 p-3"
                   tabIndex={-1}
-                  onFocus={onFocus}
+                  onClick={handleComment}
                 >
                   <span className="text-gray-400">Type something here</span>
                 </div>
