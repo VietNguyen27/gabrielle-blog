@@ -177,9 +177,9 @@ export const TrendingPost = ({
             {title}
           </a>
         </Link>
-        <div className="flex items-center gap-2 text-sm">
-          <span>{getFormattedDate(createdAt)}</span>
-          <span className="inline-block h-1 w-1 rounded-full bg-gray-700"></span>
+        <div className="flex items-center text-sm">
+          <span>{getFormattedDate(createdAt).slice(0, 6)}</span>
+          <span className="mx-2 inline-block h-1 w-1 rounded-full bg-gray-700"></span>
           <span>{readingTime} min read</span>
         </div>
       </div>

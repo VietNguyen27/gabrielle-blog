@@ -18,6 +18,9 @@ import { PostCard } from '@components/Post'
 import useOnScreen from '@hooks/useOnScreen'
 import { useInfinitePosts } from '@lib/post'
 import { PostCardSkeleton } from '@components/Skeleton'
+import { useAuth } from '@hooks/useAuth'
+import { useModal } from '@hooks/useModal'
+import { LoginRequired } from '@components/LoginRequired'
 
 const Profile = ({
   _id,
@@ -38,6 +41,8 @@ const Profile = ({
   const { data: { user } = {} } = useCurrentUser()
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
+  const { open, toggle } = useModal()
+  const isAuth = useAuth()
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
     useInfinitePosts({
       creatorId: _id,
@@ -52,8 +57,15 @@ const Profile = ({
     }
   }, [isVisible, isRefreshing])
 
+  const handleFollow = async () => {
+    if (!isAuth) {
+      toggle()
+      return
+    }
+  }
+
   return (
-    <>
+    <LoginRequired open={open} toggle={toggle}>
       <div className="h-32" style={{ backgroundColor: backdrop }}></div>
       <Container>
         <div className="lg:px-24">
@@ -81,6 +93,7 @@ const Profile = ({
                       <Button
                         variant="tertiary"
                         className="rounded-md px-4 py-2"
+                        onClick={handleFollow}
                       >
                         Follow
                       </Button>
@@ -169,7 +182,7 @@ const Profile = ({
           </div>
         </div>
       </Container>
-    </>
+    </LoginRequired>
   )
 }
 

@@ -2,6 +2,9 @@ import React from 'react'
 import Link from 'next/link'
 import clsx from 'clsx'
 import { Button } from '@components/Button'
+import { LoginRequired } from '@components/LoginRequired'
+import { useAuth } from '@hooks/useAuth'
+import { useModal } from '@hooks/useModal'
 
 type TTopicAnchorProps = {
   value: string
@@ -82,24 +85,39 @@ export const TopicCard = ({
 }: TTopicCardProps) => {
   const defaultClassName = 'w-1/2 md:w-1/3 px-1 sm:px-3 py-1 sm:py-2.5'
   const allClassNames = clsx(defaultClassName, className)
+  const { open, toggle } = useModal()
+  const isAuth = useAuth()
+
+  const handleFollow = async () => {
+    if (!isAuth) {
+      toggle()
+      return
+    }
+  }
 
   return (
-    <div className={allClassNames}>
-      <div className="flex h-full flex-col items-stretch overflow-hidden rounded-md border border-gray-200 shadow">
-        <div className="h-5" style={{ backgroundColor: color }}></div>
-        <div className="p-3 sm:p-5">
-          <TopicAnchor value={value} label={label} color={color} />
-          <p className="mt-3 mb-1 line-clamp-2 sm:line-clamp-3">
-            {description}
-          </p>
-          <p className="mb-4 text-sm text-gray-500">
-            {postsPublished} posts published
-          </p>
-          <Button variant="primary" className="rounded-md px-4 py-2">
-            Follow
-          </Button>
+    <LoginRequired open={open} toggle={toggle}>
+      <div className={allClassNames}>
+        <div className="flex h-full flex-col items-stretch overflow-hidden rounded-md border border-gray-200 shadow">
+          <div className="h-5" style={{ backgroundColor: color }}></div>
+          <div className="p-3 sm:p-5">
+            <TopicAnchor value={value} label={label} color={color} />
+            <p className="mt-3 mb-1 line-clamp-2 sm:line-clamp-3">
+              {description}
+            </p>
+            <p className="mb-4 text-sm text-gray-500">
+              {postsPublished} posts published
+            </p>
+            <Button
+              variant="primary"
+              className="rounded-md px-4 py-2"
+              onClick={handleFollow}
+            >
+              Follow
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </LoginRequired>
   )
 }

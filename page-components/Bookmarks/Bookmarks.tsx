@@ -159,9 +159,11 @@ const Bookmarks = () => {
                 ))}
               </div>
             )}
-            {bookmarks && !filteredBookmarks.length && (
+            {bookmarks &&
+            localUser.bookmarksCount &&
+            !filteredBookmarks.length ? (
               <NoResults className="-mt-8" />
-            )}
+            ) : null}
           </div>
         </div>
       </div>

@@ -23,6 +23,7 @@ type TBaseProps = {
   target?: string
   prefix?: ReactNode
   suffix?: ReactNode
+  onClick?: (() => void) | ((e: React.MouseEvent<HTMLElement>) => void)
   onPressEnter?: () => void
 }
 
