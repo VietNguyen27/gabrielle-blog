@@ -1,8 +1,14 @@
 import React from 'react'
-import { BookmarkIcon, ChatAlt2Icon, HeartIcon } from '@heroicons/react/outline'
+import {
+  BookmarkIcon,
+  ChatAlt2Icon,
+  EyeIcon,
+  HeartIcon,
+  PencilIcon,
+} from '@heroicons/react/outline'
 import { ImageRatio } from '@components/ImageRatio'
 import Link from 'next/link'
-import { getFormattedDate } from '@utils/utils'
+import { getFormattedDate, timeSince } from '@utils/utils'
 import { TopicAnchor } from '@components/Topic'
 import { Button } from '@components/Button'
 import clsx from 'clsx'
@@ -33,6 +39,17 @@ type TTrendingPostProps = {
   creator: TUser
   readingTime: number
   createdAt: number
+}
+
+type TPostAnalysisCardProps = {
+  _id: string
+  title: string
+  creator: TUser
+  likesCount: number
+  commentsCount: number
+  bookmarksCount: number
+  createdAt: number
+  totalViews: number
 }
 
 export const PostCard = ({
@@ -185,6 +202,59 @@ export const TrendingPost = ({
           <span className="mx-2 inline-block h-1 w-1 rounded-full bg-gray-700"></span>
           <span>{readingTime} min read</span>
         </div>
+      </div>
+    </article>
+  )
+}
+
+export const PostAnalysisCard = ({
+  _id,
+  title,
+  creator,
+  likesCount,
+  commentsCount,
+  bookmarksCount,
+  createdAt,
+  totalViews,
+}: TPostAnalysisCardProps) => {
+  return (
+    <article className="relative mb-4 border-b border-gray-200 pb-4">
+      <div className="flex items-center">
+        <div className="flex flex-col pr-4">
+          <Link href={`/${creator.username}/post/${_id}`}>
+            <a className="pb-1 text-lg font-bold text-tertiary-500 line-clamp-3 hover:text-tertiary-900">
+              {title}
+            </a>
+          </Link>
+          <div className="pb-2 text-sm">
+            Created at: {getFormattedDate(createdAt)} ({timeSince(createdAt)})
+          </div>
+          <div className="flex flex-wrap items-center gap-y-2 text-gray-500">
+            <span className="mr-4 inline-flex items-center">
+              <HeartIcon className="mr-1.5 h-5 w-5" />
+              {likesCount}
+            </span>
+            <span className="mr-4 inline-flex items-center">
+              <ChatAlt2Icon className="mr-1.5 h-5 w-5" />
+              {bookmarksCount}
+            </span>
+            <span className="mr-4 inline-flex items-center">
+              <BookmarkIcon className="mr-1.5 h-5 w-5" />
+              {commentsCount}
+            </span>
+            <span className="mr-4 inline-flex items-center">
+              <EyeIcon className="mr-1.5 h-5 w-5" />
+              {totalViews}
+            </span>
+          </div>
+        </div>
+        <Button
+          variant="quinary"
+          className="ml-auto flex-shrink-0 rounded-md px-2 py-1.5"
+        >
+          <PencilIcon className="mr-1 h-5 w-5" />
+          Edit
+        </Button>
       </div>
     </article>
   )

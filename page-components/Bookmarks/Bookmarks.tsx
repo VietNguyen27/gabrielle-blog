@@ -111,7 +111,7 @@ const Bookmarks = () => {
                   'text-md flex cursor-pointer whitespace-nowrap rounded px-2 py-1.5',
                   filter === 'all'
                     ? 'bg-indigo-100 font-bold'
-                    : 'hover:bg-indigo-50'
+                    : 'text-gray-500 hover:bg-indigo-50 hover:text-gray-800'
                 )}
                 onClick={() => handleFilterBookmarks('all')}
               >
@@ -124,7 +124,7 @@ const Bookmarks = () => {
                     'text-md flex cursor-pointer whitespace-nowrap rounded px-2 py-1.5',
                     filter === value
                       ? 'bg-indigo-100 font-bold'
-                      : 'hover:bg-indigo-50'
+                      : 'text-gray-500 hover:bg-indigo-50 hover:text-gray-800'
                   )}
                   onClick={() => handleFilterBookmarks(value)}
                 >

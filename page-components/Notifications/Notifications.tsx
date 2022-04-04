@@ -19,10 +19,10 @@ const Notifications = () => {
             <Tab className="flex-1" label="All">
               <div className="flex min-h-[40vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
                 <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
-                  <p className="pb-2 text-lg font-bold">
+                  <p className="pb-2 text-xl font-bold">
                     Your notifications is empty
                   </p>
-                  <p>
+                  <p className="text-lg">
                     Interact with everyone like posting something, commenting,
                     etc. to receive some notifications
                   </p>
@@ -32,10 +32,10 @@ const Notifications = () => {
             <Tab className="flex-1" label="Comments">
               <div className="flex min-h-[40vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
                 <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
-                  <p className="pb-2 text-lg font-bold">
+                  <p className="pb-2 text-xl font-bold">
                     Your notifications is empty
                   </p>
-                  <p>
+                  <p className="text-lg">
                     Interact with everyone like posting something, commenting,
                     etc. to receive some notifications
                   </p>
@@ -45,10 +45,10 @@ const Notifications = () => {
             <Tab className="flex-1" label="Posts">
               <div className="flex min-h-[40vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
                 <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
-                  <p className="pb-2 text-lg font-bold">
+                  <p className="pb-2 text-xl font-bold">
                     Your notifications is empty
                   </p>
-                  <p>
+                  <p className="text-lg">
                     Interact with everyone like posting something, commenting,
                     etc. to receive some notifications
                   </p>

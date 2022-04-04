@@ -10,6 +10,7 @@ export async function findFollowersByUserId(db, userId) {
           userId: new ObjectId(userId),
         },
       },
+      { $sort: { createdAt: -1 } },
     ])
     .toArray()
 
@@ -30,6 +31,7 @@ export async function findFollowersWithProfileByUserId(
           userId: new ObjectId(userId),
         },
       },
+      { $sort: { createdAt: -1 } },
       { $skip: skip },
       { $limit: limit },
       {

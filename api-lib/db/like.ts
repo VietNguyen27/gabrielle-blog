@@ -18,9 +18,12 @@ export async function likePost(db, postId, userId) {
       { returnDocument: 'after' }
     )
 
-  await db
-    .collection('likes')
-    .insertOne({ postId: new ObjectId(postId), userId: new ObjectId(userId) })
+  await db.collection('likes').insertOne({
+    postId: new ObjectId(postId),
+    userId: new ObjectId(userId),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  })
 
   return post.value
 }
