@@ -5,8 +5,8 @@ import { Form } from '@components/Form'
 import { Input } from '@components/Input'
 import { BookmarkIcon, SearchIcon } from '@heroicons/react/outline'
 import { useUserBookmarks } from '@lib/bookmark'
-import { CardSecondary } from '@components/Card/Card'
-import { CardSecondarySkeleton } from '@components/Skeleton'
+import { PostCardSecondary } from '@components/Card'
+import { PostCardSecondarySkeleton } from '@components/Skeleton'
 import { saveUserToLocalStorage, useCurrentUser } from '@lib/user'
 import { useDebounce } from '@hooks/useDebounce'
 import { Select } from '@components/Select'
@@ -133,7 +133,7 @@ const Bookmarks = () => {
               ))}
             </ul>
           </div>
-          <div className="flex min-h-[40vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-3 shadow xs:p-6">
+          <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-3 shadow xs:p-6">
             {!localUser.bookmarksCount ? (
               <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
                 <p className="pb-2 text-lg font-bold">
@@ -149,13 +149,13 @@ const Bookmarks = () => {
               <div className="flex flex-col items-stretch gap-6">
                 {filteredBookmarks &&
                   filteredBookmarks.map((bookmark: any) => (
-                    <CardSecondary key={bookmark._id} {...bookmark} />
+                    <PostCardSecondary key={bookmark._id} {...bookmark} />
                   ))}
               </div>
             ) : (
               <div className="flex flex-col items-stretch gap-6">
                 {[...Array(3)].map((_, index) => (
-                  <CardSecondarySkeleton key={index} />
+                  <PostCardSecondarySkeleton key={index} />
                 ))}
               </div>
             )}

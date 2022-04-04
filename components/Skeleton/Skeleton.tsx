@@ -21,7 +21,7 @@ export const TopicPopularSkeleton = () => {
   return <li className="mb-1 h-9 animate-pulse rounded bg-gray-200"></li>
 }
 
-export const CardPrimarySkeleton = () => {
+export const PostCardPrimarySkeleton = () => {
   return (
     <div className="flex items-center gap-4">
       <div className="h-12 w-12 flex-shrink-0 animate-pulse rounded-full bg-gray-200"></div>
@@ -36,7 +36,7 @@ export const CardPrimarySkeleton = () => {
   )
 }
 
-export const CardSecondarySkeleton = () => {
+export const PostCardSecondarySkeleton = () => {
   return (
     <div className="flex gap-4">
       <div className="h-8 w-8 flex-shrink-0 animate-pulse rounded-full bg-gray-200"></div>
@@ -54,7 +54,7 @@ export const CardSecondarySkeleton = () => {
   )
 }
 
-export const CardTertiarySkeleton = () => {
+export const PostCardTertiarySkeleton = () => {
   return (
     <div className="flex flex-col gap-1 p-4">
       <div className="h-4 animate-pulse rounded bg-gray-200"></div>
@@ -170,6 +170,16 @@ export const CommentSkeleton = () => {
           <div className="h-8 w-20 animate-pulse rounded-md bg-gray-200 px-2 py-1.5"></div>
         </div>
       </div>
+    </div>
+  )
+}
+
+export const UserCardSkeleton = () => {
+  return (
+    <div className="flex flex-col items-center rounded-md border border-gray-200 bg-gray-50 px-4 py-8 shadow">
+      <div className="h-16 w-16 animate-pulse rounded-full bg-gray-200"></div>
+      <div className="mt-3 mb-3 h-5 w-24 animate-pulse rounded bg-gray-200"></div>
+      <div className="h-4 w-4/5 animate-pulse rounded bg-gray-200"></div>
     </div>
   )
 }

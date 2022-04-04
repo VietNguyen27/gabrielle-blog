@@ -6,6 +6,7 @@ import { TopicAnchor } from '@components/Topic'
 import { TTopic } from '@global/types'
 
 type TCreator = {
+  email: string
   username: string
   profilePicture: string
 }
@@ -16,26 +17,26 @@ type TCardProps = {
   title: string
 }
 
-type TCardPrimaryProps = TCardProps & {
+type TPostCardPrimaryProps = TCardProps & {
   createdAt: number
 }
 
-type TCardSecondaryProps = TCardProps & {
+type TPostCardSecondaryProps = TCardProps & {
   createdAt: number
   readingTime: number
   topics: TTopic[]
 }
 
-type TCardTertiaryProps = TCardProps & {
+type TPostCardTertiaryProps = TCardProps & {
   topics: TTopic[]
 }
 
-export const CardPrimary = ({
+export const PostCardPrimary = ({
   _id,
   creator,
   title,
   createdAt,
-}: TCardPrimaryProps) => {
+}: TPostCardPrimaryProps) => {
   return (
     <article className="flex items-center gap-4">
       <Link href={`/${creator.username}`}>
@@ -63,14 +64,14 @@ export const CardPrimary = ({
   )
 }
 
-export const CardSecondary = ({
+export const PostCardSecondary = ({
   _id,
   creator,
   title,
   createdAt,
   readingTime,
   topics,
-}: TCardSecondaryProps) => {
+}: TPostCardSecondaryProps) => {
   return (
     <article className="flex gap-2 xs:gap-4">
       <Link href={`/${creator.username}`}>
@@ -110,12 +111,12 @@ export const CardSecondary = ({
   )
 }
 
-export const CardTertiary = ({
+export const PostCardTertiary = ({
   _id,
   creator,
   title,
   topics,
-}: TCardTertiaryProps) => {
+}: TPostCardTertiaryProps) => {
   return (
     <Link href={`/${creator.username}/post/${String(_id)}`}>
       <a className="flex flex-col gap-1 p-4 transition-colors duration-200 hover:bg-gray-50">
@@ -129,5 +130,25 @@ export const CardTertiary = ({
         </div>
       </a>
     </Link>
+  )
+}
+
+export const UserCard = ({ email, username, profilePicture }: TCreator) => {
+  return (
+    <div className="text-center">
+      <div className="flex flex-col items-center rounded-md border border-gray-200 bg-gray-50 px-4 py-8 shadow transition-colors duration-200">
+        <Link href={`/${username}`}>
+          <a>
+            <Avatar className="w-16" src={profilePicture} alt={username} />
+          </a>
+        </Link>
+        <h2 className="pt-3 pb-1 text-lg">
+          <Link href={`/${username}`}>
+            <a className="text-tertiary-900">{username}</a>
+          </Link>
+        </h2>
+        <p className="">{email}</p>
+      </div>
+    </div>
   )
 }
