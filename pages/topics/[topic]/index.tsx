@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react'
 import Head from 'next/head'
+import { findTopicByName } from '@api-lib/db'
 import { Topic } from '@page-components/Topics'
 import { Layout } from '@components/Layout'
 import { middleware } from '@api-lib/middlewares'
-import { findTopicByName } from '@api-lib/db/topic'
 
 export async function getServerSideProps(context) {
   await middleware.apply(context.req, context.res)

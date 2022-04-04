@@ -180,6 +180,7 @@ export const changeDataObjectToString = (data) => {
   data.creatorId = String(data.creatorId)
   data.createdAt = data.createdAt.getTime()
   data.updatedAt = data.updatedAt.getTime()
+  data.creator._id = String(data.creator._id)
   data.creator.createdAt = data.creator.createdAt.getTime()
   data.creator.updatedAt = data.creator.updatedAt.getTime()
 
@@ -188,7 +189,6 @@ export const changeDataObjectToString = (data) => {
 
 export const dbProjectionCreators = (prefix = '') => {
   return {
-    [`${prefix}_id`]: 0,
     [`${prefix}interests`]: 0,
     [`${prefix}password`]: 0,
     [`${prefix}status`]: 0,

@@ -1,6 +1,6 @@
+import { findTopics, insertTopic } from '@api-lib/db'
 import nextConnect from 'next-connect'
 import { middleware } from '@api-lib/middlewares'
-import { findTopics, insertTopic } from '@api-lib/db/topic'
 import { NextApiResponse } from 'next'
 import { TNextApiRequest } from '@global/types'
 
