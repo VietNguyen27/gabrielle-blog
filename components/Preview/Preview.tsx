@@ -1,4 +1,10 @@
-import React, { ReactChild, ReactChildren, useEffect, useState } from 'react'
+import React, {
+  ReactChild,
+  ReactChildren,
+  ReactElement,
+  useEffect,
+  useState,
+} from 'react'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { Avatar } from '@components/Avatar'
@@ -10,6 +16,22 @@ import useRect from '@hooks/useRect'
 import { useModal } from '@hooks/useModal'
 import { useAuth } from '@hooks/useAuth'
 import { LoginRequired } from '@components/LoginRequired'
+import { motion } from 'framer-motion'
+
+type TPreviewProps = {
+  children: [ReactElement, ReactElement]
+  className?: string
+}
+
+type TPreviewTriggerProps = {
+  children: ReactChild | ReactChildren
+}
+
+type TPreviewCardProps = {
+  children: ReactChild | ReactChildren
+  isOverflow: boolean
+  isHovered?: boolean
+}
 
 type TUserPreviewProps = {
   user: TUser
@@ -17,24 +39,61 @@ type TUserPreviewProps = {
   className?: string
 }
 
-const Preview = ({ children, className }) => {
-  return <div className={clsx('group relative', className)}>{children}</div>
+const Preview = ({ children, className }: TPreviewProps) => {
+  const [isHovered, setIsHovered] = useState<boolean>(false)
+  const [delayHandler, setDelayHandler] = useState<any>(null)
+
+  const handleMouseEnter = () => {
+    setDelayHandler(
+      setTimeout(() => {
+        setIsHovered && setIsHovered(true)
+      }, 400)
+    )
+  }
+
+  const handleMouseLeave = () => {
+    clearTimeout(delayHandler)
+    setIsHovered && setIsHovered(false)
+  }
+
+  return (
+    <div
+      className={clsx('relative', className)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {React.cloneElement(children[0], { setIsHovered })}
+      {React.cloneElement(children[1], { isHovered })}
+    </div>
+  )
 }
 
-const PreviewTrigger = ({ children }) => {
+const PreviewTrigger = ({ children }: TPreviewTriggerProps) => {
   return <>{children}</>
 }
 
-const PreviewCard = ({ children, isOverflow }) => {
+const PreviewCard = ({
+  children,
+  isOverflow,
+  isHovered,
+}: TPreviewCardProps) => {
   return (
-    <div
+    <motion.div
+      initial="false"
+      animate={{
+        opacity: isHovered ? 1 : 0,
+        display: isHovered ? 'block' : 'none',
+      }}
+      transition={{ duration: 0.25 }}
       className={clsx(
-        'absolute left-0 z-dropdown hidden overflow-hidden rounded bg-white shadow-lg outline outline-1 outline-gray-200 group-hover:block group-hover:delay-500',
-        isOverflow ? 'bottom-full' : 'top-full'
+        'absolute left-0 z-dropdown',
+        isOverflow ? 'bottom-full pb-1' : 'top-full pt-1'
       )}
     >
-      {children}
-    </div>
+      <div className="overflow-hidden rounded bg-white shadow-lg outline outline-1 outline-gray-200">
+        {children}
+      </div>
+    </motion.div>
   )
 }
 
@@ -43,7 +102,7 @@ export const UserPreview = ({
   children,
   className,
 }: TUserPreviewProps) => {
-  const [isOverflow, setIsOverflow] = useState(false)
+  const [isOverflow, setIsOverflow] = useState<boolean>(false)
   const { data: { currentUser } = {} } = useCurrentUser()
   const [rect, ref] = useRect()
   const { open, toggle } = useModal()
