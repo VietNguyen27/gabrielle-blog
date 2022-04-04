@@ -55,7 +55,7 @@ export const PostCard = ({
 
   return (
     <article className="relative mb-4 rounded-md border border-gray-200 shadow-sm">
-      <Link href={`/${creator.username}/post/${_id}`}>
+      <Link href={`/${creator.username}/post/${_id}`} aria-label={title}>
         <a className="absolute top-0 left-0 h-full w-full"></a>
       </Link>
       {hasCover && (
@@ -125,7 +125,10 @@ export const PostCard = ({
             </div>
             <div className="relative z-elevate flex items-center gap-2 self-end xs:self-center">
               <span className="text-xs">{readingTime} min read</span>
-              <Link href={`/${creator.username}/post/${_id}`}>
+              <Link
+                href={`/${creator.username}/post/${_id}`}
+                aria-label={title}
+              >
                 <a className="cursor-pointer">
                   {isBookmarked ? (
                     <BookmarkIcon className="h-6 w-6 fill-indigo-500 text-indigo-500" />
@@ -152,7 +155,7 @@ export const TrendingPost = ({
 }: TTrendingPostProps) => {
   return (
     <article className="flex items-stretch gap-4">
-      <div className="-mt-2 w-9 flex-shrink-0 whitespace-nowrap text-3xl font-bold text-gray-200">
+      <div className="-mt-2 w-9 flex-shrink-0 whitespace-nowrap font-roboto text-3xl font-bold text-gray-300">
         {numOrder >= 10 ? numOrder : '0' + numOrder}
       </div>
       <div className="flex w-full flex-col">
