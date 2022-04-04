@@ -22,7 +22,13 @@ const RouteGuard = ({ children }) => {
   }, [user])
 
   const authCheck = (url) => {
-    const privatePaths = ['/write', '/bookmarks', '/settings', '/notifications']
+    const privatePaths = [
+      '/write',
+      '/bookmarks',
+      '/settings',
+      '/notifications',
+      '/dashboard',
+    ]
     const path = url.split('?')[0]
     const user = JSON.parse(localStorage.getItem('user') as any) || null
 

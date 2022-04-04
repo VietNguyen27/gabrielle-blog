@@ -15,8 +15,10 @@ const NoResults = ({ className }: TNoResultsProps) => {
   return (
     <div className={allClassNames}>
       <Image src={NoSearch} width={90} height={70} alt="no results found" />
-      <p className="pb-2 text-lg font-bold">No results found</p>
-      <p>We couldn&apos;t find what you&apos;re looking for</p>
+      <p className="pb-2 text-xl font-bold">No results found</p>
+      <p className="text-lg">
+        We couldn&apos;t find what you&apos;re looking for
+      </p>
     </div>
   )
 }

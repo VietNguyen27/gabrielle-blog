@@ -1,1 +1,1 @@
-export { UserPreview } from './Preview'
+export { default as UserPreview } from './UserPreview'

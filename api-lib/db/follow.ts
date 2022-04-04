@@ -18,11 +18,15 @@ export async function followUser(db, userId, followedId) {
   await db.collection('followers').insertOne({
     userId: new ObjectId(followedId),
     followerId: new ObjectId(userId),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   })
 
   await db.collection('following').insertOne({
     userId: new ObjectId(userId),
     followingId: new ObjectId(followedId),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   })
 }
 

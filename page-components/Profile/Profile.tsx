@@ -182,12 +182,12 @@ const Profile = ({
             <div className="flex flex-col items-stretch gap-4 md:flex-row">
               <div className="flex w-full flex-col items-stretch gap-4 md:w-1/3">
                 {skills && (
-                  <div className="rounded border border-gray-200 p-4">
+                  <div className="rounded-md border border-gray-200 p-4">
                     <h2 className="pb-6 text-lg font-bold">Skills/languages</h2>
                     <p>{skills}</p>
                   </div>
                 )}
-                <div className="rounded border border-gray-200 p-4">
+                <div className="rounded-md border border-gray-200 p-4">
                   <ul>
                     <li className="flex items-center gap-2 pb-3 last:pb-0">
                       <DocumentTextIcon className="h-6 w-6 text-gray-600" />
@@ -209,11 +209,21 @@ const Profile = ({
                 </div>
               </div>
               <div className="flex w-full flex-col items-stretch md:w-2/3">
-                {posts && posts.length
-                  ? posts.map((post) => <PostCard key={post._id} {...post} />)
-                  : [...Array(6)].map((_, index) => (
+                {postsCount ? (
+                  posts.length ? (
+                    posts.map((post) => <PostCard key={post._id} {...post} />)
+                  ) : (
+                    [...Array(4)].map((_, index) => (
                       <PostCardSkeleton key={index} />
-                    ))}
+                    ))
+                  )
+                ) : (
+                  <p className="pt-8 text-center text-lg">
+                    This user doesn&apos;t have any posts yet...
+                  </p>
+                )}
+                {isLoadingMore && <PostCardSkeleton />}
+                <div className="h-px" ref={ref}></div>
               </div>
             </div>
           </div>

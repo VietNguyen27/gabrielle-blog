@@ -132,6 +132,7 @@ export async function insertPost(
     likesCount: 0,
     commentsCount: 0,
     bookmarksCount: 0,
+    totalViews: 0,
     published,
     createdAt: new Date(),
     updatedAt: new Date(),

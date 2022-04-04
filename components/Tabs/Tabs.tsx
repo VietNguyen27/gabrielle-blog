@@ -38,11 +38,13 @@ const TabLabel = ({
   ...rest
 }: TTabLabelProps) => {
   const defaultClassName =
-    'relative font-semibold cursor-pointer rounded transition-all duration-200 hover:text-tertiary-900 hover:bg-indigo-100'
+    'relative font-semibold cursor-pointer rounded transition-colors duration-200'
   const allClassNames = clsx(
     defaultClassName,
     className,
-    isActive ? 'text-zinc-900' : 'text-gray-400',
+    isActive
+      ? 'bg-indigo-100 font-bold'
+      : 'text-gray-500 hover:bg-indigo-50 hover:text-gray-800',
     horizontal ? 'text-left p-2' : 'text-center py-1 px-3',
     isActive && horizontal && 'bg-indigo-50'
   )

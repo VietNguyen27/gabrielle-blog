@@ -18,6 +18,9 @@ const MenuDropdown = ({ username, email }, onLogOut) => {
         </div>
       </MenuItem>
       <MenuDivider />
+      <MenuItem href="/dashboard" as="a">
+        Dashboard
+      </MenuItem>
       <MenuItem href="/write" as="a">
         Create Post
       </MenuItem>

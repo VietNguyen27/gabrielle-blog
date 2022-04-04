@@ -127,6 +127,26 @@ export const TrendingPostSkeleton = ({ numOrder }) => {
   )
 }
 
+export const PostAnalysisCardSkeleton = () => {
+  return (
+    <div className="relative mb-4 border-b border-gray-200 pb-4">
+      <div className="flex items-center">
+        <div className="flex w-full flex-col pr-4">
+          <div className="mb-2 h-5 w-4/5 animate-pulse rounded bg-gray-200"></div>
+          <div className="mb-2 h-4 w-64 animate-pulse rounded bg-gray-200"></div>
+          <div className="flex flex-wrap items-center">
+            <div className="mr-4 h-5 w-9 animate-pulse rounded bg-gray-200"></div>
+            <div className="mr-4 h-5 w-9 animate-pulse rounded bg-gray-200"></div>
+            <div className="mr-4 h-5 w-9 animate-pulse rounded bg-gray-200"></div>
+            <div className="mr-4 h-5 w-9 animate-pulse rounded bg-gray-200"></div>
+          </div>
+        </div>
+        <div className="ml-auto h-8 w-16 flex-shrink-0 animate-pulse rounded-md bg-gray-200 px-2 py-1.5"></div>
+      </div>
+    </div>
+  )
+}
+
 export const CommentSkeleton = () => {
   return (
     <div className="mb-4 flex items-start">
