@@ -17,7 +17,7 @@ const Notifications = () => {
             horizontal
           >
             <Tab className="flex-1" label="All">
-              <div className="flex min-h-[40vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
+              <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
                 <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
                   <p className="pb-2 text-xl font-bold">
                     Your notifications is empty
@@ -30,7 +30,7 @@ const Notifications = () => {
               </div>
             </Tab>
             <Tab className="flex-1" label="Comments">
-              <div className="flex min-h-[40vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
+              <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
                 <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
                   <p className="pb-2 text-xl font-bold">
                     Your notifications is empty
@@ -43,7 +43,7 @@ const Notifications = () => {
               </div>
             </Tab>
             <Tab className="flex-1" label="Posts">
-              <div className="flex min-h-[40vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
+              <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
                 <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
                   <p className="pb-2 text-xl font-bold">
                     Your notifications is empty

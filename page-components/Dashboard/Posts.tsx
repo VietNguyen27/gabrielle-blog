@@ -26,7 +26,7 @@ const Posts = () => {
   }, [isVisible, isRefreshing])
 
   return (
-    <div className="flex min-h-[40vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
+    <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
       {localUser.postsCount ? (
         <div className="flex h-full w-full flex-1 flex-col">
           {posts.length

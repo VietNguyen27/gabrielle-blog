@@ -12,15 +12,17 @@ import DOMPurify from 'dompurify'
 import { getFormattedDate, parseMarkdown } from '@utils/utils'
 import { Button } from '@components/Button'
 import { ImageRatio } from '@components/ImageRatio'
-import { CardTertiary } from '@components/Card'
+import { PostCardPrimary, PostCardTertiary } from '@components/Card'
 import { useCurrentUser } from '@lib/user'
 import { TopicAnchor } from '@components/Topic'
 import { ALink } from '@components/ALink'
 import CommentList from './CommentList'
 import { usePost, usePosts, useRandomPosts } from '@lib/post'
 import { useLikes } from '@lib/like'
-import { CardPrimary } from '@components/Card/Card'
-import { CardPrimarySkeleton, CardTertiarySkeleton } from '@components/Skeleton'
+import {
+  PostCardPrimarySkeleton,
+  PostCardTertiarySkeleton,
+} from '@components/Skeleton'
 import { Avatar } from '@components/Avatar'
 import { fetcher } from '@lib/fetcher'
 import { useRouter } from 'next/router'
@@ -308,10 +310,10 @@ const PostDetail = ({
                     <div className="flex flex-col items-stretch gap-6">
                       {posts
                         ? posts.map((post) => (
-                            <CardPrimary key={post._id} {...post} />
+                            <PostCardPrimary key={post._id} {...post} />
                           ))
                         : [...Array(4)].map((_, index) => (
-                            <CardPrimarySkeleton key={index} />
+                            <PostCardPrimarySkeleton key={index} />
                           ))}
                     </div>
                   </div>
@@ -417,14 +419,14 @@ const PostDetail = ({
                       {morePostsFromThisUser
                         ? morePostsFromThisUser.length
                           ? morePostsFromThisUser.map((post) => (
-                              <CardTertiary key={post._id} {...post} />
+                              <PostCardTertiary key={post._id} {...post} />
                             ))
                           : morePostsFromCommunity &&
                             morePostsFromCommunity.map((post) => (
-                              <CardTertiary key={post._id} {...post} />
+                              <PostCardTertiary key={post._id} {...post} />
                             ))
                         : [...Array(3)].map((_, index) => (
-                            <CardTertiarySkeleton key={index} />
+                            <PostCardTertiarySkeleton key={index} />
                           ))}
                     </div>
                   </div>

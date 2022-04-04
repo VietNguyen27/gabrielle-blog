@@ -6,6 +6,7 @@ import { removeUserToLocalStorage, useCurrentUser } from '@lib/user'
 import { fetcher } from '@lib/fetcher'
 import { Button } from '@components/Button'
 import { Avatar } from '@components/Avatar'
+import { useRouter } from 'next/router'
 
 type TNavDrawerProps = {
   open: boolean
@@ -14,13 +15,15 @@ type TNavDrawerProps = {
 
 const NavDrawer = ({ open, onClose }: TNavDrawerProps) => {
   const { data: { user } = {}, mutate } = useCurrentUser()
+  const router = useRouter()
 
   const onLogOut = useCallback(async () => {
     await fetcher('/api/auth', {
       method: 'DELETE',
     })
-    removeUserToLocalStorage()
+    router.push('/')
     mutate({ user: null })
+    removeUserToLocalStorage()
   }, [mutate])
 
   return (

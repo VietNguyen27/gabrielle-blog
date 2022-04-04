@@ -37,7 +37,7 @@ const MenuDropdown = ({ username, email }, onLogOut) => {
 }
 
 const Navbar = () => {
-  const { pathname } = useRouter()
+  const router = useRouter()
   const { mutate } = useCurrentUser()
   const localUser = JSON.parse(localStorage.getItem('user') as any) || null
 
@@ -45,8 +45,9 @@ const Navbar = () => {
     await fetcher('/api/auth', {
       method: 'DELETE',
     })
-    removeUserToLocalStorage()
+    router.push('/')
     mutate({ user: null })
+    removeUserToLocalStorage()
   }, [mutate])
 
   return (
@@ -55,7 +56,7 @@ const Navbar = () => {
         {!localUser ? (
           <>
             <li>
-              <Anchor href="/login" active={pathname === '/login'}>
+              <Anchor href="/login" active={router.pathname === '/login'}>
                 Sign in
               </Anchor>
             </li>
@@ -73,7 +74,7 @@ const Navbar = () => {
         ) : (
           <>
             <li>
-              <Anchor href="/write" active={pathname === '/write'}>
+              <Anchor href="/write" active={router.pathname === '/write'}>
                 Write
               </Anchor>
             </li>

@@ -8,6 +8,7 @@ import { useError, useLoading, useMessage } from '@lib/store'
 import { fetcher } from '@lib/fetcher'
 import { getErrorFromJoiMessage } from '@utils/utils'
 import { removeUserToLocalStorage, useCurrentUser } from '@lib/user'
+import { useRouter } from 'next/router'
 
 const FormFields = () => {
   const { register } = useFormContext()
@@ -58,6 +59,7 @@ const NewPassword = () => {
   const { setLoading } = useLoading()
   const { setMessage } = useMessage()
   const { mutate } = useCurrentUser()
+  const router = useRouter()
 
   const onSubmit = useCallback(async (data) => {
     const { oldPassword, newPassword, confirmPassword } = data
@@ -90,8 +92,9 @@ const NewPassword = () => {
     await fetcher('/api/auth', {
       method: 'DELETE',
     })
-    removeUserToLocalStorage()
+    router.push('/')
     mutate({ user: null })
+    removeUserToLocalStorage()
   }, [mutate])
 
   return (

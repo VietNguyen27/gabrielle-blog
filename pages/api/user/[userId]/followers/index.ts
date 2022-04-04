@@ -1,4 +1,7 @@
-import { findFollowersByUserId } from '@api-lib/db'
+import {
+  findFollowersByUserId,
+  findFollowersWithProfileByUserId,
+} from '@api-lib/db'
 import { middleware } from '@api-lib/middlewares'
 import { TNextApiRequest } from '@global/types'
 import { NextApiResponse } from 'next'
@@ -9,9 +12,22 @@ const handler = nextConnect<TNextApiRequest, NextApiResponse>()
 handler.use(middleware)
 
 handler.get(async (req: TNextApiRequest, res: NextApiResponse) => {
-  const followers = await findFollowersByUserId(req.db, req.query.userId)
+  const { userId, limit, skip } = req.query
 
-  return res.json({ followers })
+  if (limit && skip) {
+    const followers = await findFollowersWithProfileByUserId(
+      req.db,
+      userId,
+      +limit,
+      +skip
+    )
+
+    return res.json({ followers })
+  } else {
+    const followers = await findFollowersByUserId(req.db, userId)
+
+    return res.json({ followers })
+  }
 })
 
 export default handler
