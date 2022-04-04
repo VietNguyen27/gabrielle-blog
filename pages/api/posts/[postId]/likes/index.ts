@@ -1,4 +1,4 @@
-import { findLikes, likePost, unlikePost } from '@api-lib/db/like'
+import { findLikes, likePost, unlikePost } from '@api-lib/db'
 import { middleware } from '@api-lib/middlewares'
 import { TNextApiRequest } from '@global/types'
 import { NextApiResponse } from 'next'

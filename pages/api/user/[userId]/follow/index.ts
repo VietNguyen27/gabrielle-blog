@@ -1,4 +1,4 @@
-import { followTopic, unfollowTopic } from '@api-lib/db'
+import { followUser, unfollowUser } from '@api-lib/db'
 import { middleware } from '@api-lib/middlewares'
 import { TNextApiRequest } from '@global/types'
 import { NextApiResponse } from 'next'
@@ -9,15 +9,15 @@ const handler = nextConnect<TNextApiRequest, NextApiResponse>()
 handler.use(middleware)
 
 handler.put(async (req: TNextApiRequest, res: NextApiResponse) => {
-  const topics = await followTopic(req.db, req.user._id, req.body.topic)
+  await followUser(req.db, req.user._id, req.body.followedId)
 
-  return res.json({ topics })
+  return res.status(204).end()
 })
 
 handler.delete(async (req: TNextApiRequest, res: NextApiResponse) => {
-  const topics = await unfollowTopic(req.db, req.user._id, req.body.topic)
+  await unfollowUser(req.db, req.user._id, req.body.followedId)
 
-  return res.json({ topics })
+  return res.status(204).end()
 })
 
 export default handler

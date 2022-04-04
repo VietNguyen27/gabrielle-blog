@@ -1,5 +1,5 @@
 import nextConnect from 'next-connect'
-import { findPosts, insertPost } from '@api-lib/db/post'
+import { findPosts, insertPost } from '@api-lib/db'
 import { middleware, validate } from '@api-lib/middlewares'
 import { postSchema } from '@api-lib/schemas'
 import { v2 as cloudinary } from 'cloudinary'

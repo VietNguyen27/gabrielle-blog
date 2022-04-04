@@ -29,6 +29,7 @@ import { useBookmarks } from '@lib/bookmark'
 import { LoginRequired } from '@components/LoginRequired'
 import { useModal } from '@hooks/useModal'
 import { useAuth } from '@hooks/useAuth'
+import { useFollowers } from '@lib/followers'
 
 const MoreOptionsDropdown = () => {
   return (
@@ -71,11 +72,17 @@ const PostDetail = ({
   const { data: { likes } = {}, mutate: likesMutate } = useLikes(_id)
   const { data: { bookmarks } = {}, mutate: bookmarksMutate } =
     useBookmarks(_id)
+  const { data: { followers } = {}, mutate: followersMutate } =
+    useFollowers(creatorId)
   const router = useRouter()
   const { open, toggle } = useModal()
   const isAuth = useAuth()
   const isLiked = user && likes && likes.includes(user._id)
   const isBookmarked = user && bookmarks && bookmarks.includes(user._id)
+  const isFollowed =
+    user &&
+    followers &&
+    followers.some(({ followerId }) => followerId === user._id)
 
   useEffect(() => {
     mutate()
@@ -172,6 +179,26 @@ const PostDetail = ({
       toggle()
       return
     }
+
+    await fetcher(`/api/user/${creatorId}/follow`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        followedId: creatorId,
+      }),
+    })
+    followersMutate()
+  }
+
+  const handleUnfollow = async () => {
+    await fetcher(`/api/user/${creatorId}/follow`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        followedId: creatorId,
+      }),
+    })
+    followersMutate()
   }
 
   return (
@@ -325,14 +352,27 @@ const PostDetail = ({
                           Edit profile
                         </Button>
                       ) : (
-                        <Button
-                          variant="tertiary"
-                          className="mb-4 rounded-md py-2"
-                          onClick={handleFollow}
-                          fluid
-                        >
-                          Follow
-                        </Button>
+                        <>
+                          {user && followers && isFollowed ? (
+                            <Button
+                              variant="secondary"
+                              className="mb-4 rounded-md py-2"
+                              onClick={handleUnfollow}
+                              fluid
+                            >
+                              Following
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="tertiary"
+                              className="mb-4 rounded-md py-2"
+                              onClick={handleFollow}
+                              fluid
+                            >
+                              Follow
+                            </Button>
+                          )}
+                        </>
                       )}
                       {creator.bio && <div className="mb-4">{creator.bio}</div>}
                       <div className="text-sm font-bold uppercase">Email</div>

@@ -1,7 +1,7 @@
+import { ReactElement } from 'react'
 import Head from 'next/head'
 import { middleware } from '@api-lib/middlewares'
-import { findPostById } from '@api-lib/db/post'
-import { ReactElement } from 'react'
+import { findPostById } from '@api-lib/db'
 import { Layout } from '@components/Layout'
 import { PostDetail } from '@page-components/PostDetail'
 

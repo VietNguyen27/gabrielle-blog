@@ -21,6 +21,8 @@ import { PostCardSkeleton } from '@components/Skeleton'
 import { useAuth } from '@hooks/useAuth'
 import { useModal } from '@hooks/useModal'
 import { LoginRequired } from '@components/LoginRequired'
+import { fetcher } from '@lib/fetcher'
+import { useFollowers } from '@lib/followers'
 
 const Profile = ({
   _id,
@@ -43,6 +45,7 @@ const Profile = ({
   const isVisible = useOnScreen(ref)
   const { open, toggle } = useModal()
   const isAuth = useAuth()
+  const { data: { followers } = {}, mutate } = useFollowers(_id)
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
     useInfinitePosts({
       creatorId: _id,
@@ -50,6 +53,10 @@ const Profile = ({
   const posts = data
     ? data.reduce((acc, val) => [...acc, ...val.posts], [])
     : []
+  const isFollowed =
+    user &&
+    followers &&
+    followers.some(({ followerId }) => followerId === user._id)
 
   useEffect(() => {
     if (isVisible && !isReachingEnd && !isRefreshing && !isLoadingMore) {
@@ -62,6 +69,26 @@ const Profile = ({
       toggle()
       return
     }
+
+    await fetcher(`/api/user/${_id}/follow`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        followedId: _id,
+      }),
+    })
+    mutate()
+  }
+
+  const handleUnfollow = async () => {
+    await fetcher(`/api/user/${_id}/follow`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        followedId: _id,
+      }),
+    })
+    mutate()
   }
 
   return (
@@ -90,13 +117,23 @@ const Profile = ({
                     </Button>
                   ) : (
                     <>
-                      <Button
-                        variant="tertiary"
-                        className="rounded-md px-4 py-2"
-                        onClick={handleFollow}
-                      >
-                        Follow
-                      </Button>
+                      {user && followers && isFollowed ? (
+                        <Button
+                          variant="secondary"
+                          className="rounded-md px-4 py-2"
+                          onClick={handleUnfollow}
+                        >
+                          Following
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="tertiary"
+                          className="rounded-md px-4 py-2"
+                          onClick={handleFollow}
+                        >
+                          Follow
+                        </Button>
+                      )}
                       <Dropdown
                         overlay={
                           <Menu className="w-[250px]">
@@ -162,7 +199,7 @@ const Profile = ({
                     </li>
                     <li className="flex items-center gap-2 pb-3 last:pb-0">
                       <UserIcon className="h-6 w-6 text-gray-600" />
-                      {followersCount} followers
+                      {followers ? followers.length : followersCount} followers
                     </li>
                     <li className="flex items-center gap-2 pb-3 last:pb-0">
                       <HashtagIcon className="h-6 w-6 text-gray-600" />

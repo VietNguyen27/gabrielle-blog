@@ -17,6 +17,8 @@ import { useModal } from '@hooks/useModal'
 import { useAuth } from '@hooks/useAuth'
 import { LoginRequired } from '@components/LoginRequired'
 import { motion } from 'framer-motion'
+import { useFollowers } from '@lib/followers'
+import { fetcher } from '@lib/fetcher'
 
 type TPreviewProps = {
   children: [ReactElement, ReactElement]
@@ -103,10 +105,15 @@ export const UserPreview = ({
   className,
 }: TUserPreviewProps) => {
   const [isOverflow, setIsOverflow] = useState<boolean>(false)
-  const { data: { currentUser } = {} } = useCurrentUser()
+  const { data: { user: currentUser } = {} } = useCurrentUser()
+  const { data: { followers } = {}, mutate } = useFollowers(user._id)
   const [rect, ref] = useRect()
   const { open, toggle } = useModal()
   const isAuth = useAuth()
+  const isFollowed =
+    currentUser &&
+    followers &&
+    followers.some(({ followerId }) => followerId === currentUser._id)
 
   useEffect(() => {
     if (rect) {
@@ -124,8 +131,27 @@ export const UserPreview = ({
       toggle()
       return
     }
+
+    await fetcher(`/api/user/${user._id}/follow`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        followedId: user._id,
+      }),
+    })
+    mutate()
   }
 
+  const handleUnfollow = async () => {
+    await fetcher(`/api/user/${user._id}/follow`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        followedId: user._id,
+      }),
+    })
+    mutate()
+  }
   return (
     <LoginRequired open={open} toggle={toggle}>
       <Preview className={className}>
@@ -164,14 +190,27 @@ export const UserPreview = ({
                   Edit profile
                 </Button>
               ) : (
-                <Button
-                  variant="tertiary"
-                  className="mb-4 rounded-md py-2"
-                  onClick={handleFollow}
-                  fluid
-                >
-                  Follow
-                </Button>
+                <>
+                  {user && followers && isFollowed ? (
+                    <Button
+                      variant="secondary"
+                      className="mb-4 rounded-md py-2"
+                      onClick={handleUnfollow}
+                      fluid
+                    >
+                      Following
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="tertiary"
+                      className="mb-4 rounded-md py-2"
+                      onClick={handleFollow}
+                      fluid
+                    >
+                      Follow
+                    </Button>
+                  )}
+                </>
               )}
               <div className="text-sm font-bold uppercase">Email</div>
               <div className="mb-2">{user.email}</div>

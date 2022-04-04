@@ -1,4 +1,4 @@
-import { findComments, insertComment } from '@api-lib/db/comment'
+import { findComments, insertComment } from '@api-lib/db'
 import { middleware, validate } from '@api-lib/middlewares'
 import { commentSchema } from '@api-lib/schemas/comment'
 import { TNextApiRequest } from '@global/types'

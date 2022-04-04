@@ -46,17 +46,17 @@ type TButtonProps = TButtonAsButton | TButtonAsLink | TButtonAsLabel
 
 const buttonVariants = {
   primary:
-    'bg-primary-900 text-white border-none hover:bg-primary-500 disabled:hover:bg-primary-900 focus-visible:outline-primary-500',
+    'bg-primary-900 text-white border-primary-900 hover:bg-primary-500 disabled:hover:bg-primary-900 focus-visible:outline-primary-500',
   secondary:
     'bg-transparent text-gray-800 border-gray-200 hover:border-gray-800 disabled:hover:bg-transparent',
   tertiary:
-    'bg-tertiary-900 text-white border-none hover:bg-tertiary-500 disabled:hover:bg-tertiary-900 focus-visible:outline-tertiary-500',
+    'bg-tertiary-900 text-white border-tertiary-900 hover:bg-tertiary-500 disabled:hover:bg-tertiary-900 focus-visible:outline-tertiary-500',
   quaternary:
-    'rounded border-none hover:bg-indigo-50 hover:text-tertiary-900 hover:fill-tertiary-900 active:bg-indigo-100 focus-visible:outline-tertiary-500',
+    'rounded border-transparent hover:bg-indigo-50 hover:text-tertiary-900 hover:fill-tertiary-900 active:bg-indigo-100 focus-visible:outline-tertiary-500',
   quinary:
-    'rounded border-none text-gray-600 hover:bg-gray-100 active:bg-gray-200 focus-visible:outline-gray-300',
+    'rounded border-transparent text-gray-600 hover:bg-gray-100 active:bg-gray-200 focus-visible:outline-gray-300',
   alert:
-    'text-white border-none bg-red-600 hover:bg-red-700 focus-visible:outline-red-200',
+    'text-white border-transparent bg-red-600 hover:bg-red-700 focus-visible:outline-red-200',
 }
 
 const Button = ({

@@ -1,8 +1,4 @@
-import {
-  findBookmarksByPostId,
-  savePost,
-  unsavePost,
-} from '@api-lib/db/bookmark'
+import { findBookmarksByPostId, savePost, unsavePost } from '@api-lib/db'
 import { middleware } from '@api-lib/middlewares'
 import { TNextApiRequest } from '@global/types'
 import { NextApiResponse } from 'next'
