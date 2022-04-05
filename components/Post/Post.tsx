@@ -26,6 +26,7 @@ type TPostCardProps = {
   likes: string[]
   likesCount: number
   commentsCount: number
+  bookmarksCount: number
   bookmarks: string[]
   readingTime: number
   createdAt: number
@@ -62,6 +63,7 @@ export const PostCard = ({
   likesCount,
   commentsCount,
   bookmarks,
+  bookmarksCount,
   readingTime,
   createdAt,
   hasCover,
@@ -127,7 +129,8 @@ export const PostCard = ({
                 ) : (
                   <HeartIcon className="mr-1 h-5 w-5" />
                 )}
-                {likesCount} {likesCount > 1 ? 'reactions' : 'reaction'}
+                {likesCount + bookmarksCount}{' '}
+                {likesCount + bookmarksCount > 1 ? 'reactions' : 'reaction'}
               </Button>
               <Button
                 as="a"

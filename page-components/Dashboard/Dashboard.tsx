@@ -5,11 +5,11 @@ import { Title } from '@components/Title'
 import Analytics from './Analytics'
 import Posts from './Posts'
 import Followers from './Followers'
-import FollowingTags from './FollowingTags'
 import FollowingUsers from './FollowingUsers'
+import useLocalUser from '@hooks/useLocalUser'
 
 const Dashboard = () => {
-  const localUser = JSON.parse(localStorage.getItem('user') as any) || null
+  const localUser = useLocalUser()
 
   return (
     <Container>
@@ -23,26 +23,23 @@ const Dashboard = () => {
             labelClassName="min-w-[200px] lg:min-w-[240px]"
             horizontal
           >
-            <Tab className="flex-1" label="Analytics">
+            <Tab className="mt-8 flex-1 md:mt-0" label="Analytics">
               <Analytics />
             </Tab>
-            <Tab className="flex-1" label={`Posts (${localUser.postsCount})`}>
+            <Tab
+              className="mt-8 flex-1 md:mt-0"
+              label={`Posts (${localUser.postsCount})`}
+            >
               <Posts />
             </Tab>
             <Tab
-              className="flex-1"
+              className="mt-8 flex-1 md:mt-0"
               label={`Followers (${localUser.followersCount})`}
             >
               <Followers />
             </Tab>
             <Tab
-              className="flex-1"
-              label={`Following tags (${localUser.interests.length})`}
-            >
-              <FollowingTags />
-            </Tab>
-            <Tab
-              className="flex-1"
+              className="mt-8 flex-1 md:mt-0"
               label={`Following users (${localUser.followingCount})`}
             >
               <FollowingUsers />

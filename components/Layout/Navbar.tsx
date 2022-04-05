@@ -7,6 +7,7 @@ import { fetcher } from '@lib/fetcher'
 import { BellIcon } from '@heroicons/react/outline'
 import { Dropdown, Menu, MenuDivider, MenuItem } from '@components/Dropdown'
 import { Avatar } from '@components/Avatar'
+import useLocalUser from '@hooks/useLocalUser'
 
 const MenuDropdown = ({ username, email }, onLogOut) => {
   return (
@@ -39,7 +40,7 @@ const MenuDropdown = ({ username, email }, onLogOut) => {
 const Navbar = () => {
   const router = useRouter()
   const { mutate } = useCurrentUser()
-  const localUser = JSON.parse(localStorage.getItem('user') as any) || null
+  const localUser = useLocalUser()
 
   const onLogOut = useCallback(async () => {
     await fetcher('/api/auth', {

@@ -1,13 +1,18 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { UserCard } from '@components/Card'
 import { UserCardSkeleton } from '@components/Skeleton'
 import useOnScreen from '@hooks/useOnScreen'
 import { useInfiniteFollowing } from '@lib/following'
+import useLocalUser from '@hooks/useLocalUser'
+import { Form } from '@components/Form'
+import { Input } from '@components/Input'
+import { SearchIcon } from '@heroicons/react/solid'
 
 const FollowingUsers = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('')
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
-  const localUser = JSON.parse(localStorage.getItem('user') as any) || null
+  const localUser = useLocalUser()
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
     useInfiniteFollowing({
       userId: localUser._id,
@@ -23,8 +28,22 @@ const FollowingUsers = () => {
   }, [isVisible, isRefreshing])
 
   return (
-    <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
-      <div className="grid h-full w-full grid-cols-3 gap-4">
+    <div className="relative flex flex-1 flex-col items-stretch rounded-md border border-gray-200 p-4 shadow xs:min-h-[50vh]">
+      <div className="absolute bottom-full left-0 flex w-full items-center justify-end pb-3">
+        <Form onSubmit={() => null}>
+          <Input
+            name="search"
+            label="Search"
+            rounded="sm"
+            className="mb-0 w-[150px] pr-4 sm:w-[200px]"
+            suffix={
+              <SearchIcon className="absolute -right-2 top-1/2 h-5 w-5 -translate-y-1/2" />
+            }
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </Form>
+      </div>
+      <div className="grid h-full w-full grid-cols-2 gap-4 lg:grid-cols-3">
         {localUser.followingCount
           ? following.length
             ? following.map(({ following }) => (

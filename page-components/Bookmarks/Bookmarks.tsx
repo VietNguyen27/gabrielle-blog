@@ -12,6 +12,7 @@ import { useDebounce } from '@hooks/useDebounce'
 import { Select } from '@components/Select'
 import { NoResults } from '@components/NoResults'
 import { TTopic } from '@global/types'
+import useLocalUser from '@hooks/useLocalUser'
 import clsx from 'clsx'
 
 const Bookmarks = () => {
@@ -21,7 +22,7 @@ const Bookmarks = () => {
   const [filter, setFilter] = useState<string>('all')
   const [searchTerm, setSearchTerm] = useState<string>('')
   const { data: { user } = {} } = useCurrentUser()
-  const localUser = JSON.parse(localStorage.getItem('user') as any) || null
+  const localUser = useLocalUser()
   const { data: { bookmarks } = {} } = useUserBookmarks()
   const defaultOption = { label: 'All topics', value: 'all' }
 

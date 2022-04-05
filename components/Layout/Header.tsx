@@ -6,13 +6,14 @@ import clsx from 'clsx'
 import { MenuAlt2Icon } from '@heroicons/react/outline'
 import NavDrawer from './NavDrawer'
 import { saveUserToLocalStorage, useCurrentUser } from '@lib/user'
+import useLocalUser from '@hooks/useLocalUser'
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)
   const ref = useRef<any>(null)
   const { data: { user } = {} } = useCurrentUser()
-  const localUser = JSON.parse(localStorage.getItem('user') as any) || null
+  const localUser = useLocalUser()
 
   useEffect(() => {
     if (user && !localUser) {
