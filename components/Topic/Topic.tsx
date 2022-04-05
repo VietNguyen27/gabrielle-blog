@@ -121,7 +121,7 @@ export const TopicCard = ({
   return (
     <LoginRequired open={open} toggle={toggle}>
       <div className={allClassNames}>
-        <div className="flex h-full flex-col items-stretch overflow-hidden rounded-md border border-gray-200 shadow">
+        <div className="flex h-full flex-col items-stretch overflow-hidden rounded-md shadow outline outline-1 outline-gray-200">
           <div className="h-5" style={{ backgroundColor: color }}></div>
           <div className="p-3 sm:p-5">
             <TopicAnchor value={value} label={label} color={color} />

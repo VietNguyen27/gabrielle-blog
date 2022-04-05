@@ -5,11 +5,11 @@ import Container from './Container'
 import { Button } from '@components/Button'
 import { Logo } from '@components/Logo'
 import { Anchor } from '@components/Anchor'
+import useLocalUser from '@hooks/useLocalUser'
 import TwitterLogo from '@public/static/images/twitter-logo.svg'
 import DribbbleLogo from '@public/static/images/dribbble-logo.svg'
 import InstagramLogo from '@public/static/images/instagram-logo.svg'
 import FacebookLogo from '@public/static/images/facebook-logo.svg'
-import { useCurrentUser } from '@lib/user'
 
 export const socials = [
   {
@@ -47,7 +47,7 @@ export const links = [
 
 const Footer = () => {
   const { pathname } = useRouter()
-  const localUser = JSON.parse(localStorage.getItem('user') as any) || null
+  const localUser = useLocalUser()
 
   return (
     <footer className="overflow-hidden bg-gray-100">

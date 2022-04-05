@@ -136,18 +136,22 @@ export const PostCardTertiary = ({
 export const UserCard = ({ email, username, profilePicture }: TCreator) => {
   return (
     <div className="text-center">
-      <div className="flex flex-col items-center rounded-md border border-gray-200 bg-gray-50 px-4 py-8 shadow transition-colors duration-200">
+      <div className="flex h-full flex-col items-center rounded-md border border-gray-200 bg-gray-50 py-4 px-2 shadow xs:px-4 xs:py-8">
         <Link href={`/${username}`}>
           <a>
-            <Avatar className="w-16" src={profilePicture} alt={username} />
+            <Avatar
+              className="w-12 xs:w-16"
+              src={profilePicture}
+              alt={username}
+            />
           </a>
         </Link>
-        <h2 className="pt-3 pb-1 text-lg">
+        <h2 className="pt-3 pb-1 text-lg line-clamp-2">
           <Link href={`/${username}`}>
             <a className="text-tertiary-900">{username}</a>
           </Link>
         </h2>
-        <p className="">{email}</p>
+        <p className="line-clamp-2">{email}</p>
       </div>
     </div>
   )

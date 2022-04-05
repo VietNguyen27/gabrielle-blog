@@ -108,7 +108,7 @@ const Home = () => {
                                 up-to-date and grow their careers.
                               </p>
                             </div>
-                            <div className="flex w-1/2 flex-col gap-2 pt-6 xs:w-2/5 xl:w-1/4">
+                            <div className="flex w-2/3 flex-col gap-2 pt-6 xs:w-2/5 xl:w-1/3">
                               <Button
                                 as="a"
                                 href="/register"

@@ -265,3 +265,38 @@ export const resizeImage = (
     }
   })
 }
+
+export const zeroPad = (value: number, length: number) => {
+  return `${value}`.padStart(length, '0')
+}
+
+export const isDate = (date: Date): boolean => {
+  const isDate = Object.prototype.toString.call(date) === '[object Date]'
+  const isValidDate = date && !Number.isNaN(date.valueOf())
+
+  return isDate && isValidDate
+}
+
+export const getDateISO = (date = new Date()) => {
+  if (!isDate(date)) return null
+
+  return [
+    date.getFullYear(),
+    zeroPad(+date.getMonth() + 1, 2),
+    zeroPad(+date.getDate(), 2),
+  ].join('-')
+}
+
+export const getDaysInWeek = (current: Date): Date[] => {
+  const daysInWeek: Date[] = []
+  const day = current.getDay()
+  const diff = current.getDate() - day + (day === 0 ? -6 : 1)
+  const monday = new Date(current.setDate(diff))
+
+  for (let i = 0; i < 7; i++) {
+    daysInWeek.push(new Date(monday))
+    monday.setDate(monday.getDate() + 1)
+  }
+
+  return daysInWeek
+}
