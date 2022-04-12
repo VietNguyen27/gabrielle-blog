@@ -6,7 +6,6 @@ export async function findPostById(db, id) {
     .collection('posts')
     .aggregate([
       { $match: { _id: new ObjectId(id) } },
-      { $limit: 1 },
       {
         $lookup: {
           from: 'users',
@@ -24,6 +23,7 @@ export async function findPostById(db, id) {
           as: 'topics',
         },
       },
+      { $limit: 1 },
       { $project: { topic: 0, ...dbProjectionCreators('creator.') } },
     ])
     .toArray()
@@ -42,6 +42,7 @@ export async function findPosts(
   db,
   by,
   topic,
+  title,
   not,
   limit = 1000,
   skip = 0,
@@ -60,14 +61,12 @@ export async function findPosts(
     .aggregate([
       {
         $match: {
+          ...(title && { title: { $regex: title, $options: 'gi' } }),
           ...(by && { creatorId: new ObjectId(by) }),
           ...(topic && { topic: new ObjectId(topic) }),
           ...(not && { _id: { $ne: new ObjectId(not) } }),
         },
       },
-      { $sort: { createdAt: -1 } },
-      { $skip: random ? randomSkip : skip },
-      { $limit: limit },
       {
         $lookup: {
           from: 'users',
@@ -101,6 +100,9 @@ export async function findPosts(
           as: 'topics',
         },
       },
+      { $sort: { createdAt: -1 } },
+      { $skip: random ? randomSkip : skip },
+      { $limit: limit },
       {
         $project: { content: 0, topic: 0, ...dbProjectionCreators('creator.') },
       },

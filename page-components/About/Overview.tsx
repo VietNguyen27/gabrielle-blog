@@ -1,7 +1,7 @@
+import Image from 'next/image'
 import { Container } from '@components/Layout'
 import { Paragraph } from '@components/Paragraph'
 import { Title } from '@components/Title'
-import Image from 'next/image'
 import AboutImg from '@public/static/images/about.jpg'
 
 const Overview = () => {

@@ -1,17 +1,17 @@
 import React, { forwardRef, ReactNode, useRef, useState } from 'react'
+import clsx from 'clsx'
+import { ChangeHandler, useFormContext } from 'react-hook-form'
+import { ChromePicker } from 'react-color'
 import {
   EyeIcon,
   EyeOffIcon,
   InformationCircleIcon,
 } from '@heroicons/react/outline'
-import clsx from 'clsx'
-import { useError } from '@lib/store'
-import { Error } from '@components/Error'
-import { ChangeHandler, useFormContext } from 'react-hook-form'
-import { removeErrorFromObject } from '@utils/utils'
 import { Tooltip } from '@components/Tooltip'
-import { ChromePicker } from 'react-color'
-import useOnClickOutside from '@hooks/useOnClickOutside'
+import { Error } from '@components/Error'
+import { useError } from '@lib/store'
+import { useOnClickOutside } from '@hooks/index'
+import { removeErrorFromObject } from '@utils/utils'
 
 const MAX_LENGTH_INPUT = 64
 

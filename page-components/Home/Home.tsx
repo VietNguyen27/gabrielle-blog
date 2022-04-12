@@ -1,22 +1,22 @@
+import { Fragment, useEffect, useRef } from 'react'
+import { TrendingUpIcon } from '@heroicons/react/outline'
 import { Container, Sidebar } from '@components/Layout'
 import { PostCard, TrendingPost } from '@components/Post'
-import { TrendingUpIcon } from '@heroicons/react/outline'
 import { Button } from '@components/Button'
 import { Heading } from '@components/Heading'
-import { useInfinitePosts } from '@lib/post'
-import { useCurrentUser } from '@lib/user'
-import useOnScreen from '@hooks/useOnScreen'
-import { Fragment, useEffect, useRef } from 'react'
-import { useTopics } from '@lib/topic'
+import { TopicPopular } from '@components/Topic'
+import { Logo } from '@components/Logo'
+import { ALink } from '@components/ALink'
 import {
   PostCardSkeleton,
   TopicPopularSkeleton,
   TrendingPostSkeleton,
 } from '@components/Skeleton'
-import { TopicPopular } from '@components/Topic'
+import { useInfinitePosts } from '@lib/post'
+import { useCurrentUser } from '@lib/user'
+import { useTopics } from '@lib/topic'
+import { useOnScreen } from '@hooks/index'
 import HeroImg from '@public/static/images/hero.png'
-import { Logo } from '@components/Logo'
-import { ALink } from '@components/ALink'
 
 const Home = () => {
   const ref = useRef(null)

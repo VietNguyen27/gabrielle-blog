@@ -1,15 +1,15 @@
 import React from 'react'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
-import Container from './Container'
+import { useRouter } from 'next/router'
 import { Button } from '@components/Button'
 import { Logo } from '@components/Logo'
 import { Anchor } from '@components/Anchor'
-import useLocalUser from '@hooks/useLocalUser'
+import { useLocalUser } from '@hooks/index'
 import TwitterLogo from '@public/static/images/twitter-logo.svg'
 import DribbbleLogo from '@public/static/images/dribbble-logo.svg'
 import InstagramLogo from '@public/static/images/instagram-logo.svg'
 import FacebookLogo from '@public/static/images/facebook-logo.svg'
+import Container from './Container'
 
 export const socials = [
   {

@@ -1,4 +1,8 @@
 import React, { useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import clsx from 'clsx'
+import DOMPurify from 'dompurify'
 import {
   BookmarkIcon,
   DotsHorizontalIcon,
@@ -7,31 +11,26 @@ import {
 } from '@heroicons/react/outline'
 import { Container } from '@components/Layout'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
-import Link from 'next/link'
-import DOMPurify from 'dompurify'
-import { getFormattedDate, parseMarkdown } from '@utils/utils'
 import { Button } from '@components/Button'
 import { ImageRatio } from '@components/ImageRatio'
 import { PostCardPrimary, PostCardTertiary } from '@components/Card'
-import { useCurrentUser } from '@lib/user'
 import { TopicAnchor } from '@components/Topic'
 import { ALink } from '@components/ALink'
-import CommentList from './CommentList'
-import { usePost, usePosts, useRandomPosts } from '@lib/post'
-import { useLikes } from '@lib/like'
+import { Avatar } from '@components/Avatar'
 import {
   PostCardPrimarySkeleton,
   PostCardTertiarySkeleton,
 } from '@components/Skeleton'
-import { Avatar } from '@components/Avatar'
-import { fetcher } from '@lib/fetcher'
-import { useRouter } from 'next/router'
-import clsx from 'clsx'
-import { useBookmarks } from '@lib/bookmark'
 import { LoginRequired } from '@components/LoginRequired'
-import { useModal } from '@hooks/useModal'
-import { useAuth } from '@hooks/useAuth'
+import { fetcher } from '@lib/fetcher'
+import { useCurrentUser } from '@lib/user'
+import { usePost, usePosts, useRandomPosts } from '@lib/post'
+import { useLikes } from '@lib/like'
 import { useFollowers } from '@lib/followers'
+import { useBookmarks } from '@lib/bookmark'
+import { getFormattedDate, parseMarkdown } from '@utils/utils'
+import { useModal, useAuth } from '@hooks/index'
+import CommentList from './CommentList'
 
 const MoreOptionsDropdown = () => {
   return (

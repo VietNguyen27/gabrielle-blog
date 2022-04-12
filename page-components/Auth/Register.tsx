@@ -3,7 +3,7 @@ import { Logo } from '@components/Logo'
 import { Button } from '@components/Button'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/outline'
-import usePrevious from '@hooks/usePrevious'
+import { usePrevious } from '@hooks/index'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
 import StepThree from './StepThree'
@@ -46,6 +46,7 @@ const Register = () => {
 
   useEffect(() => {
     let hold = false
+    let startY
 
     const fixedNumber = (number: number) => {
       return Number(number.toFixed(0))
@@ -91,22 +92,34 @@ const Register = () => {
 
     const handleScroll = (event) => {
       if (started) {
-        if (event.deltaY < 0) {
+        if (event.deltaY < 0 || event.touches[0].clientY - startY < 0) {
           scrollDirection.current = SCROLL_DOWN
         }
-        if (event.deltaY > 0) {
+        if (event.deltaY > 0 || event.touches[0].clientY - startY > 0) {
           scrollDirection.current = SCROLL_UP
         }
         event.stopPropagation()
       }
     }
 
+    const touchStart = (e) => {
+      startY = e.touches[0].clientY
+    }
+
     window.addEventListener('wheel', handleScroll)
     window.addEventListener('wheel', scrollFullPage)
+
+    window.addEventListener('touchstart', touchStart)
+    window.addEventListener('touchmove', handleScroll)
+    window.addEventListener('touchmove', scrollFullPage)
 
     return () => {
       window.removeEventListener('wheel', handleScroll)
       window.removeEventListener('wheel', scrollFullPage)
+
+      window.removeEventListener('touchstart', touchStart)
+      window.removeEventListener('touchmove', handleScroll)
+      window.removeEventListener('touchmove', scrollFullPage)
     }
   }, [started, scrollDirection])
 

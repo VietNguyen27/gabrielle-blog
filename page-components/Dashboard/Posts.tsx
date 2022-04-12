@@ -1,37 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { SearchIcon } from '@heroicons/react/solid'
 import { Button } from '@components/Button'
-import { useInfinitePosts } from '@lib/post'
 import { PostAnalysisCard } from '@components/Post/Post'
 import { PostAnalysisCardSkeleton } from '@components/Skeleton'
-import useOnScreen from '@hooks/useOnScreen'
-import useLocalUser from '@hooks/useLocalUser'
 import { Form } from '@components/Form'
 import { Input } from '@components/Input'
-import { SearchIcon } from '@heroicons/react/solid'
+import { useDebounce, useOnScreen, useLocalUser } from '@hooks/index'
+import { useInfinitePosts } from '@lib/post'
 
 const Posts = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
   const localUser = useLocalUser()
-  const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =
-    useInfinitePosts({
-      ...(localUser && { creatorId: localUser._id }),
-    })
+  const debouncedSearchTerm: string = useDebounce<string>(searchTerm, 300)
+  const {
+    data,
+    size,
+    setSize,
+    isEmpty,
+    isLoadingMore,
+    isReachingEnd,
+    isRefreshing,
+  } = useInfinitePosts({
+    creatorId: localUser._id,
+    ...(debouncedSearchTerm && { title: debouncedSearchTerm }),
+  })
   const posts = data
     ? data.reduce((acc, val) => [...acc, ...val.posts], [])
     : []
 
   useEffect(() => {
     if (isVisible && !isReachingEnd && !isRefreshing && !isLoadingMore) {
-      console.log(123)
-
       setSize(size + 1)
     }
   }, [isVisible, isRefreshing])
 
   return (
-    <div className="relative flex flex-1 flex-col items-stretch rounded-md border border-gray-200 p-4 shadow xs:min-h-[50vh]">
+    <div className="relative flex min-h-[25vh] flex-1 flex-col items-stretch rounded-md border border-gray-200 p-4 shadow xs:min-h-[50vh]">
       <div className="absolute bottom-full left-0 flex w-full items-center justify-end pb-3">
         <Form onSubmit={() => null}>
           <Input
@@ -48,11 +54,19 @@ const Posts = () => {
       </div>
       {localUser.postsCount ? (
         <div className="flex h-full w-full flex-1 flex-col">
-          {posts.length
-            ? posts.map((post) => <PostAnalysisCard key={post._id} {...post} />)
-            : [...Array(4)].map((_, index) => (
-                <PostAnalysisCardSkeleton key={index} />
-              ))}
+          {posts.length ? (
+            posts.map((post) => <PostAnalysisCard key={post._id} {...post} />)
+          ) : isEmpty ? (
+            <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
+              <p className="px-4 pb-4 text-lg">
+                Sorry, we couldn&apos;t find any results for your search.
+              </p>
+            </div>
+          ) : (
+            [...Array(2)].map((_, index) => (
+              <PostAnalysisCardSkeleton key={index} />
+            ))
+          )}
         </div>
       ) : (
         <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">

@@ -60,14 +60,17 @@ handler.post(
 )
 
 handler.get(async (req: TNextApiRequest, res: NextApiResponse) => {
+  const { by, topic, title_like, not, limit, skip, random } = req.query
+
   const posts = await findPosts(
     req.db,
-    req.query.by,
-    req.query.topic,
-    req.query.not ? req.query.not : null,
-    req.query.limit ? +req.query.limit : undefined,
-    req.query.skip ? +req.query.skip : undefined,
-    req.query.random ? !!req.query.random : undefined
+    by,
+    topic,
+    title_like ? title_like : undefined,
+    not ? not : undefined,
+    limit ? +limit : undefined,
+    skip ? +skip : undefined,
+    random ? !!random : undefined
   )
 
   res.json({ posts })

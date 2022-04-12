@@ -13,8 +13,7 @@ import { ImageRatio } from '@components/ImageRatio'
 import { socials } from './Footer'
 import { useRouter } from 'next/router'
 import { LoginRequired } from '@components/LoginRequired'
-import { useAuth } from '@hooks/useAuth'
-import { useModal } from '@hooks/useModal'
+import { useAuth, useModal } from '@hooks/index'
 
 const navs = [
   {

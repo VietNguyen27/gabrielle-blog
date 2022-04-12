@@ -1,35 +1,34 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import DOMPurify from 'dompurify'
+import Link from 'next/link'
+import clsx from 'clsx'
+import {
+  ChatAlt2Icon,
+  DotsHorizontalIcon,
+  HeartIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from '@heroicons/react/outline'
+import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid'
 import { Avatar } from '@components/Avatar'
 import { Button } from '@components/Button'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import { Form } from '@components/Form'
 import { UserPreview } from '@components/Preview'
 import { Textarea } from '@components/Textarea'
-import {
-  ChatAlt2Icon,
-  DotsHorizontalIcon,
-  HeartIcon,
-} from '@heroicons/react/outline'
-import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
-import useOnClickOutside from '@hooks/useOnClickOutside'
-import { useComments } from '@lib/comment'
+import { LoginRequired } from '@components/LoginRequired'
 import { fetcher } from '@lib/fetcher'
+import { useComments } from '@lib/comment'
 import { useError, useLoading } from '@lib/store'
 import { useCurrentUser } from '@lib/user'
+import { usePost } from '@lib/post'
+import { useAuth, useModal, useOnClickOutside } from '@hooks/index'
 import {
   encodeHtml,
   getErrorFromJoiMessage,
   getFormattedDate,
 } from '@utils/utils'
-import DOMPurify from 'dompurify'
-import Link from 'next/link'
-import clsx from 'clsx'
 import { TUser } from '@global/types'
-import { usePost } from '@lib/post'
-import { LoginRequired } from '@components/LoginRequired'
-import { useAuth } from '@hooks/useAuth'
-import { useModal } from '@hooks/useModal'
 
 type TCommentProps = {
   _id: string

@@ -1,7 +1,7 @@
+import Image from 'next/image'
 import { Heading } from '@components/Heading'
 import { Container } from '@components/Layout'
 import { Paragraph } from '@components/Paragraph'
-import Image from 'next/image'
 import { missions } from './data'
 
 const Missions = () => {

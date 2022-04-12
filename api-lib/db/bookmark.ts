@@ -9,7 +9,6 @@ export async function findBookmarksByUserId(db, userId) {
           userId: new ObjectId(userId),
         },
       },
-      { $sort: { createdAt: -1 } },
       {
         $lookup: {
           from: 'posts',
@@ -36,6 +35,7 @@ export async function findBookmarksByUserId(db, userId) {
           as: 'post.topics',
         },
       },
+      { $sort: { createdAt: -1 } },
     ])
     .toArray()
 }

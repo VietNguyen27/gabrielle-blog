@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react'
 import { useRouter } from 'next/router'
+import { BellIcon } from '@heroicons/react/outline'
 import { Anchor } from '@components/Anchor'
 import { Button } from '@components/Button'
-import { removeUserToLocalStorage, useCurrentUser } from '@lib/user'
-import { fetcher } from '@lib/fetcher'
-import { BellIcon } from '@heroicons/react/outline'
 import { Dropdown, Menu, MenuDivider, MenuItem } from '@components/Dropdown'
 import { Avatar } from '@components/Avatar'
-import useLocalUser from '@hooks/useLocalUser'
+import { fetcher } from '@lib/fetcher'
+import { removeUserToLocalStorage, useCurrentUser } from '@lib/user'
+import { useLocalUser } from '@hooks/index'
 
 const MenuDropdown = ({ username, email }, onLogOut) => {
   return (

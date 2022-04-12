@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
-import useOnClickOutside from '@hooks/useOnClickOutside'
 import { XIcon } from '@heroicons/react/solid'
-import { capitalizeFirstLetter, getRandomColor } from '@utils/utils'
 import { NoSSR } from '@components/NoSSR'
+import { useOnClickOutside } from '@hooks/index'
+import { capitalizeFirstLetter, getRandomColor } from '@utils/utils'
 
 type TOption = {
   value: string

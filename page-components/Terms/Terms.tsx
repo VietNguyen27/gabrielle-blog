@@ -1,9 +1,9 @@
+import React from 'react'
 import { Heading } from '@components/Heading'
 import { Container } from '@components/Layout'
 import { List, ListItem } from '@components/List'
 import { Paragraph } from '@components/Paragraph'
 import { Title } from '@components/Title'
-import React from 'react'
 
 const Terms = () => {
   return (

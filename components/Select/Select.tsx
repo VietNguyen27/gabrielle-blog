@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
-import useOnClickOutside from '@hooks/useOnClickOutside'
 import clsx from 'clsx'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'
+import { useOnClickOutside } from '@hooks/index'
 
 type TOption = {
   label: string
