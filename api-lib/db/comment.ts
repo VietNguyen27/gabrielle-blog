@@ -10,7 +10,6 @@ export async function findComments(db, postId) {
           postId: new ObjectId(postId),
         },
       },
-      { $sort: { createdAt: -1 } },
       {
         $lookup: {
           from: 'users',
@@ -20,6 +19,7 @@ export async function findComments(db, postId) {
         },
       },
       { $unwind: '$creator' },
+      { $sort: { createdAt: -1 } },
       { $project: dbProjectionCreators('creator.') },
     ])
     .toArray()

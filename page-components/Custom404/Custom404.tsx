@@ -1,7 +1,7 @@
 import React from 'react'
+import { ArrowSmLeftIcon } from '@heroicons/react/outline'
 import { Container } from '@components/Layout'
 import { Button } from '@components/Button'
-import { ArrowSmLeftIcon } from '@heroicons/react/outline'
 
 const Custom404 = () => {
   return (

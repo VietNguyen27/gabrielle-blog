@@ -1,8 +1,8 @@
-import { Button } from '@components/Button'
-import { XIcon } from '@heroicons/react/solid'
-import useOnClickOutside from '@hooks/useOnClickOutside'
 import React, { ReactChild, ReactChildren, useRef } from 'react'
 import ReactDOM from 'react-dom'
+import { XIcon } from '@heroicons/react/solid'
+import { Button } from '@components/Button'
+import { useOnClickOutside } from '@hooks/index'
 
 type TModalProps = {
   open: boolean

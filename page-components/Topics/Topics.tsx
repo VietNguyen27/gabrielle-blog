@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { SearchIcon } from '@heroicons/react/outline'
 import { Container } from '@components/Layout'
 import { Title } from '@components/Title'
 import { TopicCard } from '@components/Topic'
 import { Form } from '@components/Form'
 import { Input } from '@components/Input'
-import { SearchIcon } from '@heroicons/react/outline'
+import { NoResults } from '@components/NoResults'
 import { TopicCardSkeleton } from '@components/Skeleton'
 import { useTopics } from '@lib/topic'
-import { useDebounce } from '@hooks/useDebounce'
-import { NoResults } from '@components/NoResults'
+import { useDebounce } from '@hooks/index'
 import { TTopic } from '@global/types'
 
 const Topics = () => {

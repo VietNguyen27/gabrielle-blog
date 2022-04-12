@@ -1,6 +1,3 @@
-import useOnClickOutside from '@hooks/useOnClickOutside'
-import clsx from 'clsx'
-import Link, { LinkProps } from 'next/link'
 import React, {
   Fragment,
   ReactChild,
@@ -9,6 +6,9 @@ import React, {
   useRef,
   useState,
 } from 'react'
+import Link, { LinkProps } from 'next/link'
+import clsx from 'clsx'
+import { useOnClickOutside } from '@hooks/index'
 
 type TMenuItemAs = 'button' | 'a'
 

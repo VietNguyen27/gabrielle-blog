@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Container from './Container'
-import Navbar from './Navbar'
-import { Logo } from '@components/Logo'
 import clsx from 'clsx'
 import { MenuAlt2Icon } from '@heroicons/react/outline'
-import NavDrawer from './NavDrawer'
+import { Logo } from '@components/Logo'
 import { saveUserToLocalStorage, useCurrentUser } from '@lib/user'
-import useLocalUser from '@hooks/useLocalUser'
+import { useLocalUser } from '@hooks/index'
+import Container from './Container'
+import Navbar from './Navbar'
+import NavDrawer from './NavDrawer'
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState<boolean>(false)

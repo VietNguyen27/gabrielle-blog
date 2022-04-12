@@ -2,14 +2,15 @@ import React from 'react'
 import { Container } from '@components/Layout'
 import { Tab, Tabs } from '@components/Tabs'
 import { Title } from '@components/Title'
+import { useCurrentUser } from '@lib/user'
+
 import Analytics from './Analytics'
 import Posts from './Posts'
 import Followers from './Followers'
 import FollowingUsers from './FollowingUsers'
-import useLocalUser from '@hooks/useLocalUser'
 
 const Dashboard = () => {
-  const localUser = useLocalUser()
+  const { data: { user } = {} } = useCurrentUser()
 
   return (
     <Container>
@@ -28,19 +29,19 @@ const Dashboard = () => {
             </Tab>
             <Tab
               className="mt-8 flex-1 md:mt-0"
-              label={`Posts (${localUser.postsCount})`}
+              label={`Posts (${user ? user.postsCount : 0})`}
             >
               <Posts />
             </Tab>
             <Tab
               className="mt-8 flex-1 md:mt-0"
-              label={`Followers (${localUser.followersCount})`}
+              label={`Followers (${user ? user.followersCount : 0})`}
             >
               <Followers />
             </Tab>
             <Tab
               className="mt-8 flex-1 md:mt-0"
-              label={`Following users (${localUser.followingCount})`}
+              label={`Following users (${user ? user.followingCount : 0})`}
             >
               <FollowingUsers />
             </Tab>

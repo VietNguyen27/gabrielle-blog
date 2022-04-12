@@ -1,24 +1,6 @@
-import React, {
-  ReactChild,
-  ReactChildren,
-  ReactElement,
-  useEffect,
-  useState,
-} from 'react'
+import React, { ReactChild, ReactChildren, ReactElement, useState } from 'react'
 import clsx from 'clsx'
-import Link from 'next/link'
-import { Avatar } from '@components/Avatar'
-import { Button } from '@components/Button'
-import { getFormattedDate } from '@utils/utils'
-import { useCurrentUser } from '@lib/user'
-import { TUser } from '@global/types'
-import useRect from '@hooks/useRect'
-import { useModal } from '@hooks/useModal'
-import { useAuth } from '@hooks/useAuth'
-import { LoginRequired } from '@components/LoginRequired'
 import { motion } from 'framer-motion'
-import { useFollowers } from '@lib/followers'
-import { fetcher } from '@lib/fetcher'
 
 type TPreviewProps = {
   children: [ReactElement, ReactElement]
@@ -33,12 +15,6 @@ type TPreviewCardProps = {
   children: ReactChild | ReactChildren
   isOverflow: boolean
   isHovered?: boolean
-}
-
-type TUserPreviewProps = {
-  user: TUser
-  children: ReactChild | ReactChildren
-  className?: string
 }
 
 export const Preview = ({ children, className }: TPreviewProps) => {

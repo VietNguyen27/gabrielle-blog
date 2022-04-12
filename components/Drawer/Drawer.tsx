@@ -1,9 +1,9 @@
 import React, { ReactNode, useRef } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 import clsx from 'clsx'
+import { AnimatePresence, motion } from 'framer-motion'
 import { MenuAlt2Icon } from '@heroicons/react/outline'
-import useOnClickOutside from '@hooks/useOnClickOutside'
 import { Logo } from '@components/Logo'
+import { useOnClickOutside } from '@hooks/index'
 
 type TDrawerProps = {
   open: boolean

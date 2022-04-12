@@ -7,6 +7,7 @@ const MAX_RANDOM_POSTS = 4
 
 export const useInfinitePosts = ({
   creatorId = '',
+  title = '',
   topic = '',
   limit = POSTS_PER_PAGE,
 } = {}) => {
@@ -16,9 +17,10 @@ export const useInfinitePosts = ({
 
       const searchParams = new URLSearchParams()
       searchParams.set('limit', limit + '')
-      searchParams.set('skip', pageIndex * POSTS_PER_PAGE + '')
+      searchParams.set('skip', pageIndex * limit + '')
 
       if (creatorId) searchParams.set('by', creatorId)
+      if (title) searchParams.set('title_like', title)
       if (topic) searchParams.set('topic', topic)
 
       return `${
@@ -32,7 +34,8 @@ export const useInfinitePosts = ({
   const isLoadingMore =
     isLoadingInitialData ||
     (size > 0 && data && typeof data[size - 1] === 'undefined')
-  const isEmpty = data?.[0]?.length === 0
+  const isEmpty =
+    data?.reduce((acc, val) => [...acc, ...val.posts], []).length === 0
   const isReachingEnd =
     isEmpty || (data && data[data.length - 1]?.posts?.length < limit)
   const isRefreshing = isValidating && data && data.length === size

@@ -1,6 +1,6 @@
 import { useCurrentUser } from '@lib/user'
 
-export const useAuth = (): boolean => {
+const useAuth = (): boolean => {
   const { data: { user } = {} } = useCurrentUser()
 
   if (!user) {
@@ -9,3 +9,5 @@ export const useAuth = (): boolean => {
 
   return true
 }
+
+export default useAuth

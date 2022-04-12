@@ -1,12 +1,12 @@
 import { useState } from 'react'
+import Image from 'next/image'
+import clsx from 'clsx'
+import { ArrowSmDownIcon } from '@heroicons/react/solid'
 import { Heading } from '@components/Heading'
 import { Container } from '@components/Layout'
 import { Paragraph } from '@components/Paragraph'
 import DashedLine from '@public/static/images/dashed-line.svg'
 import { contributors } from './data'
-import { ArrowSmDownIcon } from '@heroicons/react/solid'
-import Image from 'next/image'
-import clsx from 'clsx'
 
 const Contributors = () => {
   const [contributorsExpanded, setContributorsExpanded] =

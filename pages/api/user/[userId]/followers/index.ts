@@ -12,12 +12,13 @@ const handler = nextConnect<TNextApiRequest, NextApiResponse>()
 handler.use(middleware)
 
 handler.get(async (req: TNextApiRequest, res: NextApiResponse) => {
-  const { userId, limit, skip } = req.query
+  const { userId, username_like, limit, skip } = req.query
 
   if (limit && skip) {
     const followers = await findFollowersWithProfileByUserId(
       req.db,
       userId,
+      username_like,
       +limit,
       +skip
     )

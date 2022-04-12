@@ -1,11 +1,12 @@
-import { Button } from '@components/Button'
-import clsx from 'clsx'
 import React, { useState } from 'react'
+import clsx from 'clsx'
+import { Button } from '@components/Button'
+import { getDateISO, getDaysInWeek } from '@utils/utils'
+
 import PostsChart from './PostsChart'
 import FollowersChart from './FollowersChart'
 import ReactionsChart from './ReactionsChart'
 import CommentsChart from './CommentsChart'
-import { getDateISO, getDaysInWeek } from '@utils/utils'
 
 const tabs = ['Week', 'Month', 'Infinity']
 const charts = [PostsChart, FollowersChart, ReactionsChart, CommentsChart]
@@ -99,7 +100,7 @@ const Analytics = () => {
   })
 
   return (
-    <div className="relative flex flex-1 flex-col items-stretch rounded-md border border-gray-200 p-4 shadow xs:min-h-[50vh]">
+    <div className="relative flex min-h-[25vh] flex-1 flex-col items-stretch rounded-md border border-gray-200 p-4 shadow xs:min-h-[50vh]">
       <div className="absolute bottom-full left-0 flex w-full items-center justify-center pb-2">
         <ul className="flex items-center">
           {tabs.map((tab, index) => (

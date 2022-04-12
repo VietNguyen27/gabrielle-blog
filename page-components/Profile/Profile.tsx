@@ -1,6 +1,4 @@
 import React, { useEffect, useRef } from 'react'
-import { Button } from '@components/Button'
-import { Container } from '@components/Layout'
 import {
   CakeIcon,
   DocumentTextIcon,
@@ -10,19 +8,19 @@ import {
   MailIcon,
   UserIcon,
 } from '@heroicons/react/outline'
-import { getFormattedDate } from '@utils/utils'
-import { useCurrentUser } from '@lib/user'
+import { Button } from '@components/Button'
+import { Container } from '@components/Layout'
 import { Dropdown, Menu, MenuItem } from '@components/Dropdown'
 import { ImageRatio } from '@components/ImageRatio'
 import { PostCard } from '@components/Post'
-import useOnScreen from '@hooks/useOnScreen'
-import { useInfinitePosts } from '@lib/post'
 import { PostCardSkeleton } from '@components/Skeleton'
-import { useAuth } from '@hooks/useAuth'
-import { useModal } from '@hooks/useModal'
 import { LoginRequired } from '@components/LoginRequired'
 import { fetcher } from '@lib/fetcher'
+import { useCurrentUser } from '@lib/user'
+import { useInfinitePosts } from '@lib/post'
 import { useFollowers } from '@lib/followers'
+import { useOnScreen, useAuth, useModal } from '@hooks/index'
+import { getFormattedDate } from '@utils/utils'
 
 const Profile = ({
   _id,

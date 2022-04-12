@@ -13,6 +13,7 @@ export const useFollowing = (userId = '') => {
 
 export const useInfiniteFollowing = ({
   userId = '',
+  username = '',
   limit = USERS_PER_PAGE,
 } = {}) => {
   const { data, error, size, isValidating, ...props } = useSWRInfinite(
@@ -21,7 +22,9 @@ export const useInfiniteFollowing = ({
 
       const searchParams = new URLSearchParams()
       searchParams.set('limit', limit + '')
-      searchParams.set('skip', pageIndex * USERS_PER_PAGE + '')
+      searchParams.set('skip', pageIndex * limit + '')
+
+      if (username) searchParams.set('username_like', username)
 
       return `${
         process.env.NEXT_PUBLIC_API_URL
@@ -34,7 +37,8 @@ export const useInfiniteFollowing = ({
   const isLoadingMore =
     isLoadingInitialData ||
     (size > 0 && data && typeof data[size - 1] === 'undefined')
-  const isEmpty = data?.[0]?.length === 0
+  const isEmpty =
+    data?.reduce((acc, val) => [...acc, ...val.following], []).length === 0
   const isReachingEnd =
     isEmpty || (data && data[data.length - 1]?.following?.length < limit)
   const isRefreshing = isValidating && data && data.length === size

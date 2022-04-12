@@ -20,6 +20,7 @@ export async function findFollowingByUserId(db, userId) {
 export async function findFollowingWithProfileByUserId(
   db,
   userId,
+  username,
   limit = 1000,
   skip = 0
 ) {
@@ -31,18 +32,27 @@ export async function findFollowingWithProfileByUserId(
           userId: new ObjectId(userId),
         },
       },
-      { $sort: { createdAt: -1 } },
-      { $skip: skip },
-      { $limit: limit },
       {
         $lookup: {
           from: 'users',
           localField: 'followingId',
           foreignField: '_id',
           as: 'following',
+          pipeline: [
+            {
+              $match: {
+                ...(username && {
+                  username: { $regex: username, $options: 'gi' },
+                }),
+              },
+            },
+          ],
         },
       },
       { $unwind: '$following' },
+      { $sort: { createdAt: -1 } },
+      { $skip: skip },
+      { $limit: limit },
       {
         $project: dbProjectionCreators('following.'),
       },
