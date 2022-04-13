@@ -90,7 +90,7 @@ const PostDetail = ({
   useInterval(() => {
     setTimer((prevState) => prevState + 1)
 
-    if (timer === (readingTime * 60) / 2 && user._id !== creatorId) {
+    if (timer === (readingTime * 60) / 2 && (!user || user._id !== creatorId)) {
       fetcher(`/api/posts/${_id}/views`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
