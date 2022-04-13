@@ -34,7 +34,7 @@ export async function findUserByEmail(db, email) {
     .then((user) => user || null)
 }
 
-export async function updateUserById(db, id, body) {
+export async function updateUser(db, id, body) {
   return db
     .collection('users')
     .findOneAndUpdate(

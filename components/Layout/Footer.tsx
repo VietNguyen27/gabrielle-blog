@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Button } from '@components/Button'
 import { Logo } from '@components/Logo'
-import { Anchor } from '@components/Anchor'
+import { NavLink } from '@components/NavLink'
 import { useLocalUser } from '@hooks/index'
 import TwitterLogo from '@public/static/images/twitter-logo.svg'
 import DribbbleLogo from '@public/static/images/dribbble-logo.svg'
@@ -85,7 +85,7 @@ const Footer = () => {
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center">
             {links.map(({ slug, label }, index) => (
-              <Anchor
+              <NavLink
                 key={index}
                 href={slug}
                 active={pathname === slug}
@@ -97,7 +97,7 @@ const Footer = () => {
                 }
               >
                 {label}
-              </Anchor>
+              </NavLink>
             ))}
           </div>
           <div className="text-sm">

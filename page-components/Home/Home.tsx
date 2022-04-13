@@ -6,7 +6,7 @@ import { Button } from '@components/Button'
 import { Heading } from '@components/Heading'
 import { TopicPopular } from '@components/Topic'
 import { Logo } from '@components/Logo'
-import { ALink } from '@components/ALink'
+import { Anchor } from '@components/Anchor'
 import {
   PostCardSkeleton,
   TopicPopularSkeleton,
@@ -100,8 +100,9 @@ const Home = () => {
                             <div className="flex flex-col">
                               <Logo />
                               <h2 className="pt-4 text-3xl font-bold">
-                                <ALink href="/">Gabrielle Community</ALink> is a
-                                community for everyone interested in technology.
+                                <Anchor href="/">Gabrielle Community</Anchor> is
+                                a community for everyone interested in
+                                technology.
                               </h2>
                               <p>
                                 We&apos;re a place where coders share, stay

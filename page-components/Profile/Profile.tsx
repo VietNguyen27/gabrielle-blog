@@ -19,7 +19,7 @@ import { fetcher } from '@lib/fetcher'
 import { useCurrentUser } from '@lib/user'
 import { useInfinitePosts } from '@lib/post'
 import { useFollowers } from '@lib/followers'
-import { useOnScreen, useAuth, useModal } from '@hooks/index'
+import { useOnScreen, useAuth, useToggle } from '@hooks/index'
 import { getFormattedDate } from '@utils/utils'
 
 const Profile = ({
@@ -41,7 +41,7 @@ const Profile = ({
   const { data: { user } = {} } = useCurrentUser()
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
-  const { open, toggle } = useModal()
+  const { open, toggle } = useToggle()
   const isAuth = useAuth()
   const { data: { followers } = {}, mutate } = useFollowers(_id)
   const { data, size, setSize, isLoadingMore, isReachingEnd, isRefreshing } =

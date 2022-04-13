@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
@@ -15,7 +15,7 @@ import { Button } from '@components/Button'
 import { ImageRatio } from '@components/ImageRatio'
 import { PostCardPrimary, PostCardTertiary } from '@components/Card'
 import { TopicAnchor } from '@components/Topic'
-import { ALink } from '@components/ALink'
+import { Anchor } from '@components/Anchor'
 import { Avatar } from '@components/Avatar'
 import {
   PostCardPrimarySkeleton,
@@ -29,7 +29,7 @@ import { useLikes } from '@lib/like'
 import { useFollowers } from '@lib/followers'
 import { useBookmarks } from '@lib/bookmark'
 import { getFormattedDate, parseMarkdown } from '@utils/utils'
-import { useModal, useAuth } from '@hooks/index'
+import { useToggle, useAuth, useInterval } from '@hooks/index'
 import CommentList from './CommentList'
 
 const MoreOptionsDropdown = () => {
@@ -56,8 +56,10 @@ const PostDetail = ({
   likesCount,
   bookmarksCount,
   commentsCount,
+  totalViews,
   createdAt,
 }) => {
+  const [timer, setTimer] = useState<number>(0)
   const { data: { user } = {} } = useCurrentUser()
   const { data: { posts } = {} } = useRandomPosts({ not: _id })
   const { data: { posts: morePostsFromThisUser } = {} } = usePosts({
@@ -76,7 +78,7 @@ const PostDetail = ({
   const { data: { followers } = {}, mutate: followersMutate } =
     useFollowers(creatorId)
   const router = useRouter()
-  const { open, toggle } = useModal()
+  const { open, toggle } = useToggle()
   const isAuth = useAuth()
   const isLiked = user && likes && likes.includes(user._id)
   const isBookmarked = user && bookmarks && bookmarks.includes(user._id)
@@ -84,6 +86,20 @@ const PostDetail = ({
     user &&
     followers &&
     followers.some(({ followerId }) => followerId === user._id)
+
+  useInterval(() => {
+    setTimer((prevState) => prevState + 1)
+
+    if (timer === (readingTime * 60) / 2 && user._id !== creatorId) {
+      fetcher(`/api/posts/${_id}/views`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          totalViews: totalViews + 1,
+        }),
+      })
+    }
+  })
 
   useEffect(() => {
     mutate()
@@ -399,14 +415,14 @@ const PostDetail = ({
                           morePostsFromThisUser.length ? (
                             <>
                               More from{' '}
-                              <ALink href={`/${creator.username}`}>
+                              <Anchor href={`/${creator.username}`}>
                                 {creator.username}
-                              </ALink>
+                              </Anchor>
                             </>
                           ) : (
                             <>
                               Trending on{' '}
-                              <ALink href="/">Gabrielle Community</ALink>
+                              <Anchor href="/">Gabrielle Community</Anchor>
                             </>
                           )
                         ) : (

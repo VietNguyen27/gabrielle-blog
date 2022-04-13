@@ -1,4 +1,4 @@
-import { ALink } from '@components/ALink'
+import { Anchor } from '@components/Anchor'
 import { Container } from '@components/Layout'
 import { useCurrentUser } from '@lib/user'
 import React from 'react'
@@ -15,7 +15,7 @@ const Settings = () => {
         <h1 className="flex items-center gap-1 pb-4 text-2xl font-bold">
           Settings for
           {user ? (
-            <ALink href={`/${user.username}`}>@{user.username}</ALink>
+            <Anchor href={`/${user.username}`}>@{user.username}</Anchor>
           ) : (
             <div className="h-6 w-1/3 animate-pulse rounded bg-gray-200"></div>
           )}

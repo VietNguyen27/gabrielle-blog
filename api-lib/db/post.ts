@@ -141,6 +141,17 @@ export async function findPostsByUserId(db, by, after = '') {
   return posts
 }
 
+export async function updatePost(db, id, body) {
+  return db
+    .collection('posts')
+    .findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: body },
+      { returnDocument: 'after' }
+    )
+    .then((post) => post || null)
+}
+
 export async function insertPost(
   db,
   { creatorId, content, topic, title, cover, readingTime, published }

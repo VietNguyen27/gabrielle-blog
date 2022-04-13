@@ -11,7 +11,7 @@ import { saveUserToLocalStorage, useCurrentUser } from '@lib/user'
 import { getErrorFromJoiMessage } from '@utils/utils'
 import { useError, useLoading } from '@lib/store'
 import { useRouter } from 'next/router'
-import { ALink } from '@components/ALink'
+import { Anchor } from '@components/Anchor'
 
 const FormFields = () => {
   const { register } = useFormContext()
@@ -116,9 +116,9 @@ const Login = () => {
           </Form>
           <p>
             Don't have an account?{' '}
-            <ALink href="/register" target="_blank">
+            <Anchor href="/register" target="_blank">
               Sign up
-            </ALink>
+            </Anchor>
           </p>
         </div>
       </main>

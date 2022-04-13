@@ -13,7 +13,7 @@ import { ImageRatio } from '@components/ImageRatio'
 import { socials } from './Footer'
 import { useRouter } from 'next/router'
 import { LoginRequired } from '@components/LoginRequired'
-import { useAuth, useModal } from '@hooks/index'
+import { useAuth, useToggle } from '@hooks/index'
 
 const navs = [
   {
@@ -75,7 +75,7 @@ const navs = [
 ]
 
 const Sidebar = () => {
-  const { open, toggle } = useModal()
+  const { open, toggle } = useToggle()
   const isAuth = useAuth()
   const router = useRouter()
 
