@@ -1,5 +1,5 @@
 import nextConnect from 'next-connect'
-import { findPosts, insertPost } from '@api-lib/db'
+import { findPosts, findPostsByUserId, insertPost } from '@api-lib/db'
 import { middleware, validate } from '@api-lib/middlewares'
 import { postSchema } from '@api-lib/schemas'
 import { v2 as cloudinary } from 'cloudinary'
@@ -60,20 +60,26 @@ handler.post(
 )
 
 handler.get(async (req: TNextApiRequest, res: NextApiResponse) => {
-  const { by, topic, title_like, not, limit, skip, random } = req.query
+  const { by, topic, title_like, not, limit, skip, random, after } = req.query
 
-  const posts = await findPosts(
-    req.db,
-    by,
-    topic,
-    title_like ? title_like : undefined,
-    not ? not : undefined,
-    limit ? +limit : undefined,
-    skip ? +skip : undefined,
-    random ? !!random : undefined
-  )
+  if (after) {
+    const posts = await findPostsByUserId(req.db, by, after + '')
 
-  res.json({ posts })
+    res.json({ posts })
+  } else {
+    const posts = await findPosts(
+      req.db,
+      by,
+      topic,
+      title_like ? title_like : undefined,
+      not ? not : undefined,
+      limit ? +limit : undefined,
+      skip ? +skip : undefined,
+      random ? !!random : undefined
+    )
+
+    res.json({ posts })
+  }
 })
 
 export const config = { api: { bodyParser: false } }

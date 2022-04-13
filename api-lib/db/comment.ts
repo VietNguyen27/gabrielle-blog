@@ -25,6 +25,23 @@ export async function findComments(db, postId) {
     .toArray()
 }
 
+export async function findCommentsByUserId(db, userId, after = '') {
+  const comments = await db
+    .collection('comments')
+    .aggregate([
+      {
+        $match: {
+          creatorId: new ObjectId(userId),
+          ...(after && { createdAt: { $gt: new Date(after) } }),
+        },
+      },
+      { $sort: { createdAt: -1 } },
+    ])
+    .toArray()
+
+  return comments
+}
+
 export async function insertComment(
   db,
   { content, depth = 0, postId, creatorId, parentId = '' }

@@ -121,6 +121,26 @@ export async function findPosts(
   })
 }
 
+export async function findPostsByUserId(db, by, after = '') {
+  const posts = await db
+    .collection('posts')
+    .aggregate([
+      {
+        $match: {
+          ...(after && { createdAt: { $gt: new Date(after) } }),
+          ...(by && { creatorId: new ObjectId(by) }),
+        },
+      },
+      { $sort: { createdAt: -1 } },
+      {
+        $project: { content: 0, topic: 0 },
+      },
+    ])
+    .toArray()
+
+  return posts
+}
+
 export async function insertPost(
   db,
   { creatorId, content, topic, title, cover, readingTime, published }
