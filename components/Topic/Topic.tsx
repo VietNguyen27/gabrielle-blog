@@ -3,7 +3,7 @@ import Link from 'next/link'
 import clsx from 'clsx'
 import { Button } from '@components/Button'
 import { LoginRequired } from '@components/LoginRequired'
-import { useAuth, useModal } from '@hooks/index'
+import { useAuth, useToggle } from '@hooks/index'
 import { useCurrentUser } from '@lib/user'
 import { fetcher } from '@lib/fetcher'
 
@@ -86,7 +86,7 @@ export const TopicCard = ({
 }: TTopicCardProps) => {
   const defaultClassName = 'w-1/2 md:w-1/3 px-1 sm:px-3 py-1 sm:py-2.5'
   const allClassNames = clsx(defaultClassName, className)
-  const { open, toggle } = useModal()
+  const { open, toggle } = useToggle()
   const { data: { user } = {}, mutate } = useCurrentUser()
   const isAuth = useAuth()
 

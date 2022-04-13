@@ -12,7 +12,7 @@ import { useCurrentUser } from '@lib/user'
 import { useComments } from '@lib/comment'
 import { useError, useLoading } from '@lib/store'
 import { usePost } from '@lib/post'
-import { useModal, useAuth } from '@hooks/index'
+import { useToggle, useAuth } from '@hooks/index'
 import { getErrorFromJoiMessage } from '@utils/utils'
 
 const CommentList = ({ postId, commentsCount }) => {
@@ -25,7 +25,7 @@ const CommentList = ({ postId, commentsCount }) => {
   const { data: { post } = {}, mutate: postMutate } = usePost(postId)
   const { loading, setLoading } = useLoading()
   const { error, setError, resetError } = useError()
-  const { open, toggle } = useModal()
+  const { open, toggle } = useToggle()
   const isAuth = useAuth()
 
   useEffect(() => {

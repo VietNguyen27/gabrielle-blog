@@ -4,7 +4,7 @@ import { middleware, validate } from '@api-lib/middlewares'
 import { extractUser } from '@lib/user'
 import { v2 as cloudinary } from 'cloudinary'
 import multer from 'multer'
-import { updateUserById } from '@api-lib/db'
+import { updateUser } from '@api-lib/db'
 import { updateUserSchema } from '@api-lib/schemas'
 import { TNextApiRequest } from '@global/types'
 
@@ -34,12 +34,12 @@ handler.patch(
       profilePicture = image.secure_url
     }
 
-    const user = await updateUserById(req.db, req.user._id, {
+    const user = await updateUser(req.db, req.user._id, {
       ...req.body,
       ...(profilePicture && { profilePicture }),
     })
 
-    res.json({ user: user.value })
+    return res.json({ user: user.value })
   })
 )
 

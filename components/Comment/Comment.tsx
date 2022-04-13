@@ -22,7 +22,7 @@ import { useComments } from '@lib/comment'
 import { useError, useLoading } from '@lib/store'
 import { useCurrentUser } from '@lib/user'
 import { usePost } from '@lib/post'
-import { useAuth, useModal, useOnClickOutside } from '@hooks/index'
+import { useAuth, useToggle, useOnClickOutside } from '@hooks/index'
 import {
   encodeHtml,
   getErrorFromJoiMessage,
@@ -66,7 +66,7 @@ const Comment = ({
   const { mutate: postMutate } = usePost(postId)
   const { loading, setLoading } = useLoading()
   const { error, setError, resetError } = useError()
-  const { open, toggle } = useModal()
+  const { open, toggle } = useToggle()
   const isAuth = useAuth()
   const userLiked = user && isLiked
 

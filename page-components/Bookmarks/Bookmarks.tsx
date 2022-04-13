@@ -45,13 +45,15 @@ const Bookmarks = () => {
   }, [bookmarks])
 
   useEffect(() => {
-    if (debouncedSearchTerm) {
-      const searchedBookmarks = (tempBookmarks as any).filter(({ title }) =>
-        title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-      )
-      setFilteredBookmarks(searchedBookmarks)
-    } else {
-      setFilteredBookmarks(tempBookmarks)
+    if (bookmarks) {
+      if (debouncedSearchTerm) {
+        const searchedBookmarks = (tempBookmarks as any).filter(({ title }) =>
+          title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+        )
+        setFilteredBookmarks(searchedBookmarks)
+      } else {
+        setFilteredBookmarks(bookmarks)
+      }
     }
   }, [debouncedSearchTerm])
 

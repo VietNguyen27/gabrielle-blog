@@ -9,13 +9,13 @@ import { LoginRequired } from '@components/LoginRequired'
 import { fetcher } from '@lib/fetcher'
 import { useInfinitePosts } from '@lib/post'
 import { useCurrentUser } from '@lib/user'
-import { useOnScreen, useModal, useAuth } from '@hooks/index'
+import { useOnScreen, useToggle, useAuth } from '@hooks/index'
 import NoPosts from '@public/static/images/no-search.png'
 
 const Topic = ({ topic }) => {
   const ref = useRef(null)
   const isVisible = useOnScreen(ref)
-  const { open, toggle } = useModal()
+  const { open, toggle } = useToggle()
   const { data: { user } = {}, mutate } = useCurrentUser()
   const router = useRouter()
   const isAuth = useAuth()

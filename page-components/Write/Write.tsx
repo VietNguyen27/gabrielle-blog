@@ -196,7 +196,7 @@ const Write = () => {
                   ))}
                 </div>
               </div>
-              <div className="mt-6 flex items-center justify-between gap-4">
+              <div className="mt-4 flex items-center justify-between gap-4">
                 <Button
                   type={loading['newPost'] ? 'button' : 'submit'}
                   variant="tertiary"

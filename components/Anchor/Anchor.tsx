@@ -3,41 +3,27 @@ import Link from 'next/link'
 import clsx from 'clsx'
 
 type TAnchorProps = {
+  href: string
   children: ReactNode
-  href: string | object
-  active?: boolean
   className?: string
-  replace?: boolean
-  scroll?: boolean
-  prefix?: ReactNode
-  suffix?: ReactNode
+  target?: string
 }
 
 const Anchor = ({
-  children,
   href,
-  active,
   className,
-  prefix,
-  suffix,
-  ...rest
+  children,
+  target = '_self',
 }: TAnchorProps) => {
-  const defaultClassName =
-    'relative font-semibold after:absolute after:left-0 after:-bottom-0.5  after:border-b after:border-gray-700 after:transition-all after:duration-300 hover:after:w-full'
-  const allClassNames = clsx(
-    defaultClassName,
-    className,
-    active ? 'after:w-full' : 'after:w-0'
-  )
+  const defaultClassName = 'text-tertiary-500 hover:text-tertiary-900'
+  const allClassNames = clsx(defaultClassName, className)
 
   return (
-    <>
-      {prefix && prefix}
-      <Link href={href} {...rest}>
-        <a className={allClassNames}>{children}</a>
-      </Link>
-      {suffix && suffix}
-    </>
+    <Link href={href}>
+      <a className={allClassNames} target={target}>
+        {children}
+      </a>
+    </Link>
   )
 }
 

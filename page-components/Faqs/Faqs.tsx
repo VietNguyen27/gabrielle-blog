@@ -3,7 +3,7 @@ import { Container } from '@components/Layout'
 import { Title } from '@components/Title'
 import { Heading } from '@components/Heading'
 import { Paragraph } from '@components/Paragraph'
-import { ALink } from '@components/ALink'
+import { Anchor } from '@components/Anchor'
 
 const Faqs = () => {
   return (
@@ -66,7 +66,7 @@ const Faqs = () => {
         <Heading level={2}>How do I change my personal information?</Heading>
         <Paragraph>
           Laborum voluptates deserunt praesentium veritatis et{' '}
-          <ALink href="/settings">impedit consectetur</ALink> minus debitis
+          <Anchor href="/settings">impedit consectetur</Anchor> minus debitis
           enim! Enim architecto laboriosam quaerat exercitationem corporis non
           sunt nulla eveniet! Dolore quod impedit illo velit, nesciunt ut
           aspernatur officia nulla eius sequi reprehenderit consequatur libero
@@ -120,10 +120,10 @@ const Faqs = () => {
         <Heading level={2}>How do I delete my account?</Heading>
         <Paragraph>
           Enim neque perspiciatis quos provident? Sit quam modi quis{' '}
-          <ALink href="/settings">ullam accusamus</ALink> unde at eaque tempora
-          maiores iure error illum excepturi totam, nihil sunt repudiandae
-          veniam? Numquam reiciendis iusto fuga dolore dicta eum delectus,
-          adipisci inventore!
+          <Anchor href="/settings">ullam accusamus</Anchor> unde at eaque
+          tempora maiores iure error illum excepturi totam, nihil sunt
+          repudiandae veniam? Numquam reiciendis iusto fuga dolore dicta eum
+          delectus, adipisci inventore!
         </Paragraph>
         <Paragraph>
           Esse harum laudantium ducimus atque repudiandae ex commodi ratione,

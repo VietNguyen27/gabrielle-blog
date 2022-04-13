@@ -5,7 +5,7 @@ import { Button } from '@components/Button'
 import { getFormattedDate } from '@utils/utils'
 import { useCurrentUser } from '@lib/user'
 import { TUser } from '@global/types'
-import { useRect, useModal, useAuth } from '@hooks/index'
+import { useRect, useToggle, useAuth } from '@hooks/index'
 import { LoginRequired } from '@components/LoginRequired'
 import { useFollowers } from '@lib/followers'
 import { fetcher } from '@lib/fetcher'
@@ -22,7 +22,7 @@ const UserPreview = ({ user, children, className }: TUserPreviewProps) => {
   const { data: { user: currentUser } = {} } = useCurrentUser()
   const { data: { followers } = {}, mutate } = useFollowers(user._id)
   const [rect, ref] = useRect()
-  const { open, toggle } = useModal()
+  const { open, toggle } = useToggle()
   const isAuth = useAuth()
   const isFollowed =
     currentUser &&

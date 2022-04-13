@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { BellIcon } from '@heroicons/react/outline'
-import { Anchor } from '@components/Anchor'
+import { NavLink } from '@components/NavLink'
 import { Button } from '@components/Button'
 import { Dropdown, Menu, MenuDivider, MenuItem } from '@components/Dropdown'
 import { Avatar } from '@components/Avatar'
@@ -52,14 +52,14 @@ const Navbar = () => {
   }, [mutate])
 
   return (
-    <nav className="hidden items-center xs:flex">
+    <nav className="hidden items-center md:flex">
       <ul className="flex items-center gap-2 pl-3 sm:gap-4">
         {!localUser ? (
           <>
             <li>
-              <Anchor href="/login" active={router.pathname === '/login'}>
+              <NavLink href="/login" active={router.pathname === '/login'}>
                 Sign in
-              </Anchor>
+              </NavLink>
             </li>
             <li>
               <Button
@@ -75,9 +75,9 @@ const Navbar = () => {
         ) : (
           <>
             <li>
-              <Anchor href="/write" active={router.pathname === '/write'}>
+              <NavLink href="/write" active={router.pathname === '/write'}>
                 Write
-              </Anchor>
+              </NavLink>
             </li>
             <li>
               <Button

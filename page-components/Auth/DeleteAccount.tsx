@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@components/Button'
 import { Heading } from '@components/Heading'
 import { List, ListItem } from '@components/List'
-import { ALink } from '@components/ALink'
+import { Anchor } from '@components/Anchor'
 
 const DeleteAccount = () => {
   return (
@@ -27,7 +27,7 @@ const DeleteAccount = () => {
         Delete account
       </Button>
       <p className="pt-6">
-        <ALink href="/contact">Contact us</ALink> if you have any questions.
+        <Anchor href="/contact">Contact us</Anchor> if you have any questions.
       </p>
     </div>
   )
