@@ -77,6 +77,20 @@ export const usePosts = ({
   )
 }
 
+export const usePostsByUserId = (userId = '', after: string = '') => {
+  return useSWR(() => {
+    const searchParams = new URLSearchParams()
+
+    searchParams.set('by', userId)
+
+    if (after) searchParams.set('after', after)
+
+    return `${
+      process.env.NEXT_PUBLIC_API_URL
+    }/api/posts?${searchParams.toString()}`
+  }, fetcher)
+}
+
 export const useRandomPosts = ({ not = '', limit = MAX_RANDOM_POSTS } = {}) => {
   return useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/api/posts?not=${not}&limit=${limit}&random=true`,

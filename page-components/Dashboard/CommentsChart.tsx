@@ -1,15 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { getDateCounts, getNewSeries } from './Analytics'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-const CommentsChart = ({ options }) => {
+const CommentsChart = ({ options, comments, timeline }) => {
   const [series, setSeries] = useState([
     {
       name: 'Comments',
       data: [0, 0, 0, 0, 0, 0, 0],
     },
   ])
+
+  useEffect(() => {
+    if (comments) {
+      const dateCounts = getDateCounts(
+        comments,
+        timeline,
+        timeline.length === 12
+      )
+      const newSeries = Object.values({
+        ...getNewSeries(timeline),
+        ...dateCounts,
+      })
+
+      setSeries([
+        {
+          ...series[0],
+          data: newSeries as any,
+        },
+      ])
+    }
+  }, [comments])
 
   return (
     <div className="relative h-0 w-full pb-[56.25%]">

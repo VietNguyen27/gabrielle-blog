@@ -1,13 +1,14 @@
 import { ObjectId } from 'mongodb'
 import { dbProjectionCreators } from './post'
 
-export async function findFollowersByUserId(db, userId) {
+export async function findFollowersByUserId(db, userId, after = '') {
   const followers = await db
     .collection('followers')
     .aggregate([
       {
         $match: {
           userId: new ObjectId(userId),
+          ...(after && { createdAt: { $gt: new Date(after) } }),
         },
       },
       { $sort: { createdAt: -1 } },

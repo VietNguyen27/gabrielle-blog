@@ -9,6 +9,23 @@ export async function findLikes(db, postId) {
     .toArray()
 }
 
+export async function findLikesByUserId(db, userId, after = '') {
+  const likes = await db
+    .collection('likes')
+    .aggregate([
+      {
+        $match: {
+          userId: new ObjectId(userId),
+          ...(after && { createdAt: { $gt: new Date(after) } }),
+        },
+      },
+      { $sort: { createdAt: -1 } },
+    ])
+    .toArray()
+
+  return likes
+}
+
 export async function likePost(db, postId, userId) {
   const post = await db
     .collection('posts')

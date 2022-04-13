@@ -7,3 +7,10 @@ export const useComments = (postId = '') => {
     fetcher
   )
 }
+
+export const useCommentsByUserId = (userId = '', after: string = '') => {
+  return useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/user/${userId}/comments?after=${after}`,
+    fetcher
+  )
+}

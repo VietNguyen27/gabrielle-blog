@@ -1,3 +1,5 @@
+import { THIS_MONTH, THIS_YEAR } from './constants'
+
 export const getRandomColor = (): string => {
   const LETTERS = '0123456789ABCDEF'
   let color = '#'
@@ -277,6 +279,20 @@ export const isDate = (date: Date): boolean => {
   return isDate && isValidDate
 }
 
+export const isSameDay = (date1: Date, date2: Date): boolean => {
+  date1.setHours(0, 0, 0, 0)
+  date2.setHours(0, 0, 0, 0)
+
+  return date1.getTime() === date2.getTime()
+}
+
+export const isSameMonth = (date1: Date, date2: Date): boolean => {
+  return (
+    date1.getMonth() === date2.getMonth() &&
+    date1.getFullYear() === date2.getFullYear()
+  )
+}
+
 export const getDateISO = (date = new Date()) => {
   if (!isDate(date)) return null
 
@@ -287,7 +303,7 @@ export const getDateISO = (date = new Date()) => {
   ].join('-')
 }
 
-export const getDaysInWeek = (current: Date): Date[] => {
+export const getDaysInWeek = (current: Date = new Date()): Date[] => {
   const daysInWeek: Date[] = []
   const day = current.getDay()
   const diff = current.getDate() - day + (day === 0 ? -6 : 1)
@@ -299,4 +315,31 @@ export const getDaysInWeek = (current: Date): Date[] => {
   }
 
   return daysInWeek
+}
+
+export const getDaysInMonth = (
+  month: number = THIS_MONTH,
+  year: number = THIS_YEAR
+): Date[] => {
+  const daysInMonth: Date[] = []
+  const date = new Date(year, month, 1)
+
+  while (date.getMonth() === month) {
+    daysInMonth.push(new Date(date))
+    date.setDate(date.getDate() + 1)
+  }
+
+  return daysInMonth
+}
+
+export const getMonthsInYear = (year: number = THIS_YEAR): Date[] => {
+  const date = new Date(`${year}`)
+  const monthsInYear: Date[] = [new Date(date)]
+
+  for (let i = 1; i < 12; i++) {
+    date.setMonth(date.getMonth() + 1)
+    monthsInYear.push(new Date(date))
+  }
+
+  return monthsInYear
 }

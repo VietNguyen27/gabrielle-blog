@@ -1,6 +1,23 @@
 import { ObjectId } from 'mongodb'
 
-export async function findBookmarksByUserId(db, userId) {
+export async function findBookmarksByUserId(db, userId, after = '') {
+  const bookmarks = await db
+    .collection('bookmarks')
+    .aggregate([
+      {
+        $match: {
+          userId: new ObjectId(userId),
+          ...(after && { createdAt: { $gt: new Date(after) } }),
+        },
+      },
+      { $sort: { createdAt: -1 } },
+    ])
+    .toArray()
+
+  return bookmarks
+}
+
+export async function findBookmarksDetailByUserId(db, userId) {
   return db
     .collection('bookmarks')
     .aggregate([

@@ -11,6 +11,18 @@ export const useFollowers = (userId = '') => {
   )
 }
 
+export const useFollowersByUserId = (userId = '', after: string = '') => {
+  return useSWR(() => {
+    const searchParams = new URLSearchParams()
+
+    if (after) searchParams.set('after', after)
+
+    return `${
+      process.env.NEXT_PUBLIC_API_URL
+    }/api/user/${userId}/followers?${searchParams.toString()}`
+  }, fetcher)
+}
+
 export const useInfiniteFollowers = ({
   userId = '',
   username = '',
