@@ -2,14 +2,14 @@ import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import { fetcher } from '@lib/fetcher'
 
-const POSTS_PER_PAGE = 8
+const POSTS_PER_REQUEST = 8
 const MAX_RANDOM_POSTS = 4
 
 export const useInfinitePosts = ({
   creatorId = '',
   title = '',
   topic = '',
-  limit = POSTS_PER_PAGE,
+  limit = POSTS_PER_REQUEST,
 } = {}) => {
   const { data, error, size, isValidating, ...props } = useSWRInfinite(
     (pageIndex, previousPageData) => {

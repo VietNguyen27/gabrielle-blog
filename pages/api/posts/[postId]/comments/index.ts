@@ -1,4 +1,4 @@
-import { findComments, insertComment } from '@api-lib/db'
+import { findComments, insertComment, insertNotification } from '@api-lib/db'
 import { middleware, validate } from '@api-lib/middlewares'
 import { commentSchema } from '@api-lib/schemas/comment'
 import { TNextApiRequest } from '@global/types'
@@ -39,6 +39,24 @@ handler.post(
         ...(parentId && { parentId }),
         ...(depth && { depth }),
       })
+
+      const notification = {
+        senderId: req.user._id,
+        receiverId: req.body.userId,
+        referenceId: parentId,
+      }
+
+      if (depth > 0) {
+        notification['type'] = 'comment'
+        notification['title'] = ' replied to your comment '
+        notification['message'] = rawComment
+      } else {
+        notification['type'] = 'post'
+        notification['title'] = ' commented on your post '
+        notification['message'] = rawComment
+      }
+
+      insertNotification(req.db, notification)
 
       return res.json({ comment })
     }

@@ -2,6 +2,29 @@ import React from 'react'
 import { Container } from '@components/Layout'
 import { Title } from '@components/Title'
 import { Tab, Tabs } from '@components/Tabs'
+import All from './All'
+import Comments from './Comments'
+import Posts from './Posts'
+import Followers from './Followers'
+
+const tabs = [
+  {
+    label: 'All',
+    component: All,
+  },
+  {
+    label: 'Comments',
+    component: Comments,
+  },
+  {
+    label: 'Posts',
+    component: Posts,
+  },
+  {
+    label: 'Followers',
+    component: Followers,
+  },
+]
 
 const Notifications = () => {
   return (
@@ -16,45 +39,13 @@ const Notifications = () => {
             labelClassName="min-w-[200px] lg:min-w-[240px]"
             horizontal
           >
-            <Tab className="flex-1" label="All">
-              <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
-                <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
-                  <p className="pb-2 text-xl font-bold">
-                    Your notifications is empty
-                  </p>
-                  <p className="text-lg">
-                    Interact with everyone like posting something, commenting,
-                    etc. to receive some notifications
-                  </p>
+            {tabs.map(({ label, component: Component }) => (
+              <Tab key={label} className="flex-1" label={label}>
+                <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
+                  <Component />
                 </div>
-              </div>
-            </Tab>
-            <Tab className="flex-1" label="Comments">
-              <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
-                <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
-                  <p className="pb-2 text-xl font-bold">
-                    Your notifications is empty
-                  </p>
-                  <p className="text-lg">
-                    Interact with everyone like posting something, commenting,
-                    etc. to receive some notifications
-                  </p>
-                </div>
-              </div>
-            </Tab>
-            <Tab className="flex-1" label="Posts">
-              <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
-                <div className="flex h-full w-full flex-1 flex-col items-center justify-center text-center">
-                  <p className="pb-2 text-xl font-bold">
-                    Your notifications is empty
-                  </p>
-                  <p className="text-lg">
-                    Interact with everyone like posting something, commenting,
-                    etc. to receive some notifications
-                  </p>
-                </div>
-              </div>
-            </Tab>
+              </Tab>
+            ))}
           </Tabs>
         </div>
       </div>

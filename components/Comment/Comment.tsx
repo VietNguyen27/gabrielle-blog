@@ -105,6 +105,7 @@ const Comment = ({
           comment: contentRef.current || '',
           depth: currentDepth.current,
           parentId: parentId.current,
+          userId: creator._id,
         }),
       })
       mutate()
@@ -132,6 +133,7 @@ const Comment = ({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         commentId: _id,
+        userId: creator._id,
       }),
     })
     mutate()
@@ -143,6 +145,7 @@ const Comment = ({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         commentId: _id,
+        userId: creator._id,
       }),
     })
     mutate()

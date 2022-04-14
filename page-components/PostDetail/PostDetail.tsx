@@ -146,6 +146,7 @@ const PostDetail = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           postId: _id,
+          userId: creatorId,
         }),
       })
       mutate()
@@ -159,6 +160,7 @@ const PostDetail = ({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         postId: _id,
+        userId: creatorId,
       }),
     })
     mutate()
