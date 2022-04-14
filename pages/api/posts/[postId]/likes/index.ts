@@ -1,4 +1,10 @@
-import { findLikes, likePost, unlikePost } from '@api-lib/db'
+import {
+  findLikes,
+  likePost,
+  unlikePost,
+  insertNotification,
+  removeNotification,
+} from '@api-lib/db'
 import { middleware } from '@api-lib/middlewares'
 import { TNextApiRequest } from '@global/types'
 import { NextApiResponse } from 'next'
@@ -18,11 +24,28 @@ handler.get(async (req: TNextApiRequest, res: NextApiResponse) => {
 handler.put(async (req: TNextApiRequest, res: NextApiResponse) => {
   const post = await likePost(req.db, req.body.postId, req.user._id)
 
+  const notification = {
+    senderId: req.user._id,
+    receiverId: req.body.userId,
+    referenceId: req.body.postId,
+    type: 'post',
+    title: ' liked your post ',
+    message: '',
+  }
+
+  insertNotification(req.db, notification)
+
   return res.json({ post: { ...post, isLiked: true } })
 })
 
 handler.delete(async (req: TNextApiRequest, res: NextApiResponse) => {
   const post = await unlikePost(req.db, req.body.postId, req.user._id)
+
+  removeNotification(req.db, {
+    senderId: req.user._id,
+    receiverId: req.body.userId,
+    referenceId: req.body.postId,
+  })
 
   return res.json({ post: { ...post, isLiked: false } })
 })

@@ -1,5 +1,11 @@
 import nextConnect from 'next-connect'
-import { findPosts, findPostsByUserId, insertPost } from '@api-lib/db'
+import {
+  findFollowersByUserId,
+  findPosts,
+  findPostsByUserId,
+  insertNotification,
+  insertPost,
+} from '@api-lib/db'
 import { middleware, validate } from '@api-lib/middlewares'
 import { postSchema } from '@api-lib/schemas'
 import { v2 as cloudinary } from 'cloudinary'
@@ -53,6 +59,21 @@ handler.post(
       readingTime: Number(readingTime),
       published: published === 'true' ? true : false,
       ...(cover && { cover }),
+    })
+
+    const followers = await findFollowersByUserId(req.db, req.user._id)
+
+    followers.map((follower) => {
+      const notification = {
+        senderId: req.user._id,
+        receiverId: follower.userId,
+        referenceId: insertedId,
+        type: 'post',
+        title: ' made a new post.',
+        message: '',
+      }
+
+      insertNotification(req.db, notification)
     })
 
     return res.json({ insertedId })

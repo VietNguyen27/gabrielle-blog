@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import { fetcher } from '@lib/fetcher'
 
-const USERS_PER_PAGE = 9
+const USERS_PER_REQUEST = 9
 
 export const useFollowers = (userId = '') => {
   return useSWR(
@@ -26,7 +26,7 @@ export const useFollowersByUserId = (userId = '', after: string = '') => {
 export const useInfiniteFollowers = ({
   userId = '',
   username = '',
-  limit = USERS_PER_PAGE,
+  limit = USERS_PER_REQUEST,
 } = {}) => {
   const { data, error, size, isValidating, ...props } = useSWRInfinite(
     (pageIndex, previousPageData) => {
