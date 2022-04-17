@@ -40,7 +40,7 @@ const FollowingUsers = () => {
       <div className="absolute bottom-full left-0 flex w-full items-center justify-end pb-3">
         <Form onSubmit={() => null}>
           <Input
-            name="search"
+            name="following search"
             label="Search"
             rounded="sm"
             className="mb-0 w-[150px] pr-4 sm:w-[200px]"

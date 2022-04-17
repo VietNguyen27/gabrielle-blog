@@ -164,6 +164,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
                     }
                   : {}
               }
+              id={name}
             >
               {label}
             </label>
@@ -175,6 +176,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
               {...(!isInputPassword && { type: type })}
               className="w-full border-none bg-transparent outline-none"
               maxLength={maxLength}
+              aria-labelledby={name}
               autoComplete="off"
               autoCorrect="off"
               autoCapitalize="off"
@@ -194,6 +196,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
               className="mr-2.5 outline-none"
               onClick={() => setShowPassword((prevState) => !prevState)}
               tabIndex={-1}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? (
                 <EyeIcon className={iconClassNames} />
@@ -251,6 +254,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
             className="mr-2.5 pl-2.5 outline-none"
             onClick={() => setShowPassword((prevState) => !prevState)}
             tabIndex={-1}
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? (
               <EyeIcon className={iconClassNames} />

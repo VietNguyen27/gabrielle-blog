@@ -140,7 +140,11 @@ const Profile = ({
                           </Menu>
                         }
                       >
-                        <Button variant="quaternary" className="rounded-md p-2">
+                        <Button
+                          variant="quaternary"
+                          className="rounded-md p-2"
+                          aria-label="More options"
+                        >
                           <DotsHorizontalIcon className="h-5 w-5" />
                         </Button>
                       </Dropdown>

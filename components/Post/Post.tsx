@@ -74,8 +74,11 @@ export const PostCard = ({
 
   return (
     <article className="relative mb-4 rounded-md border border-gray-200 shadow-sm">
-      <Link href={`/${creator.username}/post/${_id}`} aria-label={title}>
-        <a className="absolute top-0 left-0 h-full w-full"></a>
+      <Link href={`/${creator.username}/post/${_id}`}>
+        <a
+          className="absolute top-0 left-0 h-full w-full"
+          aria-label={title}
+        ></a>
       </Link>
       {hasCover && (
         <ImageRatio className="z-negative" src={cover} ratio={2.5} />
@@ -145,11 +148,8 @@ export const PostCard = ({
             </div>
             <div className="relative z-elevate flex items-center gap-2 self-end xs:self-center">
               <span className="text-xs">{readingTime} min read</span>
-              <Link
-                href={`/${creator.username}/post/${_id}`}
-                aria-label={title}
-              >
-                <a className="cursor-pointer">
+              <Link href={`/${creator.username}/post/${_id}`}>
+                <a className="cursor-pointer" aria-label={title}>
                   {isBookmarked ? (
                     <BookmarkIcon className="h-6 w-6 fill-indigo-500 text-indigo-500" />
                   ) : (

@@ -15,18 +15,22 @@ export const socials = [
   {
     slug: '/#',
     img: TwitterLogo,
+    label: 'Twitter',
   },
   {
     slug: '/#',
     img: DribbbleLogo,
+    label: 'Dribbble',
   },
   {
     slug: '/#',
     img: InstagramLogo,
+    label: 'Instagram',
   },
   {
     slug: '/#',
     img: FacebookLogo,
+    label: 'Facebook',
   },
 ]
 
@@ -73,9 +77,9 @@ const Footer = () => {
         <div className="flex items-end justify-between pb-4 md:flex-row md:items-center">
           <Logo />
           <div className="flex items-center gap-4">
-            {socials.map(({ slug, img: Image }, index) => (
+            {socials.map(({ slug, img: Image, label }, index) => (
               <Link href={slug} key={index}>
-                <a>
+                <a aria-label={label}>
                   <Image alt="social icon" />
                 </a>
               </Link>

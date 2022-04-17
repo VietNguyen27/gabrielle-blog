@@ -85,6 +85,7 @@ const Navbar = () => {
                 as="a"
                 variant="quaternary"
                 className="p-2"
+                aria-label="Notifications"
               >
                 <BellIcon className="h-6 w-6" />
               </Button>

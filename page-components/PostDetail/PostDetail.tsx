@@ -267,7 +267,7 @@ const PostDetail = ({
                   className="inline-flex flex-1 justify-center sm:flex-auto"
                   overlay={MoreOptionsDropdown()}
                 >
-                  <button>
+                  <button aria-label="More options">
                     <DotsHorizontalIcon className="h-6 w-6" />
                   </button>
                 </Dropdown>

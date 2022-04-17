@@ -112,11 +112,11 @@ const Button = ({
   }, [])
 
   if (rest.as === 'a') {
-    const { as, ...otherAttr } = rest
+    const { as, href, ...otherAttr } = rest
 
     return (
-      <Link {...otherAttr}>
-        <a className={allClassNames} target={target}>
+      <Link href={href}>
+        <a className={allClassNames} target={target} {...otherAttr}>
           {prefix && prefix}
           {children}
           {suffix && suffix}

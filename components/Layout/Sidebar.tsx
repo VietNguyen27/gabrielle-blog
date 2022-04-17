@@ -131,9 +131,9 @@ const Sidebar = () => {
           </Fragment>
         ))}
         <div className="flex items-center gap-4 pt-2 pl-3">
-          {socials.map(({ slug, img: Image }, index) => (
+          {socials.map(({ slug, img: Image, label }, index) => (
             <Link href={slug} key={index}>
-              <a>
+              <a aria-label={label}>
                 <Image alt="social icon" />
               </a>
             </Link>
