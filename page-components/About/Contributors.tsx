@@ -43,6 +43,7 @@ const Contributors = () => {
                   width={70}
                   height={70}
                   className="rounded-full"
+                  alt={name}
                 />
                 <div className="flex flex-col gap-1">
                   <h3 className="text-lg font-bold">{name}</h3>
