@@ -41,7 +41,7 @@ const Notifications = () => {
           >
             {tabs.map(({ label, component: Component }) => (
               <Tab key={label} className="flex-1" label={label}>
-                <div className="flex min-h-[50vh] flex-1 flex-col items-stretch overflow-hidden rounded-md border border-gray-200 p-4 shadow">
+                <div className="flex min-h-[50vh] flex-1 flex-col items-stretch rounded-md border border-gray-200 p-4 shadow">
                   <Component />
                 </div>
               </Tab>

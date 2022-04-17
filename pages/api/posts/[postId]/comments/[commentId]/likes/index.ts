@@ -22,8 +22,8 @@ handler.put(async (req: TNextApiRequest, res: NextApiResponse) => {
     receiverId: req.body.userId,
     referenceId: req.body.commentId,
     type: 'comment',
-    title: ' liked a comment on ',
-    message: '',
+    title: 'liked your comment',
+    message: req.body.comment,
   }
 
   insertNotification(req.db, notification)

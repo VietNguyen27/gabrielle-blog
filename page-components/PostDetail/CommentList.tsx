@@ -15,7 +15,7 @@ import { usePost } from '@lib/post'
 import { useToggle, useAuth } from '@hooks/index'
 import { getErrorFromJoiMessage } from '@utils/utils'
 
-const CommentList = ({ postId, commentsCount }) => {
+const CommentList = ({ postId, commentsCount, creatorId }) => {
   const [focus, setFocus] = useState(false)
   const [success, setSuccess] = useState(false)
   const ref = useRef(null)
@@ -52,6 +52,7 @@ const CommentList = ({ postId, commentsCount }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           comment: contentRef.current || '',
+          userId: creatorId,
         }),
       })
       mutate()

@@ -1,7 +1,18 @@
+import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import { fetcher } from '@lib/fetcher'
 
 const NOTIFICATION_PER_REQUEST = 9
+
+export const useNotifications = (userId = '') => {
+  return useSWR(() => {
+    const searchParams = new URLSearchParams()
+
+    return `${
+      process.env.NEXT_PUBLIC_API_URL
+    }/api/user/${userId}/notifications?${searchParams.toString()}`
+  }, fetcher)
+}
 
 export const useInfiniteNotifications = ({
   userId = '',

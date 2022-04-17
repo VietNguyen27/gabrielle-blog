@@ -21,7 +21,7 @@ handler.put(async (req: TNextApiRequest, res: NextApiResponse) => {
     receiverId: req.body.followedId,
     referenceId: req.user._id,
     type: 'follower',
-    title: ' is now followed to you.',
+    title: 'is now followed to you.',
     message: '',
   }
 

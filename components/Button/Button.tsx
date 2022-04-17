@@ -75,7 +75,7 @@ const Button = ({
 }: TButtonProps) => {
   const ref = useRef<any>(null)
   const defaultClassName =
-    'relative inline-flex justify-center items-center gap-1 border outline-none font-semibold overflow-hidden transition-all disabled:text-gray-500'
+    'relative inline-flex justify-center items-center gap-1 border outline-none font-semibold transition-all disabled:text-gray-500'
   const allClassNames = clsx(
     defaultClassName,
     className,

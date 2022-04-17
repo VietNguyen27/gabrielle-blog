@@ -66,10 +66,10 @@ handler.post(
     followers.map((follower) => {
       const notification = {
         senderId: req.user._id,
-        receiverId: follower.userId,
+        receiverId: follower.followerId,
         referenceId: insertedId,
         type: 'post',
-        title: ' made a new post.',
+        title: 'made a new post.',
         message: '',
       }
 

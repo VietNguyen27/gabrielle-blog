@@ -43,16 +43,16 @@ handler.post(
       const notification = {
         senderId: req.user._id,
         receiverId: req.body.userId,
-        referenceId: parentId,
+        referenceId: parentId || req.query.postId,
       }
 
       if (depth > 0) {
         notification['type'] = 'comment'
-        notification['title'] = ' replied to your comment '
+        notification['title'] = 'replied to your comment'
         notification['message'] = rawComment
       } else {
         notification['type'] = 'post'
-        notification['title'] = ' commented on your post '
+        notification['title'] = 'commented on your post'
         notification['message'] = rawComment
       }
 

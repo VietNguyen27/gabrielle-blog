@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import DOMPurify from 'dompurify'
@@ -9,6 +8,7 @@ import { Switch } from '@components/Switch'
 import { Tab, Tabs } from '@components/Tabs'
 import { Form } from '@components/Form'
 import { ImageRatio } from '@components/ImageRatio'
+import { TopicAnchor } from '@components/Topic'
 import { fetcher } from '@lib/fetcher'
 import { useError, useLoading } from '@lib/store'
 import { useCurrentUser } from '@lib/user'
@@ -241,15 +241,8 @@ const Write = () => {
                   )}
                   {post && post.topic && (
                     <div>
-                      {post.topic.map((topic, index) => (
-                        <Link
-                          key={index}
-                          href={`/topic/${topic.label.toLowerCase()}`}
-                        >
-                          <a className="rounded-md border border-transparent px-1.5 py-1 text-gray-600 outline-none transition-colors duration-200 hover:border-gray-300 hover:bg-gray-100">
-                            #{topic.label.toLowerCase()}
-                          </a>
-                        </Link>
+                      {post.topic.map((topic) => (
+                        <TopicAnchor key={topic.value} {...topic} />
                       ))}
                     </div>
                   )}

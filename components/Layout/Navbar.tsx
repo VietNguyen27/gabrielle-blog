@@ -7,6 +7,7 @@ import { Dropdown, Menu, MenuDivider, MenuItem } from '@components/Dropdown'
 import { Avatar } from '@components/Avatar'
 import { fetcher } from '@lib/fetcher'
 import { removeUserToLocalStorage, useCurrentUser } from '@lib/user'
+import { useNotifications } from '@lib/notification'
 import { useLocalUser } from '@hooks/index'
 
 const MenuDropdown = ({ username, email }, onLogOut) => {
@@ -41,6 +42,12 @@ const Navbar = () => {
   const router = useRouter()
   const { mutate } = useCurrentUser()
   const localUser = useLocalUser()
+  const { data: { notifications } = {} } = useNotifications(
+    localUser ? localUser._id : null
+  )
+  const totalNotificationsNotReadYet =
+    notifications &&
+    notifications.reduce((acc, curr) => !curr.isRead && (acc += 1), 0)
 
   const onLogOut = useCallback(async () => {
     await fetcher('/api/auth', {
@@ -84,10 +91,17 @@ const Navbar = () => {
                 href="/notifications"
                 as="a"
                 variant="quaternary"
-                className="p-2"
+                className="relative p-2"
                 aria-label="Notifications"
               >
                 <BellIcon className="h-6 w-6" />
+                {!!totalNotificationsNotReadYet && (
+                  <span className="absolute top-1 left-[calc(100%-20px)] min-w-[16px] whitespace-nowrap rounded bg-red-700 px-1 text-center text-xs text-white">
+                    {totalNotificationsNotReadYet > 99
+                      ? '99+'
+                      : totalNotificationsNotReadYet}
+                  </span>
+                )}
               </Button>
             </li>
             <li>
