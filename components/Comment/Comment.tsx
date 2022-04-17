@@ -133,6 +133,7 @@ const Comment = ({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         commentId: _id,
+        comment: content,
         userId: creator._id,
       }),
     })

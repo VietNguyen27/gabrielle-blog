@@ -29,7 +29,7 @@ handler.put(async (req: TNextApiRequest, res: NextApiResponse) => {
     receiverId: req.body.userId,
     referenceId: req.body.postId,
     type: 'post',
-    title: ' liked your post ',
+    title: 'liked your post.',
     message: '',
   }
 

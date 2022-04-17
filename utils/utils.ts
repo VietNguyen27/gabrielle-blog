@@ -134,7 +134,7 @@ export const timeSince = (date: Date | number): string => {
   const SECONDS_PER_DAY = 86400
   const SECONDS_PER_MONTH = 2592000
   const SECONDS_PER_YEAR = 31536000
-  const seconds = Math.floor((+new Date() - +date) / 1000)
+  const seconds = Math.floor((+new Date() - +new Date(date)) / 1000)
   let interval = seconds / SECONDS_PER_YEAR
 
   if (interval > 1) {

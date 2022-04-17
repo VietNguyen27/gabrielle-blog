@@ -1,7 +1,23 @@
 import { ObjectId } from 'mongodb'
 import { dbProjectionCreators } from './post'
 
-export async function findNotifications(
+export async function findNotificationsByUserId(db, userId) {
+  const notifications = await db
+    .collection('notifications')
+    .aggregate([
+      {
+        $match: {
+          receiverId: new ObjectId(userId),
+        },
+      },
+      { $sort: { createdAt: -1 } },
+    ])
+    .toArray()
+
+  return notifications
+}
+
+export async function findNotificationsWithProfile(
   db,
   userId,
   type,
@@ -32,6 +48,20 @@ export async function findNotifications(
           localField: 'referenceId',
           foreignField: '_id',
           as: 'reference',
+        },
+      },
+      {
+        $unwind: {
+          path: '$reference',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: 'topics',
+          localField: 'reference.topic',
+          foreignField: '_id',
+          as: 'reference.topics',
         },
       },
       { $sort: { createdAt: -1 } },

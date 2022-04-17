@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 
 export const TopicCardSkeleton = () => {
@@ -67,21 +68,28 @@ export const PostCardTertiarySkeleton = () => {
   )
 }
 
-export const PostCardSkeleton = ({ hasCover = false }) => {
+export const PostCardSkeleton = ({ hasCover = false, hasHeader = true }) => {
   return (
     <div className="mb-4 overflow-hidden rounded-md border border-gray-200 shadow-sm">
       {hasCover && (
         <div className="h-0 animate-pulse bg-gray-200 pb-[40%]"></div>
       )}
       <div className="p-4">
-        <div className="flex items-center pb-2">
-          <div className="h-8 w-8 animate-pulse rounded-full bg-gray-200"></div>
-          <div className="flex flex-col pl-2">
-            <div className="mb-1 h-4 w-28 animate-pulse rounded bg-gray-200"></div>
-            <div className="h-3 w-16 animate-pulse rounded bg-gray-200"></div>
+        {hasHeader && (
+          <div className="flex items-center pb-2">
+            <div className="h-8 w-8 animate-pulse rounded-full bg-gray-200"></div>
+            <div className="flex flex-col pl-2">
+              <div className="mb-1 h-4 w-28 animate-pulse rounded bg-gray-200"></div>
+              <div className="h-3 w-16 animate-pulse rounded bg-gray-200"></div>
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col items-stretch xs:pl-10">
+        )}
+        <div
+          className={clsx(
+            'flex flex-col items-stretch',
+            hasHeader && 'xs:pl-10'
+          )}
+        >
           <div className="mb-2 h-6 animate-pulse rounded bg-gray-200"></div>
           <div className="mb-2 h-6 w-1/2 animate-pulse rounded bg-gray-200"></div>
           <div className="flex flex-wrap gap-1 pb-2">
@@ -180,6 +188,30 @@ export const UserCardSkeleton = () => {
       <div className="h-16 w-16 animate-pulse rounded-full bg-gray-200"></div>
       <div className="mt-3 mb-3 h-5 w-24 animate-pulse rounded bg-gray-200"></div>
       <div className="h-4 w-4/5 animate-pulse rounded bg-gray-200"></div>
+    </div>
+  )
+}
+
+export const NotificationSkeleton = () => {
+  const randomNotification = Math.floor(Math.random() * 2)
+
+  return (
+    <div className="relative mb-4 border-b border-gray-200 pb-4">
+      <div className="flex flex-col">
+        <div className="flex items-start">
+          <div className="mr-4 h-10 w-10 animate-pulse rounded-full bg-gray-200"></div>
+          <div className="flex flex-1 flex-col pr-8">
+            <div className="mb-2 h-4 animate-pulse rounded bg-gray-200"></div>
+            <div className="mb-2 h-4 w-1/3 animate-pulse rounded bg-gray-200"></div>
+            <div className="h-3 w-32 animate-pulse rounded bg-gray-200"></div>
+            {randomNotification ? (
+              <div className="mt-2">
+                <PostCardSkeleton hasHeader={false} />
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

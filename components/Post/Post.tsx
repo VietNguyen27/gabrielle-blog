@@ -31,6 +31,7 @@ type TPostCardProps = {
   readingTime: number
   createdAt: number
   hasCover: boolean
+  hasHeader: boolean
 }
 
 type TTrendingPostProps = {
@@ -67,6 +68,7 @@ export const PostCard = ({
   readingTime,
   createdAt,
   hasCover,
+  hasHeader = true,
 }: TPostCardProps) => {
   const { data: { user } = {} } = useCurrentUser()
   const isLiked = user && likes && likes.includes(user._id)
@@ -84,28 +86,35 @@ export const PostCard = ({
         <ImageRatio className="z-negative" src={cover} ratio={2.5} />
       )}
       <div className="p-4">
-        <div className="flex items-center pb-2">
-          <UserPreview user={creator}>
-            <Link href={`/${creator.username}`}>
-              <a className="relative z-elevate">
-                <Avatar
-                  src={creator.profilePicture}
-                  alt={creator.username}
-                  className="w-8"
-                />
-              </a>
-            </Link>
-          </UserPreview>
-          <div className="relative z-elevate flex flex-col pl-2">
-            <Link href={`/${creator.username}`}>
-              <a className="text-sm font-bold">{creator.username}</a>
-            </Link>
-            <span className="text-xs font-semibold">
-              {getFormattedDate(createdAt)}
-            </span>
+        {hasHeader && (
+          <div className="flex items-center pb-2">
+            <UserPreview user={creator}>
+              <Link href={`/${creator.username}`}>
+                <a className="relative z-elevate">
+                  <Avatar
+                    src={creator.profilePicture}
+                    alt={creator.username}
+                    className="w-8"
+                  />
+                </a>
+              </Link>
+            </UserPreview>
+            <div className="relative z-elevate flex flex-col pl-2">
+              <Link href={`/${creator.username}`}>
+                <a className="text-sm font-bold">{creator.username}</a>
+              </Link>
+              <span className="text-xs font-semibold">
+                {getFormattedDate(createdAt)}
+              </span>
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col items-stretch xs:pl-10">
+        )}
+        <div
+          className={clsx(
+            'flex flex-col items-stretch',
+            hasHeader && 'xs:pl-10'
+          )}
+        >
           <h2
             className={clsx(
               'pb-2 font-bold line-clamp-3',
@@ -125,12 +134,12 @@ export const PostCard = ({
                 as="a"
                 href={`/${creator.username}/post/${_id}`}
                 variant="quinary"
-                className="rounded-md px-2 py-1.5"
+                className="rounded-md px-2 py-1.5 text-center"
               >
                 {isLiked ? (
-                  <HeartIcon className="mr-1 h-5 w-5 fill-red-700 text-red-700" />
+                  <HeartIcon className="h-5 w-5 fill-red-700 text-red-700" />
                 ) : (
-                  <HeartIcon className="mr-1 h-5 w-5" />
+                  <HeartIcon className="h-5 w-5" />
                 )}
                 {likesCount + bookmarksCount}{' '}
                 {likesCount + bookmarksCount > 1 ? 'reactions' : 'reaction'}
@@ -139,9 +148,9 @@ export const PostCard = ({
                 as="a"
                 href={`/${creator.username}/post/${_id}#comments`}
                 variant="quinary"
-                className="rounded-md px-2 py-1.5"
+                className="rounded-md px-2 py-1.5 text-center"
               >
-                <ChatAlt2Icon className="mr-1 h-5 w-5" />
+                <ChatAlt2Icon className="h-5 w-5" />
                 {commentsCount > 0 ? commentsCount : 'Add'}{' '}
                 {commentsCount > 1 ? 'comments' : 'comment'}
               </Button>

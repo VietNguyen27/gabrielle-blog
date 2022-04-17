@@ -286,15 +286,21 @@ const PostDetail = ({
                   )}
                   <div className="px-6 py-6 sm:px-12">
                     <div className="flex items-center gap-4 pb-6">
-                      <Avatar
-                        src={creator.profilePicture}
-                        alt={creator.username}
-                        className="w-10"
-                      />
+                      <Link href={`/${creator.username}`}>
+                        <a>
+                          <Avatar
+                            src={creator.profilePicture}
+                            alt={creator.username}
+                            className="w-10 bg-white"
+                          />
+                        </a>
+                      </Link>
                       <div className="flex flex-col">
-                        <div className="text-lg font-bold">
-                          {creator.username}
-                        </div>
+                        <Link href={`/${creator.username}`}>
+                          <a className="text-lg font-bold line-clamp-1">
+                            {creator.username}
+                          </a>
+                        </Link>
                         <div className="flex flex-col text-sm xs:flex-row xs:items-center xs:gap-1.5">
                           <span>Posted on {getFormattedDate(createdAt)}</span>
                           <span className="hidden h-1 w-1 rounded-full bg-gray-700 xs:inline-block"></span>
@@ -319,7 +325,11 @@ const PostDetail = ({
                       ></div>
                     </div>
                   </div>
-                  <CommentList postId={_id} commentsCount={commentsCount} />
+                  <CommentList
+                    postId={_id}
+                    commentsCount={commentsCount}
+                    creatorId={creatorId}
+                  />
                 </div>
                 <div className="rounded-md border border-gray-300 bg-white shadow">
                   <div className="px-6 py-6 sm:px-12">
