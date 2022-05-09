@@ -92,10 +92,16 @@ const Register = () => {
 
     const handleScroll = (event) => {
       if (started) {
-        if (event.deltaY < 0 || event.touches[0].clientY - startY < 0) {
+        if (
+          event.deltaY < 0 ||
+          (event.touches && event.touches[0].clientY - startY < 0)
+        ) {
           scrollDirection.current = SCROLL_DOWN
         }
-        if (event.deltaY > 0 || event.touches[0].clientY - startY > 0) {
+        if (
+          event.deltaY > 0 ||
+          (event.touches && event.touches[0].clientY - startY > 0)
+        ) {
           scrollDirection.current = SCROLL_UP
         }
         event.stopPropagation()
